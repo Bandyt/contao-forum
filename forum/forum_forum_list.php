@@ -60,7 +60,40 @@ class forum_forum_list extends Module
 	 */
 	protected function compile()
 	{
+		if($this->forum_use_fixed_forum=='1'){
+			$forumid = $this->forum_fixed_forum;
+		}
+		else
+		{
+			$forumid = $this->Input->get('forum');
+		}
+		if($forumid==''){
+			$forumid=0;
+		}
 		
+		$objForums = $this->Database->prepare("SELECT * FROM tl_forum_forums WHERE pid=? ORDER BY sorting ASC")->execute($forumid);
+		while($objForums->next()){
+			$arrForums[]=array(
+				'id'=>$objForums->id,
+				'title'=>$objForums->title,
+				'redirect'=>$this->addToUrl('forum=' . $objForums->id)
+			);
+		}
+		$this->Template->forums=$arrForums;
+		
+		$objTargetPage = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
+												->limit(1)
+												->execute($this->forum_redirect_thread);
+												
+		$objThreads = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE pid=? ORDER BY sorting ASC")->execute($forumid);
+		while($objThreads->next()){
+			$arrThreads[]=array(
+				'id'=>$objThreads->id,
+				'title'=>$objThreads->title,
+				'redirect'=>$this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $objThreads->id)
+			);
+		}
+		$this->Template->threads=$arrThreads;
 	}
 }
 

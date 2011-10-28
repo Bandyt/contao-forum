@@ -1,0 +1,29 @@
+<div class="<?php echo $this->class; ?>"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+	<?php if ($this->headline): ?>
+		<<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+	<?php endif; ?>
+	
+	<div class="forums">
+		<?php if(count($this->forums)>0): ?>
+			<?php foreach($this->forums as $forum): ?>
+				<div class="forum">
+					<div class="name">Forum: <a href="<?php echo($forum['redirect']); ?>"><?php echo($forum['title']); ?></a></div>
+				</div>
+			<?php endforeach; ?>
+		<?php else: ?>
+			<div class="noforum">No Forum</div>
+		<?php endif; ?>
+	</div>
+	
+	<div class="threads">
+		<?php if(count($this->threads)>0): ?>
+			<?php foreach($this->threads as $thread): ?>
+				<div class="thread">
+					<div class="name">Thread: <a href="<?php echo($thread['redirect']); ?>"><?php echo($thread['title']); ?></a></div>
+				</div>
+			<?php endforeach; ?>
+		<?php else: ?>
+			<div class="nothread">No Thread</div>
+		<?php endif; ?>
+	</div>
+</div>
