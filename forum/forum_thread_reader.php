@@ -43,15 +43,45 @@ class forum_thread_reader extends Module
 	 * Template
 	 * @var string
 	 */
-	protected $strTemplate = '';
+	protected $strTemplate = 'forum_thread_reader';
 
-
+	public function generate()
+	{
+		if (TL_MODE == 'BE')
+		{
+			$return="Forum - Thread reader";
+			return $return;
+		}
+		return parent::generate();
+	}
+	
 	/**
 	 * Generate module
 	 */
 	protected function compile()
 	{
+		if($this->forum_use_fixed_thread=='1'){
+			$threadid = $this->forum_fixed_thread;
+		}
+		else
+		{
+			$threadid = $this->Input->get('thread');
+		}
 		
+		$objPosts = $this->Database->prepare("SELECT * FROM tl_forum_posts WHERE pid=? ORDER BY order_no ASC")->execute($threadid);
+		$i=0;
+		while($objPosts->next()){
+				$i++;
+				//$objCreator=$this->Database->prepare("SELECT * FROM tl_member WHERE id=?")->execute($objComments->created_user);
+				//$objChangeUser=$this->Database->prepare("SELECT * FROM tl_member WHERE id=?")->execute($objComments->last_change_user);
+				$arrPosts[]=array(
+				'id'=>$objPosts->id,
+				'class'=>(($i == 1) ? 'first ' : '') . (($i == $objPosts->numRows) ? 'last ' : '') . ((($i % 2) == 0) ? 'even' : 'odd'),
+				'title'=>$objPosts->title,
+				'description'=>$objPosts->description
+				);
+		}
+		$this->Template->posts=$arrPosts;
 	}
 }
 

@@ -40,7 +40,11 @@ $GLOBALS['TL_DCA']['tl_forum_posts'] = array
 	(
 		'dataContainer'               => 'Table',
 		'ptable'                      => 'tl_forum_threads',
-		'enableVersioning'            => true
+		'enableVersioning'            => true,
+		'onsubmit_callback' => array
+		(
+			array('tl_forum_posts', 'adjustTime')
+		)
 	),
 
 	// List
@@ -104,7 +108,7 @@ $GLOBALS['TL_DCA']['tl_forum_posts'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array(''),
-		'default'                     => 'title,description'
+		'default'                     => 'title,description;{forum_creator_information},created_by,created_date,created_time;{forum_additional_settings},deleted'
 	),
 
 	// Subpalettes
@@ -129,6 +133,35 @@ $GLOBALS['TL_DCA']['tl_forum_posts'] = array
 			'exclude'                 => true,
 			'inputType'               => 'textarea',
 			'eval'                    => array('mandatory'=>true)
+		),
+		'created_by' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_posts']['created_by'],
+			'exclude'                 => false,
+			'inputType'               => 'select',
+			'options_callback'        => array('tl_forum_posts', 'getMembers'),
+			'eval'                    => array('mandatory'=>true, 'multiple'=>true)
+		),
+		'created_date' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_posts']['created_date'],
+			'exclude'                 => false,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>true,'rgxp'=>'date', 'datepicker'=>$this->getDatePickerString())
+		),
+		'created_time' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_posts']['created_time'],
+			'exclude'                 => false,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>true,'rgxp'=>'time')
+		),
+		'deleted' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_posts']['deleted'],
+			'exclude'                 => false,
+			'inputType'               => 'checkbox',
+			'eval'                    => array('mandatory'=>false)
 		)
 	)
 );
@@ -142,7 +175,41 @@ class tl_forum_posts extends Backend
 	
 	public function listPosts($arrRow)
 	{
-		return '<div>' . $arrRow['title'] . '<br />' . $arrRow['description'] . '</div>' . "\n";
+		return '<div>' . $arrRow['title'] . '<br />' . $arrRow['description'] . '</div>' . '\n';
+	}
+	
+	public function getMembers($dc)
+	{
+		$return = array();
+		$objMembers = $this->Database->prepare("SELECT * FROM tl_member WHERE disable=?")->execute('');
+
+		if ($objMembers->numRows < 1)
+		{
+			return array();
+		}
+		
+		while ($objMembers->next())
+		{
+			
+			$return[$objMembers->id] = $objMembers->firstname . " " . $objMembers->lastname . "(" . $objMembers->username . ")";
+			
+		}
+		
+		return $return;
+	}
+	
+	public function adjustTime(DataContainer $dc)
+	{
+		// Return if there is no active record (override all)
+		if (!$dc->activeRecord)
+		{
+			return;
+		}
+
+		// Adjust start and end time
+		$arrSet['created_time'] = strtotime(date('Y-m-d', $dc->activeRecord->created_date) . ' ' . date('H:i:s', $dc->activeRecord->created_time));
+
+		$this->Database->prepare("UPDATE tl_forum_posts %s WHERE id=?")->set($arrSet)->execute($dc->id);
 	}
 }
 ?>

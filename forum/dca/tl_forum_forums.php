@@ -114,7 +114,7 @@ $GLOBALS['TL_DCA']['tl_forum_forums'] = array
 		'forum_type' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_forums']['forum_type'],
-			'exclude'                 => true,
+			'exclude'                 => false,
 			'inputType'               => 'select',
 			'options'				  => array('F'),
 			'reference'				  => &$GLOBALS['TL_LANG']['tl_forum_forums']['forum_type']['reference'],
@@ -123,18 +123,17 @@ $GLOBALS['TL_DCA']['tl_forum_forums'] = array
 		'title' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_forums']['title'],
-			'exclude'                 => true,
+			'exclude'                 => false,
 			'inputType'               => 'text',
 			'eval'                    => array('mandatory'=>true, 'maxlength'=>255)
 		),
 		'description' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_forums']['description'],
-			'exclude'                 => true,
+			'exclude'                 => false,
 			'inputType'               => 'textarea',
 			'eval'                    => array()
 		)
 	)
 );
-
 ?>

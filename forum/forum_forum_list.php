@@ -73,10 +73,23 @@ class forum_forum_list extends Module
 		
 		$objForums = $this->Database->prepare("SELECT * FROM tl_forum_forums WHERE pid=? ORDER BY sorting ASC")->execute($forumid);
 		while($objForums->next()){
+			$objThreads = $this->Database->prepare("SELECT count(id) as num_threads FROM tl_forum_threads WHERE pid=?")->execute($objForums->id);
+			$objLastPost = $this->Database->prepare("SELECT thr.title as thread_title,pst.* FROM tl_forum_threads as thr INNER JOIN tl_forum_posts as pst ON thr.id=pst.pid WHERE thr.pid=? ORDER BY created_time DESC LIMIT 0,1")->execute($objForums->id);
+			if($objThreads->num_threads==0)
+			{
+				$Threads=0;
+			}
+			else
+			{
+				$Threads=$objThreads->num_threads;
+			}
 			$arrForums[]=array(
 				'id'=>$objForums->id,
 				'title'=>$objForums->title,
-				'redirect'=>$this->addToUrl('forum=' . $objForums->id)
+				'redirect'=>$this->addToUrl('forum=' . $objForums->id),
+				'num_threads'=>$Threads,
+				'last_post_creator'=>$objLastPost->created_by,
+				'last_post_title'=>$objLastPost->thread_title,
 			);
 		}
 		$this->Template->forums=$arrForums;

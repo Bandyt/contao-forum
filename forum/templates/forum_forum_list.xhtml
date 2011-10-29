@@ -8,13 +8,15 @@
 			<?php foreach($this->forums as $forum): ?>
 				<div class="forum">
 					<div class="name">Forum: <a href="<?php echo($forum['redirect']); ?>"><?php echo($forum['title']); ?></a></div>
+					<div class="threads">Threads: <?php echo($forum['num_threads']); ?></div>
+					<div class="last_post">Last post:<br /><span class="creator">Creator: <?php echo($forum['last_post_creator']); ?></span><br /><span class="title">Title: <?php echo($forum['last_post_title']); ?></span></div>
 				</div>
 			<?php endforeach; ?>
 		<?php else: ?>
 			<div class="noforum">No Forum</div>
 		<?php endif; ?>
 	</div>
-	
+	<hr>
 	<div class="threads">
 		<?php if(count($this->threads)>0): ?>
 			<?php foreach($this->threads as $thread): ?>
