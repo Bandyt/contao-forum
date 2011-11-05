@@ -3,29 +3,49 @@
 		<<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
 	<?php endif; ?>
 	
-	<div class="forums">
+	<table class="forums">
+		<tr class="header">
+			<th>Forum</th>
+			<th>Threads</th>
+			<th>Last Post</th>
+		</tr>
 		<?php if(count($this->forums)>0): ?>
 			<?php foreach($this->forums as $forum): ?>
-				<div class="forum">
-					<div class="name">Forum: <a href="<?php echo($forum['redirect']); ?>"><?php echo($forum['title']); ?></a></div>
-					<div class="threads">Threads: <?php echo($forum['num_threads']); ?></div>
-					<div class="last_post">Last post:<br /><span class="creator">Creator: <?php echo($forum['last_post_creator']); ?></span><br /><span class="title">Title: <?php echo($forum['last_post_title']); ?></span></div>
-				</div>
+				<tr class="forum">
+					<td class="name"><a href="<?php echo($forum['redirect']); ?>"><?php echo($forum['title']); ?></a></td>
+					<td class="threads"><?php echo($forum['num_threads']); ?></td>
+					<td class="last_post">
+						<?php if($forum['num_threads']!=0): ?>
+							<span class="last_post_date"><?php echo($forum['last_post_date']); ?></span>&nbsp;
+							<span class="last_post_time"><?php echo($forum['last_post_time']); ?></span><br />
+							<span class="creator">Creator: <?php echo($forum['last_post_creator']); ?></span><br />
+							<span class="title">Title: <?php echo($forum['last_post_title']); ?></span>
+						<?php endif; ?>
+					</td>
+				</td>
 			<?php endforeach; ?>
 		<?php else: ?>
-			<div class="noforum">No Forum</div>
+			<tr class="noforum"><td>No Forum<td></tr>
 		<?php endif; ?>
-	</div>
-	<hr>
-	<div class="threads">
+	</table>
+	<hr /><br />
+	<a href="<?php echo($this->threadeditor); ?>">Add new thread</a><br />
+	<table class="threads">
+		<tr class="header"><td>&nbsp;</td><td>Thread</td><td>Created by</td><td>Posts</td><td>Last Post</td></tr>
 		<?php if(count($this->threads)>0): ?>
 			<?php foreach($this->threads as $thread): ?>
-				<div class="thread">
-					<div class="name">Thread: <a href="<?php echo($thread['redirect']); ?>"><?php echo($thread['title']); ?></a></div>
-				</div>
+				<tr class="thread">
+					<td class="icon">Icon not implemented</td>
+					<td class="name"><a href="<?php echo($thread['redirect']); ?>"><?php echo($thread['title']); ?></a></td>
+					<td class="created_by">Created by not implemented</td>
+					<td class="posts">Posts not implemented</td>
+					<td class="last_post">Last post not implemented</td>
+				</tr>
 			<?php endforeach; ?>
 		<?php else: ?>
-			<div class="nothread">No Thread</div>
+			<tr class="nothread"><td>No Threads</td></tr>
 		<?php endif; ?>
-	</div>
+	</table>
+	<br />
+	<a href="<?php echo($this->threadeditor); ?>">Add new thread</a>
 </div>

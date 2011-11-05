@@ -71,7 +71,7 @@ CREATE TABLE `tl_forum_posts` (
   `last_change_time` int(10) unsigned NOT NULL default '0',
   `deleted` char(1) NOT NULL default '',
   `title` varchar(255) NOT NULL default '',
-  `description` blob NULL,
+  `text` blob NULL,
   PRIMARY KEY  (`id`),
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -88,7 +88,11 @@ CREATE TABLE `tl_content` (
   `pid` int(10) unsigned NOT NULL default '0',
   `sorting` int(10) unsigned NOT NULL default '0',
   `tstamp` int(10) unsigned NOT NULL default '0',
-  `forum_redirect_thread` int(10) unsigned NOT NULL default '0',
+  `forum_redirect_threadreader` int(10) unsigned NOT NULL default '0',
+  `forum_redirect_threadeditor` int(10) unsigned NOT NULL default '0',
+  `forum_redirect_forumlist` int(10) unsigned NOT NULL default '0',
+  `forum_redirect_posteditor` int(10) unsigned NOT NULL default '0',
+  `forum_redirect` int(10) unsigned NOT NULL default '0',
   `forum_use_fixed_forum` char(1) NOT NULL default '',
   `forum_use_fixed_thread` char(1) NOT NULL default '',
   `forum_fixed_forum` int(10) unsigned NOT NULL default '0',

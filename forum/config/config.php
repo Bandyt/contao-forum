@@ -108,6 +108,8 @@
  */
 $GLOBALS['TL_CTE']['tl_forum']['forum_forum_list'] = 'forum_forum_list';  
 $GLOBALS['TL_CTE']['tl_forum']['forum_thread_reader'] = 'forum_thread_reader'; 
+$GLOBALS['TL_CTE']['tl_forum']['forum_thread_editor'] = 'forum_thread_editor'; 
+$GLOBALS['TL_CTE']['tl_forum']['forum_post_editor'] = 'forum_post_editor'; 
 
 /**
  * -------------------------------------------------------------------------

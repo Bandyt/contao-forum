@@ -30,26 +30,26 @@
 
 
 /**
- * Class forum_forum_list 
+ * Class forum_thread_editor
  *
  * @copyright  2011 Andreas Koob 
  * @author     Andreas Koob 
  * @package    Controller
  */
-class forum_forum_list extends Module
+class forum_thread_editor extends Module
 {
 
 	/**
 	 * Template
 	 * @var string
 	 */
-	protected $strTemplate = 'forum_forum_list';
+	protected $strTemplate = 'forum_thread_editor';
 
 	public function generate()
 	{
 		if (TL_MODE == 'BE')
 		{
-			$return="Forum - Forum list";
+			$return="Forum - Thread editor";
 			return $return;
 		}
 		return parent::generate();
@@ -73,7 +73,7 @@ class forum_forum_list extends Module
 		if($forumid==''){
 			$forumid=0;
 		}
-		
+		$this->Template->forumid=$forumid;
 		//###########################################
 		//Get user information
 		//###########################################
@@ -94,53 +94,59 @@ class forum_forum_list extends Module
 		{
 			$this->Template->member_loggedin=false;
 		}
-		
 		//###########################################
-		//Get forums and threads and list them
+		//Prepare form
 		//###########################################
-		$objForums = $this->Database->prepare("SELECT * FROM tl_forum_forums WHERE pid=? ORDER BY sorting ASC")->execute($forumid);
-		while($objForums->next()){
-			$objThreads = $this->Database->prepare("SELECT count(id) as num_threads FROM tl_forum_threads WHERE pid=?")->execute($objForums->id);
-			$objLastPost = $this->Database->prepare("SELECT thr.title as thread_title,pst.* FROM tl_forum_threads as thr INNER JOIN tl_forum_posts as pst ON thr.id=pst.pid WHERE thr.pid=? ORDER BY created_time DESC LIMIT 0,1")->execute($objForums->id);
-			if($objThreads->num_threads==0)
-			{
-				$Threads=0;
-			}
-			else
-			{
-				$Threads=$objThreads->num_threads;
-			}
-			$arrForums[]=array(
-				'id'=>$objForums->id,
-				'title'=>$objForums->title,
-				'redirect'=>$this->addToUrl('forum=' . $objForums->id),
-				'num_threads'=>$Threads,
-				'last_post_creator'=>$objLastPost->created_by,
-				'last_post_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objLastPost->created_date),
-				'last_post_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objLastPost->created_time),
-				'last_post_title'=>$objLastPost->thread_title,
-			);
+		if($this->Input->get('mode')=='edit')
+		{
+			$mode='edit';
+			
 		}
-		$this->Template->forums=$arrForums;
-		
-		$objThreadReader = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
+		else
+		{
+			$mode='new';
+		}
+		$this->Template->mode=$mode;
+		//###########################################
+		//Process form
+		//###########################################
+		$errors=array();
+		if($this->Input->post('submit'))
+		{
+			if($this->Input->post('mode')=='new')
+			{
+				//Add thread to database
+				$arrSetthread = array
+				(
+					'pid' => $forumid,
+					'title' => $this->Input->post('title'),
+					'created_date' => time(),
+					'created_time' => time(),
+					'created_by' => $user['id'],
+				);
+				$insertId = $this->Database->prepare("INSERT INTO tl_forum_threads %s")->set($arrSetthread)->execute()->insertId;
+				$arrSetpost=array
+				(
+					'pid'=>$insertId,
+					'order_no'=>0,
+					'title'=>$this->Input->post('title'),
+					'text'=>$this->Input->post('text'),
+					'created_date' => time(),
+					'created_time' => time(),
+					'created_by' => $user['id']
+				);
+				$postInsertId = $this->Database->prepare("INSERT INTO tl_forum_posts %s")->set($arrSetpost)->execute()->insertId;
+
+				//Thread added. Now redirect to new thread
+				$objTargetPage = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
 												->limit(1)
 												->execute($this->forum_redirect_threadreader);
-												
-		$objThreads = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE pid=? ORDER BY sorting ASC")->execute($forumid);
-		while($objThreads->next()){
-			$arrThreads[]=array(
-				'id'=>$objThreads->id,
-				'title'=>$objThreads->title,
-				'redirect'=>$this->generateFrontendUrl($objThreadReader->row(),'/thread/' . $objThreads->id)
-			);
+								$this->log('New thread for forum ' . $forumid . ' created. Redirecting to [' . $this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $insertId) . ']', 'Create thread', TL_INFO);
+				$this->redirect($this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $insertId));
+			}	
 		}
-		$objThreadEditor = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
-												->limit(1)
-												->execute($this->forum_redirect_threadeditor);
-		$this->Template->threadeditor=$this->generateFrontendUrl($objThreadEditor->row(),'/forum/' . $forumid);
-		$this->Template->threads=$arrThreads;
-		$this->Template->forumid=$forumid;
+		$this->Template->errors=$errors;
+		
 	}
 }
 

@@ -67,18 +67,17 @@ class forum_thread_reader extends Module
 		{
 			$threadid = $this->Input->get('thread');
 		}
-		
+		$objThread = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE id=?")->execute($threadid);
+		$this->Template->title=$objThread->title;
 		$objPosts = $this->Database->prepare("SELECT * FROM tl_forum_posts WHERE pid=? ORDER BY order_no ASC")->execute($threadid);
 		$i=0;
 		while($objPosts->next()){
 				$i++;
-				//$objCreator=$this->Database->prepare("SELECT * FROM tl_member WHERE id=?")->execute($objComments->created_user);
-				//$objChangeUser=$this->Database->prepare("SELECT * FROM tl_member WHERE id=?")->execute($objComments->last_change_user);
 				$arrPosts[]=array(
 				'id'=>$objPosts->id,
 				'class'=>(($i == 1) ? 'first ' : '') . (($i == $objPosts->numRows) ? 'last ' : '') . ((($i % 2) == 0) ? 'even' : 'odd'),
 				'title'=>$objPosts->title,
-				'description'=>$objPosts->description
+				'text'=>$objPosts->text
 				);
 		}
 		$this->Template->posts=$arrPosts;
