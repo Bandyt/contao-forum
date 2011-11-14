@@ -98,6 +98,17 @@ class forum_forum_list extends Module
 		//###########################################
 		//Get forums and threads and list them
 		//###########################################
+		$objMembers = $this->Database->prepare("SELECT * FROM tl_member")->execute();
+		$arrMember=array();
+		while($objMembers->next()){
+			$arrMember[$objMembers->id]=array(
+			'id'=>$objMembers->id,
+			'username'=>$objMembers->username,
+			'firstname'=>$objMembers->firstname,
+			'lastname'=>$objMembers->lastname
+			);
+		}
+		
 		$objForums = $this->Database->prepare("SELECT * FROM tl_forum_forums WHERE pid=? ORDER BY sorting ASC")->execute($forumid);
 		while($objForums->next()){
 			$objThreads = $this->Database->prepare("SELECT count(id) as num_threads FROM tl_forum_threads WHERE pid=?")->execute($objForums->id);
@@ -115,7 +126,7 @@ class forum_forum_list extends Module
 				'title'=>$objForums->title,
 				'redirect'=>$this->addToUrl('forum=' . $objForums->id),
 				'num_threads'=>$Threads,
-				'last_post_creator'=>$objLastPost->created_by,
+				'last_post_creator'=>$arrMember[$objLastPost->created_by]['username'],
 				'last_post_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objLastPost->created_date),
 				'last_post_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objLastPost->created_time),
 				'last_post_title'=>$objLastPost->thread_title,
@@ -132,13 +143,15 @@ class forum_forum_list extends Module
 			$arrThreads[]=array(
 				'id'=>$objThreads->id,
 				'title'=>$objThreads->title,
+				'created_by'=>$arrMember[$objThreads->created_by]['username'],
 				'redirect'=>$this->generateFrontendUrl($objThreadReader->row(),'/thread/' . $objThreads->id)
 			);
 		}
 		$objThreadEditor = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
 												->limit(1)
 												->execute($this->forum_redirect_threadeditor);
-		$this->Template->threadeditor=$this->generateFrontendUrl($objThreadEditor->row(),'/forum/' . $forumid);
+		$this->Template->threadcreator=$this->generateFrontendUrl($objThreadEditor->row(),'/forum/' . $forumid . '/mode/new');
+		$this->Template->num_threads=count($arrThreads);
 		$this->Template->threads=$arrThreads;
 		$this->Template->forumid=$forumid;
 	}

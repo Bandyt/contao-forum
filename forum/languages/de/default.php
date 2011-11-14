@@ -36,5 +36,6 @@ $GLOBALS['TL_LANG']['CTE']['tl_forum'] = 'Forum';
 $GLOBALS['TL_LANG']['CTE']['forum_forum_list'] = array('Forum - Forenliste', 'Zeit alle Foren an');
 $GLOBALS['TL_LANG']['CTE']['forum_thread_reader'] = array('Forum - Themenleser', 'Zeigt ein Thema und deren Beitr&auml;ge an');
 $GLOBALS['TL_LANG']['CTE']['forum_thread_editor'] = array('Forum - Themeneditor', 'Erstellt oder bearbeitet ein Thema');
+$GLOBALS['TL_LANG']['CTE']['forum_post_editor'] = array('Forum - Beitrageditor', 'Erstellt oder bearbeitet einen Beitrag');
 
 ?>

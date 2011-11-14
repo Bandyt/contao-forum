@@ -33,7 +33,7 @@
  * Fields
  */
 $GLOBALS['TL_LANG']['tl_forum_posts']['title'] = array('Title', 'Title of the post');
-$GLOBALS['TL_LANG']['tl_forum_posts']['description'] = array('Text', 'Text of the post');
+$GLOBALS['TL_LANG']['tl_forum_posts']['text'] = array('Text', 'Text of the post');
 
 
 /**

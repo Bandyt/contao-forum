@@ -102,7 +102,7 @@ class forum_thread_editor extends Module
 			$mode='edit';
 			
 		}
-		else
+		elseif($this->Input->get('mode')=='new')
 		{
 			$mode='new';
 		}

@@ -36,7 +36,7 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'forum_use_fixe
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'forum_use_fixed_thread';
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['forum_forum_list'] = '{title_legend},name,headline,type;{forum_settings},forum_use_fixed_forum,forum_redirect_threadreader,forum_redirect_threadeditor';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_thread_reader'] = '{title_legend},name,headline,type;{forum_settings},forum_use_fixed_threadeditor';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_thread_reader'] = '{title_legend},name,headline,type;{forum_settings},forum_use_fixed_threadeditor,forum_redirect_posteditor';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['forum_thread_editor'] = '{title_legend},name,headline,type;{forum_settings},forum_redirect_threadreader,forum_redirect_forumlist';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['forum_post_editor'] = '{title_legend},name,headline,type;{forum_settings},forum_redirect_threadreader';
 
@@ -92,6 +92,13 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['forum_redirect_threadeditor'] = arra
 $GLOBALS['TL_DCA']['tl_content']['fields']['forum_redirect_forumlist'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['forum_redirect_forumlist'],
+	'exclude'                 => false,
+	'inputType'               => 'pageTree',
+	'eval'                    => array('mandatory'=>true,'fieldType'=>'radio', 'tl_class'=>'clr')
+);
+$GLOBALS['TL_DCA']['tl_content']['fields']['forum_redirect_posteditor'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['forum_redirect_posteditor'],
 	'exclude'                 => false,
 	'inputType'               => 'pageTree',
 	'eval'                    => array('mandatory'=>true,'fieldType'=>'radio', 'tl_class'=>'clr')

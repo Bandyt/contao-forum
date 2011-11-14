@@ -136,7 +136,7 @@ $GLOBALS['TL_DCA']['tl_forum_threads'] = array
 			'exclude'                 => false,
 			'inputType'               => 'select',
 			'options_callback'        => array('tl_forum_threads', 'getMembers'),
-			'eval'                    => array('mandatory'=>true, 'multiple'=>true)
+			'eval'                    => array('mandatory'=>true, 'multiple'=>false)
 		),
 		'created_date' => array
 		(

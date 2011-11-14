@@ -81,11 +81,7 @@ class forum_post_editor extends Module
 		if(FE_USER_LOGGED_IN)
 		{
 			$user=array(
-				'id'=>$this->Member->id,
-				'firstname'=>$this->Member->firstname,
-				'lastname'=>$this->Member->lastname,
-				'username'=>$this->Member->username,
-				'groups'=>$this->Member->groups
+				'id'=>$this->Member->id
 			);
 			$this->Template->member=$user;
 			$this->Template->member_loggedin=true;
@@ -102,7 +98,7 @@ class forum_post_editor extends Module
 			$mode='edit';
 			
 		}
-		else
+		elseif($this->Input->get('mode')=='new')
 		{
 			$mode='new';
 		}
@@ -115,25 +111,26 @@ class forum_post_editor extends Module
 		{
 			if($this->Input->post('mode')=='new')
 			{
-				//Add thread to database
-				/*$arrSetthread = array
+				//Add post to database
+				$posts = $this->Database->prepare("SELECT max(order_no) as order_no FROM tl_forum_posts WHERE pid=?")->execute($threadid);
+				$arrSetthread = array
 				(
-					'pid' => $forumid,
+					'pid' => $threadid,
 					'title' => $this->Input->post('title'),
+					'text' => $this->Input->post('text'),
 					'created_date' => time(),
 					'created_time' => time(),
 					'created_by' => $user['id'],
+					'order_no' => $posts->order_no+1
 				);
-				$insertId = $this->Database->prepare("INSERT INTO tl_forum_threads %s")->set($arrSetthread)->execute()->insertId;
-				*/
-
-				//Thread added. Now redirect to new thread
-				/*$objTargetPage = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
+				$insertId = $this->Database->prepare("INSERT INTO tl_forum_posts %s")->set($arrSetthread)->execute()->insertId;
+				
+				//Post added. Now redirect to thread reader
+				$objTargetPage = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
 												->limit(1)
 												->execute($this->forum_redirect_threadreader);
-								$this->log('New thread for forum ' . $forumid . ' created. Redirecting to [' . $this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $insertId) . ']', 'Create thread', TL_INFO);
-				$this->redirect($this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $insertId));
-				*/
+				$this->log('New post for thread ' . $threadid . ' created. Redirecting to [' . $this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $threadid) . ']', 'Create thread', TL_INFO);
+				$this->redirect($this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $threadid));
 			}	
 		}
 		$this->Template->errors=$errors;

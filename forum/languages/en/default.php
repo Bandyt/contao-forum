@@ -35,6 +35,7 @@
 $GLOBALS['TL_LANG']['CTE']['tl_forum'] = 'Forum';
 $GLOBALS['TL_LANG']['CTE']['forum_forum_list'] = array('Forum - Forum list', 'Lists all available forums');
 $GLOBALS['TL_LANG']['CTE']['forum_thread_reader'] = array('Forum - Thread reader', 'Shows a thread and its posts');
-$GLOBALS['TL_LANG']['CTE']['forum_thread_editor'] = array('Forum - Thread editor', 'Creates or edits a Thread');
+$GLOBALS['TL_LANG']['CTE']['forum_thread_editor'] = array('Forum - Thread editor', 'Creates or edits a thread');
+$GLOBALS['TL_LANG']['CTE']['forum_post_editor'] = array('Forum - Post editor', 'Creates or edits a post');
 
 ?>

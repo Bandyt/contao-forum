@@ -28,24 +28,27 @@
 			<tr class="noforum"><td>No Forum<td></tr>
 		<?php endif; ?>
 	</table>
-	<hr /><br />
-	<a href="<?php echo($this->threadeditor); ?>">Add new thread</a><br />
-	<table class="threads">
-		<tr class="header"><td>&nbsp;</td><td>Thread</td><td>Created by</td><td>Posts</td><td>Last Post</td></tr>
-		<?php if(count($this->threads)>0): ?>
-			<?php foreach($this->threads as $thread): ?>
-				<tr class="thread">
-					<td class="icon">Icon not implemented</td>
-					<td class="name"><a href="<?php echo($thread['redirect']); ?>"><?php echo($thread['title']); ?></a></td>
-					<td class="created_by">Created by not implemented</td>
-					<td class="posts">Posts not implemented</td>
-					<td class="last_post">Last post not implemented</td>
-				</tr>
-			<?php endforeach; ?>
-		<?php else: ?>
-			<tr class="nothread"><td>No Threads</td></tr>
-		<?php endif; ?>
-	</table>
-	<br />
-	<a href="<?php echo($this->threadeditor); ?>">Add new thread</a>
+	<hr />
+	<a href="<?php echo($this->threadcreator); ?>">Add new thread</a><br />
+	<?php if($this->num_threads!=0): ?>
+		<table class="threads">
+			<tr class="header"><td>&nbsp;</td><td>Thread</td><td>Created by</td><td>Posts</td><td>Last Post</td></tr>
+			<?php if(count($this->threads)>0): ?>
+				<?php foreach($this->threads as $thread): ?>
+					<tr class="thread">
+						<td class="icon">Icon not implemented</td>
+						<td class="name"><a href="<?php echo($thread['redirect']); ?>"><?php echo($thread['title']); ?></a></td>
+						<td class="created_by"><?php echo($thread['created_by']); ?></td>
+						<td class="posts">Posts not implemented</td>
+						<td class="last_post">Last post not implemented</td>
+					</tr>
+				<?php endforeach; ?>
+			<?php else: ?>
+				<tr class="nothread"><td>No Threads</td></tr>
+			<?php endif; ?>
+		</table>
+	<?php else: ?>
+		<div class="nothread">No Thread</div>
+	<?php endif; ?>
+	<a href="<?php echo($this->threadcreator); ?>">Add new thread</a>
 </div>

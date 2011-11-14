@@ -81,6 +81,11 @@ class forum_thread_reader extends Module
 				);
 		}
 		$this->Template->posts=$arrPosts;
+		
+		$objPostEditor = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
+												->limit(1)
+												->execute($this->forum_redirect_posteditor);
+		$this->Template->postcreator=$this->generateFrontendUrl($objPostEditor->row(),'/thread/' . $threadid . '/mode/new');
 	}
 }
 

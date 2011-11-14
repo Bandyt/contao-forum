@@ -108,7 +108,7 @@ $GLOBALS['TL_DCA']['tl_forum_posts'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array(''),
-		'default'                     => 'title,description;{forum_creator_information},created_by,created_date,created_time;{forum_additional_settings},deleted'
+		'default'                     => 'title,text;{forum_creator_information},created_by,created_date,created_time;{forum_additional_settings},deleted'
 	),
 
 	// Subpalettes
@@ -127,9 +127,9 @@ $GLOBALS['TL_DCA']['tl_forum_posts'] = array
 			'inputType'               => 'text',
 			'eval'                    => array('mandatory'=>false, 'maxlength'=>255)
 		),
-		'description' => array
+		'text' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_posts']['description'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_posts']['text'],
 			'exclude'                 => true,
 			'inputType'               => 'textarea',
 			'eval'                    => array('mandatory'=>true)
@@ -140,7 +140,7 @@ $GLOBALS['TL_DCA']['tl_forum_posts'] = array
 			'exclude'                 => false,
 			'inputType'               => 'select',
 			'options_callback'        => array('tl_forum_posts', 'getMembers'),
-			'eval'                    => array('mandatory'=>true, 'multiple'=>true)
+			'eval'                    => array('mandatory'=>true, 'multiple'=>false)
 		),
 		'created_date' => array
 		(
