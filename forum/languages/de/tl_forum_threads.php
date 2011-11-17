@@ -34,7 +34,13 @@
  */
 $GLOBALS['TL_LANG']['tl_forum_threads']['title'] = array('Titel', 'Titel des Themas');
 
+$GLOBALS['TL_LANG']['tl_forum_threads']['forum_creator_information'] = 'Forum - Erstellerinformationen';
+$GLOBALS['TL_LANG']['tl_forum_threads']['created_by'] = array('Ertellt von', 'Benutzer, der dieses Thema erstellt hat');
+$GLOBALS['TL_LANG']['tl_forum_threads']['created_date'] = array('Erstellungsdatum', 'Datum der Erstellung');
+$GLOBALS['TL_LANG']['tl_forum_threads']['created_time'] = array('Erstellungsuhrzeit', 'Uhrzeit der Erstellung');
 
+$GLOBALS['TL_LANG']['tl_forum_threads']['forum_additional_settings'] = 'Forum - Erweiterte Einstellugnen';
+$GLOBALS['TL_LANG']['tl_forum_threads']['deleted'] = array('Gel&ouml;scht', 'Anklicken, wenn das Thema gel&ouml;scht wurde');
 /**
  * Reference
  */

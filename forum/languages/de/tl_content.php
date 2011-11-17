@@ -32,6 +32,7 @@
 /**
  * Fields
  */
+$GLOBALS['TL_LANG']['tl_content']['forum_settings'] = 'Forum - Einstellungen';
 $GLOBALS['TL_LANG']['tl_content']['forum_use_fixed_forum'] = array('Fixes Forum nutzen', 'Anklicken wenn ein fixes Forum genutzt werden soll');
 $GLOBALS['TL_LANG']['tl_content']['forum_fixed_forum'] = array('Fixes Forum', 'W&auml;hlen Sie das Forum, dass dieses Inhaltselement nutzen soll, aus');
 $GLOBALS['TL_LANG']['tl_content']['forum_use_fixed_thread'] = array('Fixes Thema nutzen', 'Anklicken wenn ein fixes Thema genutzt werden soll');

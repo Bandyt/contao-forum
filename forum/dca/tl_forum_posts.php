@@ -175,7 +175,7 @@ class tl_forum_posts extends Backend
 	
 	public function listPosts($arrRow)
 	{
-		return '<div>' . $arrRow['title'] . '<br />' . $arrRow['description'] . '</div>' . '\n';
+		return '<div><strong>' . $arrRow['title'] . '</strong><br />' . $arrRow['text'] . '</div>';
 	}
 	
 	public function getMembers($dc)

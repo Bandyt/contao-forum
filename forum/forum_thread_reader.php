@@ -67,8 +67,23 @@ class forum_thread_reader extends Module
 		{
 			$threadid = $this->Input->get('thread');
 		}
+		//Get thread information
 		$objThread = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE id=?")->execute($threadid);
 		$this->Template->title=$objThread->title;
+		
+		//Get member information
+		$objMembers = $this->Database->prepare("SELECT * FROM tl_member")->execute();
+		$arrMember=array();
+		while($objMembers->next()){
+			$arrMember[$objMembers->id]=array(
+				'id'=>$objMembers->id,
+				'username'=>$objMembers->username,
+				'firstname'=>$objMembers->firstname,
+				'lastname'=>$objMembers->lastname
+			);
+		}
+		
+		//Get post information
 		$objPosts = $this->Database->prepare("SELECT * FROM tl_forum_posts WHERE pid=? ORDER BY order_no ASC")->execute($threadid);
 		$i=0;
 		while($objPosts->next()){
@@ -76,6 +91,11 @@ class forum_thread_reader extends Module
 				$arrPosts[]=array(
 				'id'=>$objPosts->id,
 				'class'=>(($i == 1) ? 'first ' : '') . (($i == $objPosts->numRows) ? 'last ' : '') . ((($i % 2) == 0) ? 'even' : 'odd'),
+				'order_no'=>$objPosts->order_no+1,
+				'created_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objPosts->created_date),
+				'created_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objPosts->created_time),
+				'creator_id'=>$arrMember[$objPosts->created_by]['id'],
+				'creator_username'=>$arrMember[$objPosts->created_by]['username'],
 				'title'=>$objPosts->title,
 				'text'=>$objPosts->text
 				);

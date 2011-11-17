@@ -35,10 +35,10 @@
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'forum_use_fixed_forum';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'forum_use_fixed_thread';
 
-$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_forum_list'] = '{title_legend},name,headline,type;{forum_settings},forum_use_fixed_forum,forum_redirect_threadreader,forum_redirect_threadeditor';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_thread_reader'] = '{title_legend},name,headline,type;{forum_settings},forum_use_fixed_threadeditor,forum_redirect_posteditor';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_thread_editor'] = '{title_legend},name,headline,type;{forum_settings},forum_redirect_threadreader,forum_redirect_forumlist';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_post_editor'] = '{title_legend},name,headline,type;{forum_settings},forum_redirect_threadreader';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_forum_list'] = '{type_legend},name,headline,type;{forum_settings},forum_use_fixed_forum,forum_redirect_threadreader,forum_redirect_threadeditor';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_thread_reader'] = '{type_legend},name,headline,type;{forum_settings},forum_use_fixed_threadeditor,forum_redirect_posteditor';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_thread_editor'] = '{type_legend},name,headline,type;{forum_settings},forum_redirect_threadreader,forum_redirect_forumlist';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_post_editor'] = '{type_legend},name,headline,type;{forum_settings},forum_redirect_threadreader';
 
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['forum_use_fixed_forum'] = 'forum_fixed_forum';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['forum_use_fixed_thread'] = 'forum_fixed_thread';

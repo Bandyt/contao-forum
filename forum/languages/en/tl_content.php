@@ -32,6 +32,7 @@
 /**
  * Fields
  */
+$GLOBALS['TL_LANG']['tl_content']['forum_settings'] = 'Forum - Settings';
 $GLOBALS['TL_LANG']['tl_content']['forum_use_fixed_forum'] = array('Use fixed forum', 'Click if this content element should use a fix forum');
 $GLOBALS['TL_LANG']['tl_content']['forum_fixed_forum'] = array('Fixed forum', 'Select the fixed forum this content element should use');
 $GLOBALS['TL_LANG']['tl_content']['forum_use_fixed_thread'] = array('Use fixed thread', 'Click if this content element should use a fix thread');

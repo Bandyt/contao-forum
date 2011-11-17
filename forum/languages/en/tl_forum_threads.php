@@ -34,7 +34,13 @@
  */
 $GLOBALS['TL_LANG']['tl_forum_threads']['title'] = array('Title', 'Title of the thread');
 
+$GLOBALS['TL_LANG']['tl_forum_threads']['forum_creator_information'] = 'Forum - Creator information';
+$GLOBALS['TL_LANG']['tl_forum_threads']['created_by'] = array('Created by', 'User which created this thread');
+$GLOBALS['TL_LANG']['tl_forum_threads']['created_date'] = array('Date of creation', 'Date this thread was created');
+$GLOBALS['TL_LANG']['tl_forum_threads']['created_time'] = array('Time of creation', 'Time this thread was created');
 
+$GLOBALS['TL_LANG']['tl_forum_threads']['forum_additional_settings'] = 'Forum - Additional settings';
+$GLOBALS['TL_LANG']['tl_forum_threads']['deleted'] = array('Deleted', 'Check if this thread has been deleted');
 /**
  * Reference
  */

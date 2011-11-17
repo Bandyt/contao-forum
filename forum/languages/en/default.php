@@ -28,14 +28,33 @@
  * @filesource
  */
 
-
-/**
- * Miscellaneous
+/*
+ * Content elements
  */
 $GLOBALS['TL_LANG']['CTE']['tl_forum'] = 'Forum';
 $GLOBALS['TL_LANG']['CTE']['forum_forum_list'] = array('Forum - Forum list', 'Lists all available forums');
 $GLOBALS['TL_LANG']['CTE']['forum_thread_reader'] = array('Forum - Thread reader', 'Shows a thread and its posts');
 $GLOBALS['TL_LANG']['CTE']['forum_thread_editor'] = array('Forum - Thread editor', 'Creates or edits a thread');
 $GLOBALS['TL_LANG']['CTE']['forum_post_editor'] = array('Forum - Post editor', 'Creates or edits a post');
+/*
+ * Miscellaneous
+ */
+$GLOBALS['TL_LANG']['forum']['answer']   = 'Answer';
+$GLOBALS['TL_LANG']['forum']['no_posts']   = 'No posts';
+$GLOBALS['TL_LANG']['forum']['author']   = 'Author';
+$GLOBALS['TL_LANG']['forum']['posts']   = 'Posts';
+
+$GLOBALS['TL_LANG']['forum']['forum']   = 'Forum';
+$GLOBALS['TL_LANG']['forum']['threads']   = 'Threads';
+$GLOBALS['TL_LANG']['forum']['last_post']   = 'Last post';
+$GLOBALS['TL_LANG']['forum']['creator']   = 'Creator';
+$GLOBALS['TL_LANG']['forum']['title']   = 'Title';
+$GLOBALS['TL_LANG']['forum']['no_forums']   = 'No forums';
+$GLOBALS['TL_LANG']['forum']['add_thread']   = 'Add new thread';
+$GLOBALS['TL_LANG']['forum']['thread']   = 'Thread';
+$GLOBALS['TL_LANG']['forum']['created_by']   = 'Created by';
+$GLOBALS['TL_LANG']['forum']['no_threads']   = 'No threads';
+
+$GLOBALS['TL_LANG']['forum']['text']   = 'Text';
 
 ?>

@@ -35,7 +35,13 @@
 $GLOBALS['TL_LANG']['tl_forum_posts']['title'] = array('Title', 'Title of the post');
 $GLOBALS['TL_LANG']['tl_forum_posts']['text'] = array('Text', 'Text of the post');
 
+$GLOBALS['TL_LANG']['tl_forum_posts']['forum_creator_information'] = 'Forum - Creator information';
+$GLOBALS['TL_LANG']['tl_forum_posts']['created_by'] = array('Created by', 'User which created this post');
+$GLOBALS['TL_LANG']['tl_forum_posts']['created_date'] = array('Date of creation', 'Date this post was created');
+$GLOBALS['TL_LANG']['tl_forum_posts']['created_time'] = array('Time of creation', 'Time this post was created');
 
+$GLOBALS['TL_LANG']['tl_forum_posts']['forum_additional_settings'] = 'Forum - Additional settings';
+$GLOBALS['TL_LANG']['tl_forum_posts']['deleted'] = array('Deleted', 'Check if this post has been deleted');
 /**
  * Reference
  */

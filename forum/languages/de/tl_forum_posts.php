@@ -35,7 +35,13 @@
 $GLOBALS['TL_LANG']['tl_forum_posts']['title'] = array('Titel', 'Titel des Beitrags');
 $GLOBALS['TL_LANG']['tl_forum_posts']['text'] = array('Text', 'Text des Beitrags');
 
+$GLOBALS['TL_LANG']['tl_forum_posts']['forum_creator_information'] = 'Forum - Erstellerinformationen';
+$GLOBALS['TL_LANG']['tl_forum_posts']['created_by'] = array('Ertellt von', 'Benutzer, der diesen Beitrag erstellt hat');
+$GLOBALS['TL_LANG']['tl_forum_posts']['created_date'] = array('Erstellungsdatum', 'Datum der Erstellung');
+$GLOBALS['TL_LANG']['tl_forum_posts']['created_time'] = array('Erstellungsuhrzeit', 'Uhrzeit der Erstellung');
 
+$GLOBALS['TL_LANG']['tl_forum_posts']['forum_additional_settings'] = 'Forum - Erweiterte Einstellugnen';
+$GLOBALS['TL_LANG']['tl_forum_posts']['deleted'] = array('Gel&ouml;scht', 'Anklicken, wenn der Beitrag gel&ouml;scht wurde');
 /**
  * Reference
  */

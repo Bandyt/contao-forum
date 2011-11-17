@@ -140,11 +140,19 @@ class forum_forum_list extends Module
 												
 		$objThreads = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE pid=? ORDER BY sorting ASC")->execute($forumid);
 		while($objThreads->next()){
+			$objPosts = $this->Database->prepare("SELECT count(id) as cnt FROM tl_forum_posts WHERE pid=? AND deleted=?")->execute($objThreads->id,'');
+			$objLastThreadPost = $this->Database->prepare("SELECT * FROM tl_forum_posts WHERE pid=? AND deleted=? ORDER BY created_time DESC LIMIT 0,1")->execute($objThreads->id,'');
 			$arrThreads[]=array(
 				'id'=>$objThreads->id,
 				'title'=>$objThreads->title,
 				'created_by'=>$arrMember[$objThreads->created_by]['username'],
-				'redirect'=>$this->generateFrontendUrl($objThreadReader->row(),'/thread/' . $objThreads->id)
+				'redirect'=>$this->generateFrontendUrl($objThreadReader->row(),'/thread/' . $objThreads->id),
+				'post_count'=>$objPosts->cnt,
+				'last_post_id'=>$objLastThreadPost->id,
+				'last_post_user'=>$arrMember[$objLastThreadPost->created_by]['username'],
+				'last_post_title'=>$objLastThreadPost->title,
+				'last_post_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objLastThreadPost->created_date),
+				'last_post_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objLastThreadPost->created_time)
 			);
 		}
 		$objThreadEditor = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
