@@ -33,7 +33,7 @@
  * Back end modules
  */
 $GLOBALS['TL_LANG']['MOD']['forum'] = 'Forum';
-$GLOBALS['TL_LANG']['MOD']['tl_forum_forums'] = array('Forum', 'Manage forums and their structure');
+$GLOBALS['TL_LANG']['MOD']['tl_forum_forums'] = array('Forums', 'Manage forums and their structure');
 $GLOBALS['TL_LANG']['MOD']['tl_forum_threads'] = array('Threads', 'Manage threads and posts');
 
 

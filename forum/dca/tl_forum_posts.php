@@ -107,14 +107,14 @@ $GLOBALS['TL_DCA']['tl_forum_posts'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'__selector__'                => array(''),
-		'default'                     => 'title,text;{forum_creator_information},created_by,created_date,created_time;{forum_additional_settings},deleted'
+		'__selector__'                => array('changed'),
+		'default'                     => 'title,text;{forum_creator_information},created_by,created_date,created_time;{forum_additional_settings},changed,deleted'
 	),
 
 	// Subpalettes
 	'subpalettes' => array
 	(
-		''                            => ''
+		'changed'                            => 'last_change_by,last_change_date,last_change_time,last_change_reason'
 	),
 
 	// Fields
@@ -156,12 +156,48 @@ $GLOBALS['TL_DCA']['tl_forum_posts'] = array
 			'inputType'               => 'text',
 			'eval'                    => array('mandatory'=>true,'rgxp'=>'time')
 		),
+		'changed' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_posts']['changed'],
+			'exclude'                 => false,
+			'inputType'               => 'checkbox',
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+		),
+		'last_change_by' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_posts']['last_change_by'],
+			'exclude'                 => false,
+			'inputType'               => 'select',
+			'options_callback'        => array('tl_forum_posts', 'getMembers'),
+			'eval'                    => array('mandatory'=>false, 'multiple'=>false)
+		),
+		'last_change_date' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_posts']['last_change_date'],
+			'exclude'                 => false,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false,'rgxp'=>'date', 'datepicker'=>$this->getDatePickerString())
+		),
+		'last_change_time' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_posts']['last_change_time'],
+			'exclude'                 => false,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false,'rgxp'=>'time')
+		),
+		'last_change_reason' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_posts']['last_change_reason'],
+			'exclude'                 => false,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false)
+		),
 		'deleted' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_posts']['deleted'],
 			'exclude'                 => false,
 			'inputType'               => 'checkbox',
-			'eval'                    => array('mandatory'=>false)
+			'eval'                    => array('mandatory'=>false, 'disabled'=>true)
 		)
 	)
 );
@@ -208,7 +244,7 @@ class tl_forum_posts extends Backend
 
 		// Adjust start and end time
 		$arrSet['created_time'] = strtotime(date('Y-m-d', $dc->activeRecord->created_date) . ' ' . date('H:i:s', $dc->activeRecord->created_time));
-
+		$arrSet['last_change_time'] = strtotime(date('Y-m-d', $dc->activeRecord->last_change_date) . ' ' . date('H:i:s', $dc->activeRecord->last_change_time));
 		$this->Database->prepare("UPDATE tl_forum_posts %s WHERE id=?")->set($arrSet)->execute($dc->id);
 	}
 }

@@ -41,6 +41,11 @@ $GLOBALS['TL_LANG']['tl_forum_posts']['created_date'] = array('Date of creation'
 $GLOBALS['TL_LANG']['tl_forum_posts']['created_time'] = array('Time of creation', 'Time this post was created');
 
 $GLOBALS['TL_LANG']['tl_forum_posts']['forum_additional_settings'] = 'Forum - Additional settings';
+$GLOBALS['TL_LANG']['tl_forum_posts']['changed'] = array('Changed', 'Check if this post has been changed after creation');
+$GLOBALS['TL_LANG']['tl_forum_posts']['last_change_by'] = array('Last changed by', 'User which changed this post the last time');
+$GLOBALS['TL_LANG']['tl_forum_posts']['last_change_date'] = array('Date of last change', 'Date this post was changed the last time');
+$GLOBALS['TL_LANG']['tl_forum_posts']['last_change_time'] = array('Time of last change', 'Time this post was changed the last time');
+$GLOBALS['TL_LANG']['tl_forum_posts']['last_change_reason'] = array('Reason', 'Reason for the last change');
 $GLOBALS['TL_LANG']['tl_forum_posts']['deleted'] = array('Deleted', 'Check if this post has been deleted');
 /**
  * Reference

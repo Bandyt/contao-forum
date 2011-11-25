@@ -41,6 +41,11 @@ $GLOBALS['TL_LANG']['tl_forum_posts']['created_date'] = array('Erstellungsdatum'
 $GLOBALS['TL_LANG']['tl_forum_posts']['created_time'] = array('Erstellungsuhrzeit', 'Uhrzeit der Erstellung');
 
 $GLOBALS['TL_LANG']['tl_forum_posts']['forum_additional_settings'] = 'Forum - Erweiterte Einstellugnen';
+$GLOBALS['TL_LANG']['tl_forum_posts']['changed'] = array('Ge&auml;ndert', 'Anklicken, wenn der Beitrag ver&auml;ndert wurde nach der Erstellung');
+$GLOBALS['TL_LANG']['tl_forum_posts']['last_change_by'] = array('Letzter &Auml;nderer', 'Benutzer, der den Beitrag als letztes ge&auml;ndert hat');
+$GLOBALS['TL_LANG']['tl_forum_posts']['last_change_date'] = array('Datum der letzten &Auml;nderung', 'Datum an dem der Beitrag als letztes ge&auml;ndert wurde');
+$GLOBALS['TL_LANG']['tl_forum_posts']['last_change_time'] = array('Uhrzeit der letzten &Auml;nderung', 'Uhrzeit an dem der Beitrag als letztes ge&auml;ndert wurde');
+$GLOBALS['TL_LANG']['tl_forum_posts']['last_change_reason'] = array('Grund', 'Grund der letzten &Auml;nderung');
 $GLOBALS['TL_LANG']['tl_forum_posts']['deleted'] = array('Gel&ouml;scht', 'Anklicken, wenn der Beitrag gel&ouml;scht wurde');
 /**
  * Reference

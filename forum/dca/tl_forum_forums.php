@@ -40,7 +40,8 @@ $GLOBALS['TL_DCA']['tl_forum_forums'] = array
 	(
 		'dataContainer'               => 'Table',
 		'ctable'                      => array('tl_forum_threads'),
-		'enableVersioning'            => true
+		'enableVersioning'            => true,
+		'label'						  => 'Forum'
 	),
 
 	// List
@@ -53,7 +54,7 @@ $GLOBALS['TL_DCA']['tl_forum_forums'] = array
 		'label' => array
 		(
 			'fields'                  => array('title','description'),
-			'format'                  => '%s<br />%s'
+			'format'                  => '%s<br /><i>%s</i>'
 		),
 		'global_operations' => array
 		(

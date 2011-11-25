@@ -91,26 +91,21 @@ class forum_post_editor extends Module
 			$this->Template->member_loggedin=false;
 		}
 		//###########################################
-		//Prepare form
-		//###########################################
-		if($this->Input->get('mode')=='edit')
-		{
-			$mode='edit';
-			
-		}
-		elseif($this->Input->get('mode')=='new')
-		{
-			$mode='new';
-		}
-		$this->Template->mode=$mode;
-		//###########################################
 		//Process form
 		//###########################################
 		$errors=array();
 		if($this->Input->post('submit'))
 		{
-			if($this->Input->post('mode')=='new')
+			if(($this->Input->post('mode')=='new')||($this->Input->post('mode')=='quote'))
 			{
+				if(!$this->Input->post('quoted_id'))
+				{
+					$quoted_post=0;
+				}
+				else
+				{
+					$quoted_post=$this->Input->post('quoted_id');
+				}
 				//Add post to database
 				$posts = $this->Database->prepare("SELECT max(order_no) as order_no FROM tl_forum_posts WHERE pid=?")->execute($threadid);
 				$arrSetthread = array
@@ -121,6 +116,7 @@ class forum_post_editor extends Module
 					'created_date' => time(),
 					'created_time' => time(),
 					'created_by' => $user['id'],
+					'quoted_post' => $quoted_post,
 					'order_no' => $posts->order_no+1
 				);
 				$insertId = $this->Database->prepare("INSERT INTO tl_forum_posts %s")->set($arrSetthread)->execute()->insertId;
@@ -131,9 +127,69 @@ class forum_post_editor extends Module
 												->execute($this->forum_redirect_threadreader);
 				$this->log('New post for thread ' . $threadid . ' created. Redirecting to [' . $this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $threadid) . ']', 'Create thread', TL_INFO);
 				$this->redirect($this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $threadid));
-			}	
+			}
+			elseif($this->Input->post('mode')=='edit')
+			{
+				$arrSetpost = array
+				(
+					'id' => $this->Input->post('post_id'),
+					'title' => $this->Input->post('title'),
+					'text' => $this->Input->post('text'),
+					'changed' => 1,
+					'last_change_by' => $user['id'],
+					'last_change_date' => time(),
+					'last_change_time' => time(),
+					'reason'=>$this->Input->post('reason')
+				);
+				$this->Database->prepare("UPDATE tl_forum_posts %s WHERE id=?")->set($arrSetpost)->execute($this->Input->post('post_id'));
+				$objTargetPage = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
+												->limit(1)
+												->execute($this->forum_redirect_threadreader);
+				$this->redirect($this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $threadid));
+			}
 		}
 		$this->Template->errors=$errors;
+		//###########################################
+		//Prepare form
+		//###########################################
+		if($this->Input->get('mode')=='new')
+		{
+			$mode='new';
+		}
+		elseif($this->Input->get('mode')=='edit')
+		{
+			$mode='edit';
+			$postid=intval($this->Input->get('post'));
+			if($postid!='')
+			{
+				if(is_int($postid)==true)
+				{
+					$objPost = $this->Database->prepare("SELECT title,text FROM tl_forum_posts WHERE id=?")->executeUncached($postid);
+					$this->Template->post=$objPost->text;
+					$this->Template->title=$objPost->title;
+					$this->Template->post_id=$postid;
+				}
+			}
+		}
+		elseif($this->Input->get('mode')=='quote')
+		{
+			$mode='quote';
+			//TODO: Add code for quoting posts
+			$quoteid=intval($this->Input->get('post'));
+			if($quoteid!='')
+			{
+				if(is_int($quoteid)==true)
+				{
+					$quoted_post = $this->Database->prepare("SELECT created_by,text FROM tl_forum_posts WHERE id=?")->executeUncached($quoteid);
+					$this->Template->quoted_id=$quoteid;
+					$this->Template->quoted_creator=$quoted_post->created_by;
+					$this->Template->quoted_text=$quoted_post->text;
+				}
+				
+			}
+		}
+		$this->Template->mode=$mode;
+		
 		
 	}
 }

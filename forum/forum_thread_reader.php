@@ -67,6 +67,11 @@ class forum_thread_reader extends Module
 		{
 			$threadid = $this->Input->get('thread');
 		}
+		$objPostEditor = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
+												->limit(1)
+												->execute($this->forum_redirect_posteditor);
+		$this->Template->postcreator=$this->generateFrontendUrl($objPostEditor->row(),'/thread/' . $threadid . '/mode/new');
+		
 		//Get thread information
 		$objThread = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE id=?")->execute($threadid);
 		$this->Template->title=$objThread->title;
@@ -97,15 +102,19 @@ class forum_thread_reader extends Module
 				'creator_id'=>$arrMember[$objPosts->created_by]['id'],
 				'creator_username'=>$arrMember[$objPosts->created_by]['username'],
 				'title'=>$objPosts->title,
-				'text'=>$objPosts->text
+				'text'=>$objPosts->text,
+				'changed'=>$objPosts->changed,
+				'last_change_by'=>$arrMember[$objPosts->last_change_by]['username'],
+				'last_change_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objPosts->last_change_date),
+				'last_change_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objPosts->last_change_time),
+				'last_change_reason'=>$objPosts->last_change_reason,
+				'quote_link'=>$this->generateFrontendUrl($objPostEditor->row(),'/thread/' . $threadid . '/mode/quote/post/' . $objPosts->id),
+				'edit_link'=>$this->generateFrontendUrl($objPostEditor->row(),'/thread/' . $threadid . '/mode/edit/post/' . $objPosts->id)
 				);
 		}
 		$this->Template->posts=$arrPosts;
 		
-		$objPostEditor = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
-												->limit(1)
-												->execute($this->forum_redirect_posteditor);
-		$this->Template->postcreator=$this->generateFrontendUrl($objPostEditor->row(),'/thread/' . $threadid . '/mode/new');
+		
 	}
 }
 

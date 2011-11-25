@@ -41,15 +41,17 @@ $GLOBALS['TL_LANG']['CTE']['forum_post_editor'] = array('Forum - Beitrageditor',
  * Miscellaneous
  */
 $GLOBALS['TL_LANG']['forum']['answer']   = 'Antworten';
+$GLOBALS['TL_LANG']['forum']['quote']   = 'Zitieren';
+$GLOBALS['TL_LANG']['forum']['edit']   = 'Bearbeiten';
 $GLOBALS['TL_LANG']['forum']['no_posts']   = 'Keine Beitr&auml;ge';
 $GLOBALS['TL_LANG']['forum']['author']   = 'Author';
 $GLOBALS['TL_LANG']['forum']['posts']   = 'Beitr&auml;ge';
-
 $GLOBALS['TL_LANG']['forum']['forum']   = 'Forum';
 $GLOBALS['TL_LANG']['forum']['threads']   = 'Themen';
 $GLOBALS['TL_LANG']['forum']['last_post']   = 'Letzter Beitrag';
 $GLOBALS['TL_LANG']['forum']['creator']   = 'Ersteller';
 $GLOBALS['TL_LANG']['forum']['title']   = 'Titel';
+$GLOBALS['TL_LANG']['forum']['reason']   = 'Grund der Bearbeitung';
 $GLOBALS['TL_LANG']['forum']['no_forums']   = 'Keine Foren';
 $GLOBALS['TL_LANG']['forum']['add_thread']   = 'Neues Thema erstellen';
 $GLOBALS['TL_LANG']['forum']['thread']   = 'Thema';
