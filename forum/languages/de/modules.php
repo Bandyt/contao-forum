@@ -35,7 +35,7 @@
 $GLOBALS['TL_LANG']['MOD']['forum'] = 'Forum';
 $GLOBALS['TL_LANG']['MOD']['tl_forum_forums'] = array('Foren', 'Foren und deren Struktur verwalten');
 $GLOBALS['TL_LANG']['MOD']['tl_forum_threads'] = array('Themen', 'Themen und deren Beintr&auml;ge verwalten');
-
+$GLOBALS['TL_LANG']['MOD']['tl_forum_user_settings'] = array('Benutzereinstellungen', 'Die Benutzereinstellungen verwalten');
 
 /**
  * Front end modules

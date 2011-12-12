@@ -45,6 +45,46 @@ class forum_forum_list extends Module
 	 */
 	protected $strTemplate = 'forum_forum_list';
 
+	public function getForumBreadcrumb($intForumid, $arrCrumbs)
+	{
+		$this->log("Breadcrumb for " . $intForumid, 'Forum list - getForumBreadcrumb', TL_INO);
+		$objForum = $this->Database->prepare("SELECT id,title,pid FROM tl_forum_forums WHERE id=?")->execute($intForumid);
+		$class='';
+		if($intForumid==0)
+		{
+			$arrNewCrumb = array(
+				'id' => $objForum->id,
+				'title' => $GLOBALS['TL_LANG']['forum']['forum'],
+				'link' => $this->addToUrl('forum=0'),
+				'class' => $class
+			);
+		}
+		else
+		{
+			$arrNewCrumb = array(
+				'id' => $objForum->id,
+				'title' => $objForum->title,
+				'link' => $this->addToUrl('forum=' . $objForum->id),
+				'class' => $class
+			);
+		}
+		
+		array_unshift($arrCrumbs,$arrNewCrumb);
+		if($objForum->id!=0)
+		{
+			$arrTotalArray=$this->getForumBreadcrumb($objForum->pid,$arrCrumbs);
+			return $arrTotalArray;
+		}
+		else
+		{
+			return $arrCrumbs;
+		}
+		
+		
+		
+		
+	}//public function getForumBreadcrumb
+	
 	public function generate()
 	{
 		if (TL_MODE == 'BE')
@@ -98,6 +138,10 @@ class forum_forum_list extends Module
 		//###########################################
 		//Get forums and threads and list them
 		//###########################################
+		$objThreadReader = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
+												->limit(1)
+												->execute($this->forum_redirect_threadreader);
+												
 		$objMembers = $this->Database->prepare("SELECT * FROM tl_member")->execute();
 		$arrMember=array();
 		while($objMembers->next()){
@@ -130,13 +174,12 @@ class forum_forum_list extends Module
 				'last_post_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objLastPost->created_date),
 				'last_post_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objLastPost->created_time),
 				'last_post_title'=>$objLastPost->thread_title,
+				'last_post_link'=>$this->generateFrontendUrl($objThreadReader->row(),'/thread/' . $objLastPost->pid) . '#' . $objLastPost->id
 			);
 		}
 		$this->Template->forums=$arrForums;
 		
-		$objThreadReader = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
-												->limit(1)
-												->execute($this->forum_redirect_threadreader);
+		
 												
 		$objThreads = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE pid=? ORDER BY sorting ASC")->execute($forumid);
 		while($objThreads->next()){
@@ -152,7 +195,8 @@ class forum_forum_list extends Module
 				'last_post_user'=>$arrMember[$objLastThreadPost->created_by]['username'],
 				'last_post_title'=>$objLastThreadPost->title,
 				'last_post_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objLastThreadPost->created_date),
-				'last_post_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objLastThreadPost->created_time)
+				'last_post_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objLastThreadPost->created_time),
+				'last_post_link'=>$this->generateFrontendUrl($objThreadReader->row(),'/thread/' . $objLastThreadPost->pid) . '#' . $objLastThreadPost->id
 			);
 		}
 		$objThreadEditor = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
@@ -162,7 +206,10 @@ class forum_forum_list extends Module
 		$this->Template->num_threads=count($arrThreads);
 		$this->Template->threads=$arrThreads;
 		$this->Template->forumid=$forumid;
-	}
+		$this->Template->forumbreadcrumbs=$this->getForumBreadcrumb($forumid,array());
+	}//protected function compile()
+	
+	
 }
 
 ?>

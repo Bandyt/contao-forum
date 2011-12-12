@@ -36,6 +36,7 @@ $GLOBALS['TL_LANG']['CTE']['forum_forum_list'] = array('Forum - Forum list', 'Li
 $GLOBALS['TL_LANG']['CTE']['forum_thread_reader'] = array('Forum - Thread reader', 'Shows a thread and its posts');
 $GLOBALS['TL_LANG']['CTE']['forum_thread_editor'] = array('Forum - Thread editor', 'Creates or edits a thread');
 $GLOBALS['TL_LANG']['CTE']['forum_post_editor'] = array('Forum - Post editor', 'Creates or edits a post');
+$GLOBALS['TL_LANG']['CTE']['forum_user_settings'] = array('Forum - User settings', 'Add or changes user settings');
 /*
  * Miscellaneous
  */
@@ -56,6 +57,7 @@ $GLOBALS['TL_LANG']['forum']['add_thread']   = 'Add new thread';
 $GLOBALS['TL_LANG']['forum']['thread']   = 'Thread';
 $GLOBALS['TL_LANG']['forum']['created_by']   = 'Created by';
 $GLOBALS['TL_LANG']['forum']['no_threads']   = 'No threads';
+$GLOBALS['TL_LANG']['forum']['signature']   = 'Signature';
 
 $GLOBALS['TL_LANG']['forum']['text']   = 'Text';
 

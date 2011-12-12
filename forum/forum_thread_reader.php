@@ -80,13 +80,16 @@ class forum_thread_reader extends Module
 		$objMembers = $this->Database->prepare("SELECT * FROM tl_member")->execute();
 		$arrMember=array();
 		while($objMembers->next()){
+			$objMemberSignature = $this->Database->prepare("SELECT signature FROM tl_forum_user_settings WHERE user=?")->execute($objMembers->id);
 			$arrMember[$objMembers->id]=array(
 				'id'=>$objMembers->id,
 				'username'=>$objMembers->username,
 				'firstname'=>$objMembers->firstname,
-				'lastname'=>$objMembers->lastname
+				'lastname'=>$objMembers->lastname,
+				'signature'=>$objMemberSignature->signature
 			);
 		}
+		
 		
 		//Get post information
 		$objPosts = $this->Database->prepare("SELECT * FROM tl_forum_posts WHERE pid=? ORDER BY order_no ASC")->execute($threadid);
@@ -101,6 +104,7 @@ class forum_thread_reader extends Module
 				'created_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objPosts->created_time),
 				'creator_id'=>$arrMember[$objPosts->created_by]['id'],
 				'creator_username'=>$arrMember[$objPosts->created_by]['username'],
+				'creator_signature'=>$arrMember[$objPosts->created_by]['signature'],
 				'title'=>$objPosts->title,
 				'text'=>$objPosts->text,
 				'changed'=>$objPosts->changed,

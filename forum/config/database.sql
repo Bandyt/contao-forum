@@ -79,6 +79,22 @@ CREATE TABLE `tl_forum_posts` (
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+-- 
+-- Table `tl_forum_user_settings`
+-- 
+
+CREATE TABLE `tl_forum_user_settings` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `pid` int(10) unsigned NOT NULL default '0',
+  `sorting` int(10) unsigned NOT NULL default '0',
+  `tstamp` int(10) unsigned NOT NULL default '0',
+  `user` int(10) unsigned NOT NULL default '0',
+  `signature` blob NULL,
+  PRIMARY KEY  (`id`),
+  KEY `pid` (`pid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 

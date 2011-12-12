@@ -2,7 +2,9 @@
 	<?php if ($this->headline): ?>
 		<<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
 	<?php endif; ?>
-	
+	<?php foreach($this->forumbreadcrumbs as $breadcrumb): ?>
+		<a href="<?php echo($breadcrumb['link']); ?>"><?php echo($breadcrumb['title']); ?></a> <?php if($breadcrumb['class']!='last'): ?>><?php endif; ?>
+	<?php endforeach; ?>
 	<table class="forums">
 		<tr class="header">
 			<th><?php echo($GLOBALS['TL_LANG']['forum']['forum']); ?></th>
@@ -19,7 +21,7 @@
 							<span class="last_post_date"><?php echo($forum['last_post_date']); ?></span>&nbsp;
 							<span class="last_post_time"><?php echo($forum['last_post_time']); ?></span><br />
 							<span class="creator"><?php echo($GLOBALS['TL_LANG']['forum']['creator']); ?> <?php echo($forum['last_post_creator']); ?></span><br />
-							<span class="title"><?php echo($GLOBALS['TL_LANG']['forum']['title']); ?> <?php echo($forum['last_post_title']); ?></span>
+							<span class="title"><a href="<?php echo($forum['last_post_link']); ?>"><?php echo($GLOBALS['TL_LANG']['forum']['title']); ?> <?php echo($forum['last_post_title']); ?></a></span>
 						<?php endif; ?>
 					</td>
 				</td>
@@ -45,9 +47,9 @@
 						<td class="posts"><?php echo($thread['post_count']); ?></td>
 						<td class="last_post">
 							<?php echo($thread['last_post_user']); ?><br />
-							<?php if($thread['last_post_title']!=''): ?><?php echo($thread['last_post_title']); ?><br /><?php endif; ?>
+							<a href="<?php echo($thread['last_post_link']); ?>"><?php if($thread['last_post_title']!=''): ?><?php echo($thread['last_post_title']); ?><br /><?php endif; ?>
 							<?php echo($thread['last_post_date']); ?>&nbsp;
-							<?php echo($thread['last_post_time']); ?>
+							<?php echo($thread['last_post_time']); ?></a>
 						</td>
 					</tr>
 				<?php endforeach; ?>

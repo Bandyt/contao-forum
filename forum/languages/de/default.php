@@ -37,6 +37,7 @@ $GLOBALS['TL_LANG']['CTE']['forum_forum_list'] = array('Forum - Forenliste', 'Ze
 $GLOBALS['TL_LANG']['CTE']['forum_thread_reader'] = array('Forum - Themenleser', 'Zeigt ein Thema und deren Beitr&auml;ge an');
 $GLOBALS['TL_LANG']['CTE']['forum_thread_editor'] = array('Forum - Themeneditor', 'Erstellt oder bearbeitet ein Thema');
 $GLOBALS['TL_LANG']['CTE']['forum_post_editor'] = array('Forum - Beitrageditor', 'Erstellt oder bearbeitet einen Beitrag');
+$GLOBALS['TL_LANG']['CTE']['forum_user_settings'] = array('Forum - Benutzereinstellungen', 'Erstellt oder bearbeitet die Benutzereinstellungen');
 /*
  * Miscellaneous
  */
@@ -57,6 +58,7 @@ $GLOBALS['TL_LANG']['forum']['add_thread']   = 'Neues Thema erstellen';
 $GLOBALS['TL_LANG']['forum']['thread']   = 'Thema';
 $GLOBALS['TL_LANG']['forum']['created_by']   = 'Erstellt von';
 $GLOBALS['TL_LANG']['forum']['no_threads']   = 'Keine Themen';
+$GLOBALS['TL_LANG']['forum']['signature']   = 'Signatur';
 
 $GLOBALS['TL_LANG']['forum']['text']   = 'Text';
 ?>
