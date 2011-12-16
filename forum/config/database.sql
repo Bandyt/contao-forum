@@ -19,6 +19,10 @@ CREATE TABLE `tl_forum_forums` (
   `pid` int(10) unsigned NOT NULL default '0',
   `sorting` int(10) unsigned NOT NULL default '0',
   `tstamp` int(10) unsigned NOT NULL default '0',
+  `last_post_date` int(10) unsigned NOT NULL default '0',
+  `last_post_time` int(10) unsigned NOT NULL default '0',
+  `last_change_date` int(10) unsigned NOT NULL default '0',
+  `last_change_time` int(10) unsigned NOT NULL default '0',
   `forum_type` char(1) NOT NULL default 'f',
   `title` varchar(255) NOT NULL default '',
   `description` blob NULL,
@@ -42,6 +46,10 @@ CREATE TABLE `tl_forum_threads` (
   `created_by` int(10) unsigned NOT NULL default '0',
   `created_date` int(10) unsigned NOT NULL default '0',
   `created_time` int(10) unsigned NOT NULL default '0',
+  `last_change_date` int(10) unsigned NOT NULL default '0',
+  `last_change_time` int(10) unsigned NOT NULL default '0',
+  `last_post_date` int(10) unsigned NOT NULL default '0',
+  `last_post_time` int(10) unsigned NOT NULL default '0',
   `deleted` char(1) NOT NULL default '',
   `locked` char(1) NOT NULL default '',
   `important_thread` char(1) NOT NULL default '',
@@ -96,6 +104,29 @@ CREATE TABLE `tl_forum_user_settings` (
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+-- 
+-- Table `tl_forum_forum_tracker`
+-- 
+
+CREATE TABLE `tl_forum_forum_tracker` (
+  `forum` int(10) unsigned NOT NULL default '0',
+  `user` int(10) unsigned NOT NULL default '0',
+  `tstamp` int(10) unsigned NOT NULL default '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table `tl_forum_thread_tracker`
+-- 
+
+CREATE TABLE `tl_forum_thread_tracker` (
+  `thread` int(10) unsigned NOT NULL default '0',
+  `user` int(10) unsigned NOT NULL default '0',
+  `tstamp` int(10) unsigned NOT NULL default '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- --------------------------------------------------------
 
 -- 

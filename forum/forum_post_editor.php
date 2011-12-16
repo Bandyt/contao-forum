@@ -73,6 +73,8 @@ class forum_post_editor extends Module
 		if($threadid==''){
 			$threadid=0;
 		}
+		$objThread = $this->Database->prepare("SELECT pid FROM tl_forum_threads WHERE id=?")->execute($threadid);
+		$intForumId=$objThread->pid;
 		$this->Template->threadid=$threadid;
 		//###########################################
 		//Get user information
@@ -96,6 +98,7 @@ class forum_post_editor extends Module
 		$errors=array();
 		if($this->Input->post('submit'))
 		{
+			$currenttime=time();
 			if(($this->Input->post('mode')=='new')||($this->Input->post('mode')=='quote'))
 			{
 				if(!$this->Input->post('quoted_id'))
@@ -113,21 +116,30 @@ class forum_post_editor extends Module
 					'pid' => $threadid,
 					'title' => $this->Input->post('title'),
 					'text' => $this->Input->post('text'),
-					'created_date' => time(),
-					'created_time' => time(),
+					'created_date' => $currenttime,
+					'created_time' => $currenttime,
 					'created_by' => $user['id'],
 					'quoted_post' => $quoted_post,
 					'order_no' => $posts->order_no+1
 				);
 				$insertId = $this->Database->prepare("INSERT INTO tl_forum_posts %s")->set($arrSetthread)->execute()->insertId;
 				
+				$arrSet = array
+				(
+					'last_change_date' => $currenttime,
+					'last_change_time' => $currenttime,
+					'last_post_date' => $currenttime,
+					'last_post_time' => $currenttime
+				);
+				$this->Database->prepare("UPDATE tl_forum_threads %s WHERE id=?")->set($arrSet)->execute($threadid);
+				$this->Database->prepare("UPDATE tl_forum_forums %s WHERE id=?")->set($arrSet)->execute($intForumId);
+			
 				//Post added. Now redirect to thread reader
 				$objTargetPage = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
 												->limit(1)
 												->execute($this->forum_redirect_threadreader);
-				$this->log('New post for thread ' . $threadid . ' created. Redirecting to [' . $this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $threadid) . ']', 'Create thread', TL_INFO);
 				$this->redirect($this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $threadid));
-			}
+			}//if(($this->Input->post('mode')=='new')||($this->Input->post('mode')=='quote'))
 			elseif($this->Input->post('mode')=='edit')
 			{
 				$arrSetpost = array
@@ -137,17 +149,35 @@ class forum_post_editor extends Module
 					'text' => $this->Input->post('text'),
 					'changed' => 1,
 					'last_change_by' => $user['id'],
-					'last_change_date' => time(),
-					'last_change_time' => time(),
-					'reason'=>$this->Input->post('reason')
+					'last_change_date' => $currenttime,
+					'last_change_time' => $currenttime,
+					'last_change_reason'=>$this->Input->post('reason')
 				);
 				$this->Database->prepare("UPDATE tl_forum_posts %s WHERE id=?")->set($arrSetpost)->execute($this->Input->post('post_id'));
+				
+				$arrSet = array
+				(
+					'last_change_date' => $currenttime,
+					'last_change_time' => $currenttime
+				);
+				$this->Database->prepare("UPDATE tl_forum_threads %s WHERE id=?")->set($arrSet)->execute($threadid);
+				$this->Database->prepare("UPDATE tl_forum_forums %s WHERE id=?")->set($arrSet)->execute($intForumId);
+					
 				$objTargetPage = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
 												->limit(1)
 												->execute($this->forum_redirect_threadreader);
 				$this->redirect($this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $threadid));
-			}
-		}
+			}//elseif($this->Input->post('mode')=='edit')
+			//Post created/edited. Now update forum and thread
+			$arrSetForum = array
+			(
+				'last_change_date' => $currenttime,
+				'last_change_time' => $currenttime,
+			);
+			$this->Database->prepare("UPDATE tl_forum_forums %s WHERE id=?")->set($arrSetForum)->execute($intForumId);
+			
+		}//if($this->Input->post('submit'))
+		
 		$this->Template->errors=$errors;
 		//###########################################
 		//Prepare form
@@ -188,9 +218,7 @@ class forum_post_editor extends Module
 				
 			}
 		}
-		$this->Template->mode=$mode;
-		
-		
+		$this->Template->mode=$mode;	
 	}
 }
 

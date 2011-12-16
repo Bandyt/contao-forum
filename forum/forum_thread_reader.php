@@ -44,7 +44,87 @@ class forum_thread_reader extends Module
 	 * @var string
 	 */
 	protected $strTemplate = 'forum_thread_reader';
-
+	private $arrMember=array();
+	private $threadid;
+	private $user=array();
+	private $user_logged_in=false;
+	
+	private function getUser()
+	{
+		$this->import('FrontendUser', 'Member');
+		if(FE_USER_LOGGED_IN)
+		{
+			$this->user=array(
+				'id'=>$this->Member->id,
+				'firstname'=>$this->Member->firstname,
+				'lastname'=>$this->Member->lastname,
+				'username'=>$this->Member->username,
+				'groups'=>$this->Member->groups
+			);
+			$this->Template->member=$user;
+			$this->Template->member_loggedin=true;
+			$this->user_logged_in=true;
+		}
+		else
+		{
+			$this->Template->member_loggedin=false;
+			$this->user_logged_in=false;
+		}
+	}
+	private function getThreadId()
+	{
+		if($this->forum_use_fixed_thread=='1'){
+			$this->threadid = $this->forum_fixed_thread;
+		}
+		else
+		{
+			$this->threadid = $this->Input->get('thread');
+		}
+	}
+	
+	private function updateTracker()
+	{
+		if(($this->threadid!=0) && ($this->user_logged_in==true))
+		{
+			$currenttime=time();
+			$objTracker = $this->Database->prepare("SELECT tstamp FROM tl_forum_thread_tracker WHERE user=? AND thread=?")->execute($this->user['id'],$this->threadid);
+			if($objTracker->numRows!=0)
+			{
+				$arrSetTracker = array
+				(
+					'tstamp' => $currenttime
+				);
+				$this->Database->prepare("UPDATE tl_forum_thread_tracker %s WHERE user=? AND thread=?")->set($arrSetTracker)->execute($this->user['id'],$this->threadid);
+			}
+			else
+			{
+				$arrSetTracker = array
+				(
+					'thread' => $this->threadid,
+					'user' => $this->user['id'],
+					'tstamp' => $currenttime
+				);
+				$this->Database->prepare("INSERT INTO tl_forum_thread_tracker %s")->set($arrSetTracker)->execute();
+			}
+			
+		}
+	}
+	
+	private function getMember()
+	{
+		$objMembers = $this->Database->prepare("SELECT * FROM tl_member")->execute();
+		$objMemberSettings = $this->Database->prepare("SELECT signature FROM tl_forum_user_settings WHERE user=?")->execute($objMembers->id);
+		while($objMembers->next()){
+			$this->arrMember[$objMembers->id]=array(
+			'id'=>$objMembers->id,
+			'username'=>$objMembers->username,
+			'firstname'=>$objMembers->firstname,
+			'lastname'=>$objMembers->lastname,
+			'signature'=>$objMemberSettings->signature
+			);
+		}
+	}
+	
 	public function generate()
 	{
 		if (TL_MODE == 'BE')
@@ -60,39 +140,22 @@ class forum_thread_reader extends Module
 	 */
 	protected function compile()
 	{
-		if($this->forum_use_fixed_thread=='1'){
-			$threadid = $this->forum_fixed_thread;
-		}
-		else
-		{
-			$threadid = $this->Input->get('thread');
-		}
+		$this->getUser();
+		$this->getThreadId();
 		$objPostEditor = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
 												->limit(1)
 												->execute($this->forum_redirect_posteditor);
-		$this->Template->postcreator=$this->generateFrontendUrl($objPostEditor->row(),'/thread/' . $threadid . '/mode/new');
+		$this->Template->postcreator=$this->generateFrontendUrl($objPostEditor->row(),'/thread/' . $this->threadid . '/mode/new');
 		
 		//Get thread information
-		$objThread = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE id=?")->execute($threadid);
+		$objThread = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE id=?")->execute($this->threadid);
 		$this->Template->title=$objThread->title;
 		
-		//Get member information
-		$objMembers = $this->Database->prepare("SELECT * FROM tl_member")->execute();
-		$arrMember=array();
-		while($objMembers->next()){
-			$objMemberSignature = $this->Database->prepare("SELECT signature FROM tl_forum_user_settings WHERE user=?")->execute($objMembers->id);
-			$arrMember[$objMembers->id]=array(
-				'id'=>$objMembers->id,
-				'username'=>$objMembers->username,
-				'firstname'=>$objMembers->firstname,
-				'lastname'=>$objMembers->lastname,
-				'signature'=>$objMemberSignature->signature
-			);
-		}
-		
+		$this->getMember();
+		$this->updateTracker();
 		
 		//Get post information
-		$objPosts = $this->Database->prepare("SELECT * FROM tl_forum_posts WHERE pid=? ORDER BY order_no ASC")->execute($threadid);
+		$objPosts = $this->Database->prepare("SELECT * FROM tl_forum_posts WHERE pid=? ORDER BY order_no ASC")->execute($this->threadid);
 		$i=0;
 		while($objPosts->next()){
 				$i++;
@@ -102,18 +165,18 @@ class forum_thread_reader extends Module
 				'order_no'=>$objPosts->order_no+1,
 				'created_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objPosts->created_date),
 				'created_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objPosts->created_time),
-				'creator_id'=>$arrMember[$objPosts->created_by]['id'],
-				'creator_username'=>$arrMember[$objPosts->created_by]['username'],
-				'creator_signature'=>$arrMember[$objPosts->created_by]['signature'],
+				'creator_id'=>$this->arrMember[$objPosts->created_by]['id'],
+				'creator_username'=>$this->arrMember[$objPosts->created_by]['username'],
+				'creator_signature'=>$this->arrMember[$objPosts->created_by]['signature'],
 				'title'=>$objPosts->title,
 				'text'=>$objPosts->text,
 				'changed'=>$objPosts->changed,
-				'last_change_by'=>$arrMember[$objPosts->last_change_by]['username'],
+				'last_change_by'=>$this->arrMember[$objPosts->last_change_by]['username'],
 				'last_change_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objPosts->last_change_date),
 				'last_change_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objPosts->last_change_time),
 				'last_change_reason'=>$objPosts->last_change_reason,
-				'quote_link'=>$this->generateFrontendUrl($objPostEditor->row(),'/thread/' . $threadid . '/mode/quote/post/' . $objPosts->id),
-				'edit_link'=>$this->generateFrontendUrl($objPostEditor->row(),'/thread/' . $threadid . '/mode/edit/post/' . $objPosts->id)
+				'quote_link'=>$this->generateFrontendUrl($objPostEditor->row(),'/thread/' . $this->threadid . '/mode/quote/post/' . $objPosts->id),
+				'edit_link'=>$this->generateFrontendUrl($objPostEditor->row(),'/thread/' . $this->threadid . '/mode/edit/post/' . $objPosts->id)
 				);
 		}
 		$this->Template->posts=$arrPosts;

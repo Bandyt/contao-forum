@@ -20,7 +20,7 @@
 						<?php if($forum['num_threads']!=0): ?>
 							<span class="last_post_date"><?php echo($forum['last_post_date']); ?></span>&nbsp;
 							<span class="last_post_time"><?php echo($forum['last_post_time']); ?></span><br />
-							<span class="creator"><?php echo($GLOBALS['TL_LANG']['forum']['creator']); ?> <?php echo($forum['last_post_creator']); ?></span><br />
+							<span class="creator"><?php echo($GLOBALS['TL_LANG']['forum']['creator']); ?>: <?php echo($forum['last_post_creator']); ?></span><br />
 							<span class="title"><a href="<?php echo($forum['last_post_link']); ?>"><?php echo($GLOBALS['TL_LANG']['forum']['title']); ?> <?php echo($forum['last_post_title']); ?></a></span>
 						<?php endif; ?>
 					</td>

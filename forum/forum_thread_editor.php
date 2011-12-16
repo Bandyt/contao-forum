@@ -113,6 +113,7 @@ class forum_thread_editor extends Module
 		$errors=array();
 		if($this->Input->post('submit'))
 		{
+			$currenttime=time();
 			if($this->Input->post('mode')=='new')
 			{
 				//Add thread to database
@@ -120,8 +121,8 @@ class forum_thread_editor extends Module
 				(
 					'pid' => $forumid,
 					'title' => $this->Input->post('title'),
-					'created_date' => time(),
-					'created_time' => time(),
+					'created_date' => $currenttime,
+					'created_time' => $currenttime,
 					'created_by' => $user['id'],
 				);
 				$insertId = $this->Database->prepare("INSERT INTO tl_forum_threads %s")->set($arrSetthread)->execute()->insertId;
@@ -131,17 +132,26 @@ class forum_thread_editor extends Module
 					'order_no'=>0,
 					'title'=>$this->Input->post('title'),
 					'text'=>$this->Input->post('text'),
-					'created_date' => time(),
-					'created_time' => time(),
+					'created_date' => $currenttime,
+					'created_time' => $currenttime,
 					'created_by' => $user['id']
 				);
 				$postInsertId = $this->Database->prepare("INSERT INTO tl_forum_posts %s")->set($arrSetpost)->execute()->insertId;
 
-				//Thread added. Now redirect to new thread
+				//Thread added. Now update parent forum and redirect to new thread
+				
+				if($forumid!=0 && $forumid!='')
+				{
+					$arrSetForum = array
+					(
+						'last_change_date' => $currenttime,
+						'last_change_time' => $currenttime,
+					);
+					$this->Database->prepare("UPDATE tl_forum_forums %s WHERE id=?")->set($arrSetForum)->execute($forumid);
+				}
 				$objTargetPage = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
 												->limit(1)
 												->execute($this->forum_redirect_threadreader);
-								$this->log('New thread for forum ' . $forumid . ' created. Redirecting to [' . $this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $insertId) . ']', 'Create thread', TL_INFO);
 				$this->redirect($this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $insertId));
 			}	
 		}

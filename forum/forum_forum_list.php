@@ -44,10 +44,90 @@ class forum_forum_list extends Module
 	 * @var string
 	 */
 	protected $strTemplate = 'forum_forum_list';
-
+	private $arrMember=array();
+	private $user=array();
+	private $user_logged_in=false;
+	private $forumid;
+	
+	private function getForumId()
+	{
+		if($this->forum_use_fixed_forum=='1'){
+			$this->forumid = $this->forum_fixed_forum;
+		}
+		else
+		{
+			$this->forumid = $this->Input->get('forum');
+		}
+		if($this->forumid==''){
+			$this->forumid=0;
+		}
+	}
+	
+	private function updateTracker()
+	{
+		if(($this->forumid!=0) && ($this->user_logged_in==true))
+		{
+			$currenttime=time();
+			$objTracker = $this->Database->prepare("SELECT tstamp FROM tl_forum_forum_tracker WHERE user=? AND forum=?")->execute($this->user['id'],$this->forumid);
+			if($objTracker->numRows!=0)
+			{
+				$arrSetTracker = array
+				(
+					'tstamp' => $currenttime
+				);
+				$this->Database->prepare("UPDATE tl_forum_forum_tracker %s WHERE user=? AND forum=?")->set($arrSetTracker)->execute($this->user['id'],$this->forumid);
+			}
+			else
+			{
+				$arrSetTracker = array
+				(
+					'forum' => $this->forumid,
+					'user' => $this->user['id'],
+					'tstamp' => $currenttime
+				);
+				$this->Database->prepare("INSERT INTO tl_forum_forum_tracker %s")->set($arrSetTracker)->execute();
+			}
+			
+		}
+	}
+	private function getUser()
+	{
+		$this->import('FrontendUser', 'Member');
+		if(FE_USER_LOGGED_IN)
+		{
+			$this->user=array(
+				'id'=>$this->Member->id,
+				'firstname'=>$this->Member->firstname,
+				'lastname'=>$this->Member->lastname,
+				'username'=>$this->Member->username,
+				'groups'=>$this->Member->groups
+			);
+			$this->Template->member=$user;
+			$this->Template->member_loggedin=true;
+			$this->user_logged_in=true;
+		}
+		else
+		{
+			$this->Template->member_loggedin=false;
+			$this->user_logged_in=false;
+		}
+	}
+	
+	private function getMember()
+	{
+		$objMembers = $this->Database->prepare("SELECT * FROM tl_member")->execute();
+		
+		while($objMembers->next()){
+			$this->arrMember[$objMembers->id]=array(
+			'id'=>$objMembers->id,
+			'username'=>$objMembers->username,
+			'firstname'=>$objMembers->firstname,
+			'lastname'=>$objMembers->lastname
+			);
+		}
+	}
 	public function getForumBreadcrumb($intForumid, $arrCrumbs)
 	{
-		$this->log("Breadcrumb for " . $intForumid, 'Forum list - getForumBreadcrumb', TL_INO);
 		$objForum = $this->Database->prepare("SELECT id,title,pid FROM tl_forum_forums WHERE id=?")->execute($intForumid);
 		$class='';
 		if($intForumid==0)
@@ -100,60 +180,16 @@ class forum_forum_list extends Module
 	 */
 	protected function compile()
 	{
-		//###########################################
-		//Get forum id
-		//###########################################
-		if($this->forum_use_fixed_forum=='1'){
-			$forumid = $this->forum_fixed_forum;
-		}
-		else
-		{
-			$forumid = $this->Input->get('forum');
-		}
-		if($forumid==''){
-			$forumid=0;
-		}
+		$this->getForumId();
+		$this->getUser();
+		$this->updateTracker();
+		$this->getMember();
 		
-		//###########################################
-		//Get user information
-		//###########################################
-		$this->import('FrontendUser', 'Member');
-		if(FE_USER_LOGGED_IN)
-		{
-			$user=array(
-				'id'=>$this->Member->id,
-				'firstname'=>$this->Member->firstname,
-				'lastname'=>$this->Member->lastname,
-				'username'=>$this->Member->username,
-				'groups'=>$this->Member->groups
-			);
-			$this->Template->member=$user;
-			$this->Template->member_loggedin=true;
-		}
-		else
-		{
-			$this->Template->member_loggedin=false;
-		}
-		
-		//###########################################
-		//Get forums and threads and list them
-		//###########################################
 		$objThreadReader = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
 												->limit(1)
 												->execute($this->forum_redirect_threadreader);
-												
-		$objMembers = $this->Database->prepare("SELECT * FROM tl_member")->execute();
-		$arrMember=array();
-		while($objMembers->next()){
-			$arrMember[$objMembers->id]=array(
-			'id'=>$objMembers->id,
-			'username'=>$objMembers->username,
-			'firstname'=>$objMembers->firstname,
-			'lastname'=>$objMembers->lastname
-			);
-		}
-		
-		$objForums = $this->Database->prepare("SELECT * FROM tl_forum_forums WHERE pid=? ORDER BY sorting ASC")->execute($forumid);
+													
+		$objForums = $this->Database->prepare("SELECT * FROM tl_forum_forums WHERE pid=? ORDER BY sorting ASC")->execute($this->forumid);
 		while($objForums->next()){
 			$objThreads = $this->Database->prepare("SELECT count(id) as num_threads FROM tl_forum_threads WHERE pid=?")->execute($objForums->id);
 			$objLastPost = $this->Database->prepare("SELECT thr.title as thread_title,pst.* FROM tl_forum_threads as thr INNER JOIN tl_forum_posts as pst ON thr.id=pst.pid WHERE thr.pid=? ORDER BY created_time DESC LIMIT 0,1")->execute($objForums->id);
@@ -170,7 +206,7 @@ class forum_forum_list extends Module
 				'title'=>$objForums->title,
 				'redirect'=>$this->addToUrl('forum=' . $objForums->id),
 				'num_threads'=>$Threads,
-				'last_post_creator'=>$arrMember[$objLastPost->created_by]['username'],
+				'last_post_creator'=>$this->arrMember[$objLastPost->created_by]['username'],
 				'last_post_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objLastPost->created_date),
 				'last_post_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objLastPost->created_time),
 				'last_post_title'=>$objLastPost->thread_title,
@@ -181,14 +217,14 @@ class forum_forum_list extends Module
 		
 		
 												
-		$objThreads = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE pid=? ORDER BY sorting ASC")->execute($forumid);
+		$objThreads = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE pid=? ORDER BY sorting ASC")->execute($this->forumid);
 		while($objThreads->next()){
 			$objPosts = $this->Database->prepare("SELECT count(id) as cnt FROM tl_forum_posts WHERE pid=? AND deleted=?")->execute($objThreads->id,'');
 			$objLastThreadPost = $this->Database->prepare("SELECT * FROM tl_forum_posts WHERE pid=? AND deleted=? ORDER BY created_time DESC LIMIT 0,1")->execute($objThreads->id,'');
 			$arrThreads[]=array(
 				'id'=>$objThreads->id,
 				'title'=>$objThreads->title,
-				'created_by'=>$arrMember[$objThreads->created_by]['username'],
+				'created_by'=>$this->arrMember[$objThreads->created_by]['username'],
 				'redirect'=>$this->generateFrontendUrl($objThreadReader->row(),'/thread/' . $objThreads->id),
 				'post_count'=>$objPosts->cnt,
 				'last_post_id'=>$objLastThreadPost->id,
@@ -202,11 +238,11 @@ class forum_forum_list extends Module
 		$objThreadEditor = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
 												->limit(1)
 												->execute($this->forum_redirect_threadeditor);
-		$this->Template->threadcreator=$this->generateFrontendUrl($objThreadEditor->row(),'/forum/' . $forumid . '/mode/new');
+		$this->Template->threadcreator=$this->generateFrontendUrl($objThreadEditor->row(),'/forum/' . $this->forumid . '/mode/new');
 		$this->Template->num_threads=count($arrThreads);
 		$this->Template->threads=$arrThreads;
-		$this->Template->forumid=$forumid;
-		$this->Template->forumbreadcrumbs=$this->getForumBreadcrumb($forumid,array());
+		$this->Template->forumid=$this->forumid;
+		$this->Template->forumbreadcrumbs=$this->getForumBreadcrumb($this->forumid,array());
 	}//protected function compile()
 	
 	
