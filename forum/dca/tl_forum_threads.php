@@ -111,7 +111,7 @@ $GLOBALS['TL_DCA']['tl_forum_threads'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array(''),
-		'default'                     => 'title;{forum_creator_information},created_by,created_date,created_time;{forum_additional_settings},deleted'
+		'default'                     => 'title;{forum_creator_information},created_by,created_date,created_time;{forum_additional_settings},deleted,important_thread,global_thread'
 	),
 
 	// Subpalettes
@@ -157,7 +157,21 @@ $GLOBALS['TL_DCA']['tl_forum_threads'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_threads']['deleted'],
 			'exclude'                 => false,
 			'inputType'               => 'checkbox',
-			'eval'                    => array('mandatory'=>false, 'disabled'=>true)
+			'eval'                    => array('mandatory'=>false)
+		),
+		'important_thread' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_threads']['important_thread'],
+			'exclude'                 => false,
+			'inputType'               => 'checkbox',
+			'eval'                    => array('mandatory'=>false)
+		),
+		'global_thread' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_threads']['global_thread'],
+			'exclude'                 => false,
+			'inputType'               => 'checkbox',
+			'eval'                    => array('mandatory'=>false)
 		)
 	)
 );

@@ -41,6 +41,8 @@ $GLOBALS['TL_LANG']['tl_forum_threads']['created_time'] = array('Erstellungsuhrz
 
 $GLOBALS['TL_LANG']['tl_forum_threads']['forum_additional_settings'] = 'Forum - Erweiterte Einstellugnen';
 $GLOBALS['TL_LANG']['tl_forum_threads']['deleted'] = array('Gel&ouml;scht', 'Anklicken, wenn das Thema gel&ouml;scht wurde');
+$GLOBALS['TL_LANG']['tl_forum_threads']['important_thread'] = array('Wichtig', 'Wichtige Themen werden als erstes in der Themen&uuml;bersicht gelistet');
+$GLOBALS['TL_LANG']['tl_forum_threads']['global_thread'] = array('Globales Thema', 'Globale Themen werden als erstes in jeder Themen&uuml;bersicht gelistet');
 /**
  * Reference
  */

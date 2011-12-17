@@ -262,9 +262,18 @@ class forum_forum_list extends Module
 		return $arrForums;
 	}//private function getForums()
 	
-	private function getThreads()
+	private function getThreads($deleted,$global,$important)
 	{
-		$objThreads = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE pid=? ORDER BY sorting ASC")->execute($this->forumid);
+		$arrThreads=array();
+		if($global=='1')
+		{
+			$objThreads = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE deleted=? AND global_thread=? ORDER BY sorting ASC")->execute($deleted,$global);
+		}
+		else
+		{
+			$objThreads = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE pid=? AND deleted=? AND important_thread=? and global_thread=? ORDER BY sorting ASC")->execute($this->forumid,$deleted,$important,$global);
+		}
+		
 		while($objThreads->next()){
 			$objPosts = $this->Database->prepare("SELECT count(id) as cnt FROM tl_forum_posts WHERE pid=? AND deleted=?")->execute($objThreads->id,'');
 			$objLastThreadPost = $this->Database->prepare("SELECT * FROM tl_forum_posts WHERE pid=? AND deleted=? ORDER BY created_time DESC LIMIT 0,1")->execute($objThreads->id,'');
@@ -311,7 +320,9 @@ class forum_forum_list extends Module
 		//Get data and send them to template
 		$this->Template->forums=$this->getForums();
 		$this->Template->threadcreator=$this->generateFrontendUrl($this->objThreadEditor->row(),'/forum/' . $this->forumid . '/mode/new');
-		$this->Template->threads=$this->getThreads();
+		$this->Template->threads=$this->getThreads('','',''); //Get the normal threads
+		$this->Template->important_threads=$this->getThreads('','','1'); //Get the important threads
+		$this->Template->global_threads=$this->getThreads('','1',''); //Get the global threads
 		$this->Template->num_threads=count($this->Template->threads);
 		$this->Template->forumid=$this->forumid;
 		$this->Template->forumbreadcrumbs=$this->getForumBreadcrumb($this->forumid,array());
