@@ -7,6 +7,7 @@
 	<?php endforeach; ?>
 	<table class="forums">
 		<tr class="header">
+			<th>&nbsp;</th>
 			<th><?php echo($GLOBALS['TL_LANG']['forum']['forum']); ?></th>
 			<th><?php echo($GLOBALS['TL_LANG']['forum']['threads']); ?></th>
 			<th><?php echo($GLOBALS['TL_LANG']['forum']['last_post']); ?></th>
@@ -14,13 +15,14 @@
 		<?php if(count($this->forums)>0): ?>
 			<?php foreach($this->forums as $forum): ?>
 				<tr class="forum">
+					<td class="icon"><?php foreach($forum['status'] as $status): ?><?php echo($status); ?><?php endforeach; ?></td>
 					<td class="name"><a href="<?php echo($forum['redirect']); ?>"><?php echo($forum['title']); ?></a></td>
 					<td class="threads"><?php echo($forum['num_threads']); ?></td>
 					<td class="last_post">
 						<?php if($forum['num_threads']!=0): ?>
 							<span class="last_post_date"><?php echo($forum['last_post_date']); ?></span>&nbsp;
 							<span class="last_post_time"><?php echo($forum['last_post_time']); ?></span><br />
-							<span class="creator"><?php echo($GLOBALS['TL_LANG']['forum']['creator']); ?> <?php echo($forum['last_post_creator']); ?></span><br />
+							<span class="creator"><?php echo($GLOBALS['TL_LANG']['forum']['creator']); ?>: <?php echo($forum['last_post_creator']); ?></span><br />
 							<span class="title"><a href="<?php echo($forum['last_post_link']); ?>"><?php echo($GLOBALS['TL_LANG']['forum']['title']); ?> <?php echo($forum['last_post_title']); ?></a></span>
 						<?php endif; ?>
 					</td>
@@ -35,13 +37,15 @@
 	<?php if($this->num_threads!=0): ?>
 		<table class="threads">
 			<tr class="header">
-				<td><?php echo($GLOBALS['TL_LANG']['forum']['thread']); ?></td>
-				<td><?php echo($GLOBALS['TL_LANG']['forum']['created_by']); ?></td>
-				<td><?php echo($GLOBALS['TL_LANG']['forum']['posts']); ?></td>
-				<td><?php echo($GLOBALS['TL_LANG']['forum']['last_post']); ?></td>
+				<th>&nbsp;</th>
+				<th><?php echo($GLOBALS['TL_LANG']['forum']['thread']); ?></th>
+				<th><?php echo($GLOBALS['TL_LANG']['forum']['created_by']); ?></th>
+				<th><?php echo($GLOBALS['TL_LANG']['forum']['posts']); ?></th>
+				<th><?php echo($GLOBALS['TL_LANG']['forum']['last_post']); ?></th>
 			</tr>
 				<?php foreach($this->threads as $thread): ?>
 					<tr class="thread">
+						<td class="icon"><?php foreach($thread['status'] as $status): ?><?php echo($status); ?><?php endforeach; ?></td>
 						<td class="name"><a href="<?php echo($thread['redirect']); ?>"><?php echo($thread['title']); ?></a></td>
 						<td class="created_by"><?php echo($thread['created_by']); ?></td>
 						<td class="posts"><?php echo($thread['post_count']); ?></td>

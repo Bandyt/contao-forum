@@ -48,6 +48,8 @@ class forum_forum_list extends Module
 	private $user=array();
 	private $user_logged_in=false;
 	private $forumid;
+	private $objThreadReader;
+	private $objThreadEditor;
 	
 	private function getForumId()
 	{
@@ -61,7 +63,7 @@ class forum_forum_list extends Module
 		if($this->forumid==''){
 			$this->forumid=0;
 		}
-	}
+	}//private function getForumId()
 	
 	private function updateTracker()
 	{
@@ -89,7 +91,8 @@ class forum_forum_list extends Module
 			}
 			
 		}
-	}
+	}//private function updateTracker()
+	
 	private function getUser()
 	{
 		$this->import('FrontendUser', 'Member');
@@ -111,7 +114,7 @@ class forum_forum_list extends Module
 			$this->Template->member_loggedin=false;
 			$this->user_logged_in=false;
 		}
-	}
+	}//private function getUser()
 	
 	private function getMember()
 	{
@@ -125,8 +128,9 @@ class forum_forum_list extends Module
 			'lastname'=>$objMembers->lastname
 			);
 		}
-	}
-	public function getForumBreadcrumb($intForumid, $arrCrumbs)
+	}//private function getMember()
+	
+	private function getForumBreadcrumb($intForumid, $arrCrumbs)
 	{
 		$objForum = $this->Database->prepare("SELECT id,title,pid FROM tl_forum_forums WHERE id=?")->execute($intForumid);
 		$class='';
@@ -159,36 +163,77 @@ class forum_forum_list extends Module
 		{
 			return $arrCrumbs;
 		}
-		
-		
-		
-		
-	}//public function getForumBreadcrumb
+	}//private function getForumBreadcrumb
 	
-	public function generate()
+	private function getForumStatus($forumid)
 	{
-		if (TL_MODE == 'BE')
+		//We are checking currently the last_post_time. This could change in the future
+		$arrStatus=array();
+		$objTracker = $this->Database->prepare("SELECT forum.last_change_time,forum.last_post_time,tracker.tstamp 
+														FROM tl_forum_forums as forum 
+														JOIN tl_forum_forum_tracker as tracker
+														ON forum.id=tracker.forum
+														WHERE tracker.forum=? AND tracker.user=?")->execute($forumid,$this->user['id']);
+		//Check if anything new has happened afer the user's last visit
+		if ($objTracker->numRows==0)
 		{
-			$return="Forum - Forum list";
-			return $return;
+			//Unread
+			$arrStatus[]='unread';
 		}
-		return parent::generate();
-	}
-
-	/**
-	 * Generate module
-	 */
-	protected function compile()
+		elseif($objTracker->last_change_time > $objTracker->tstamp)
+		{
+			//Forum has changed after last visit
+			$arrStatus[]='unread';
+		}
+		elseif($objTracker->last_change_time <= $objTracker->tstamp)
+		{
+			//Last visit was after the last change
+			$arrStatus[]='read';
+		}
+		return $arrStatus;
+	}//private function getForumStatus()
+	
+	private function getThreadStatus($threadid)
 	{
-		$this->getForumId();
-		$this->getUser();
-		$this->updateTracker();
-		$this->getMember();
-		
-		$objThreadReader = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
+		//We are checking currently the last_post_time. This could change in the future
+		$arrStatus=array();
+		$objTracker = $this->Database->prepare("SELECT thread.last_change_time,thread.last_post_time,tracker.tstamp 
+														FROM tl_forum_threads as thread 
+														JOIN tl_forum_thread_tracker as tracker
+														ON thread.id=tracker.thread
+														WHERE tracker.thread=? AND tracker.user=?")->execute($threadid,$this->user['id']);
+		//Check if anything new has happened afer the user's last visit
+		if ($objTracker->numRows==0)
+		{
+			//Unread
+			$arrStatus[]='unread';
+		}
+		elseif($objTracker->last_change_time > $objTracker->tstamp)
+		{
+			//Forum has changed after last visit
+			$arrStatus[]='unread';
+		}
+		elseif($objTracker->last_change_time <= $objTracker->tstamp)
+		{
+			//Last visit was after the last change
+			$arrStatus[]='read';
+		}
+		return $arrStatus;
+	}//private function getForumStatus()
+	
+	private function getInternalLinks()
+	{
+		$this->objThreadReader = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
 												->limit(1)
 												->execute($this->forum_redirect_threadreader);
-													
+												
+		$this->objThreadEditor = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
+												->limit(1)
+												->execute($this->forum_redirect_threadeditor);
+	}//private function getInternalLinks()
+	
+	private function getForums()
+	{
 		$objForums = $this->Database->prepare("SELECT * FROM tl_forum_forums WHERE pid=? ORDER BY sorting ASC")->execute($this->forumid);
 		while($objForums->next()){
 			$objThreads = $this->Database->prepare("SELECT count(id) as num_threads FROM tl_forum_threads WHERE pid=?")->execute($objForums->id);
@@ -210,13 +255,15 @@ class forum_forum_list extends Module
 				'last_post_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objLastPost->created_date),
 				'last_post_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objLastPost->created_time),
 				'last_post_title'=>$objLastPost->thread_title,
-				'last_post_link'=>$this->generateFrontendUrl($objThreadReader->row(),'/thread/' . $objLastPost->pid) . '#' . $objLastPost->id
+				'last_post_link'=>$this->generateFrontendUrl($this->objThreadReader->row(),'/thread/' . $objLastPost->pid) . '#' . $objLastPost->id,
+				'status'=>$this->getForumStatus($objForums->id)
 			);
 		}
-		$this->Template->forums=$arrForums;
-		
-		
-												
+		return $arrForums;
+	}//private function getForums()
+	
+	private function getThreads()
+	{
 		$objThreads = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE pid=? ORDER BY sorting ASC")->execute($this->forumid);
 		while($objThreads->next()){
 			$objPosts = $this->Database->prepare("SELECT count(id) as cnt FROM tl_forum_posts WHERE pid=? AND deleted=?")->execute($objThreads->id,'');
@@ -225,22 +272,47 @@ class forum_forum_list extends Module
 				'id'=>$objThreads->id,
 				'title'=>$objThreads->title,
 				'created_by'=>$this->arrMember[$objThreads->created_by]['username'],
-				'redirect'=>$this->generateFrontendUrl($objThreadReader->row(),'/thread/' . $objThreads->id),
+				'redirect'=>$this->generateFrontendUrl($this->objThreadReader->row(),'/thread/' . $objThreads->id),
 				'post_count'=>$objPosts->cnt,
 				'last_post_id'=>$objLastThreadPost->id,
 				'last_post_user'=>$arrMember[$objLastThreadPost->created_by]['username'],
 				'last_post_title'=>$objLastThreadPost->title,
 				'last_post_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objLastThreadPost->created_date),
 				'last_post_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objLastThreadPost->created_time),
-				'last_post_link'=>$this->generateFrontendUrl($objThreadReader->row(),'/thread/' . $objLastThreadPost->pid) . '#' . $objLastThreadPost->id
+				'last_post_link'=>$this->generateFrontendUrl($this->objThreadReader->row(),'/thread/' . $objLastThreadPost->pid) . '#' . $objLastThreadPost->id,
+				'status'=>$this->getThreadStatus($objThreads->id)
 			);
 		}
-		$objThreadEditor = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
-												->limit(1)
-												->execute($this->forum_redirect_threadeditor);
-		$this->Template->threadcreator=$this->generateFrontendUrl($objThreadEditor->row(),'/forum/' . $this->forumid . '/mode/new');
-		$this->Template->num_threads=count($arrThreads);
-		$this->Template->threads=$arrThreads;
+		return $arrThreads;
+	}//private function getThreads()
+	
+	public function generate()
+	{
+		if (TL_MODE == 'BE')
+		{
+			$return="Forum - Forum list";
+			return $return;
+		}
+		return parent::generate();
+	}
+
+	/**
+	 * Generate module
+	 */
+	protected function compile()
+	{
+		//Initialize
+		$this->getForumId();
+		$this->getUser();
+		$this->updateTracker();
+		$this->getMember();
+		$this->getInternalLinks();
+		
+		//Get data and send them to template
+		$this->Template->forums=$this->getForums();
+		$this->Template->threadcreator=$this->generateFrontendUrl($this->objThreadEditor->row(),'/forum/' . $this->forumid . '/mode/new');
+		$this->Template->threads=$this->getThreads();
+		$this->Template->num_threads=count($this->Template->threads);
 		$this->Template->forumid=$this->forumid;
 		$this->Template->forumbreadcrumbs=$this->getForumBreadcrumb($this->forumid,array());
 	}//protected function compile()
