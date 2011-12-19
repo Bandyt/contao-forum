@@ -197,7 +197,7 @@ $GLOBALS['TL_DCA']['tl_forum_posts'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_posts']['deleted'],
 			'exclude'                 => false,
 			'inputType'               => 'checkbox',
-			'eval'                    => array('mandatory'=>false, 'disabled'=>true)
+			'eval'                    => array('mandatory'=>false)
 		)
 	)
 );

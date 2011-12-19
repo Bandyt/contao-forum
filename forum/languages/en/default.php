@@ -37,14 +37,15 @@ $GLOBALS['TL_LANG']['CTE']['forum_thread_reader'] = array('Forum - Thread reader
 $GLOBALS['TL_LANG']['CTE']['forum_thread_editor'] = array('Forum - Thread editor', 'Creates or edits a thread');
 $GLOBALS['TL_LANG']['CTE']['forum_post_editor'] = array('Forum - Post editor', 'Creates or edits a post');
 $GLOBALS['TL_LANG']['CTE']['forum_user_settings'] = array('Forum - User settings', 'Add or changes user settings');
+$GLOBALS['TL_LANG']['CTE']['forum_moderator_panel'] = array('Forum - Moderator panel', 'Contains moderator functionalities');
 /*
  * Miscellaneous
  */
 $GLOBALS['TL_LANG']['forum']['answer']   = 'Answer';
-$GLOBALS['TL_LANG']['forum']['quote']   = 'Quote';
-$GLOBALS['TL_LANG']['forum']['edit']   = 'Edit';
-$GLOBALS['TL_LANG']['forum']['no_posts']   = 'No posts';
 $GLOBALS['TL_LANG']['forum']['author']   = 'Author';
+$GLOBALS['TL_LANG']['forum']['edit']   = 'Edit';
+$GLOBALS['TL_LANG']['forum']['quote']   = 'Quote';
+$GLOBALS['TL_LANG']['forum']['no_posts']   = 'No posts';
 $GLOBALS['TL_LANG']['forum']['posts']   = 'Posts';
 $GLOBALS['TL_LANG']['forum']['forum']   = 'Forum';
 $GLOBALS['TL_LANG']['forum']['threads']   = 'Threads';
@@ -58,6 +59,7 @@ $GLOBALS['TL_LANG']['forum']['thread']   = 'Thread';
 $GLOBALS['TL_LANG']['forum']['created_by']   = 'Created by';
 $GLOBALS['TL_LANG']['forum']['no_threads']   = 'No threads';
 $GLOBALS['TL_LANG']['forum']['signature']   = 'Signature';
+$GLOBALS['TL_LANG']['forum']['delete_post']   = 'Delete post';
 
 $GLOBALS['TL_LANG']['forum']['text']   = 'Text';
 

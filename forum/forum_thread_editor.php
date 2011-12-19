@@ -151,7 +151,7 @@ class forum_thread_editor extends Module
 				}
 				$objTargetPage = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
 												->limit(1)
-												->execute($this->forum_redirect_threadreader);
+												->execute($GLOBALS['TL_CONFIG']['forum_redirect_threadreader']);
 				$this->redirect($this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $insertId));
 			}	
 		}

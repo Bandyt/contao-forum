@@ -35,11 +35,12 @@
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'forum_use_fixed_forum';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'forum_use_fixed_thread';
 
-$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_forum_list'] = '{type_legend},name,headline,type;{forum_settings},forum_use_fixed_forum,forum_redirect_threadreader,forum_redirect_threadeditor';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_thread_reader'] = '{type_legend},name,headline,type;{forum_settings},forum_use_fixed_threadeditor,forum_redirect_posteditor';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_thread_editor'] = '{type_legend},name,headline,type;{forum_settings},forum_redirect_threadreader,forum_redirect_forumlist';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_post_editor'] = '{type_legend},name,headline,type;{forum_settings},forum_redirect_threadreader';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_forum_list'] = '{type_legend},name,headline,type;{forum_settings},forum_use_fixed_forum,';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_thread_reader'] = '{type_legend},name,headline,type;{forum_settings},forum_use_fixed_thread';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_thread_editor'] = '{type_legend},name,headline,type';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_post_editor'] = '{type_legend},name,headline,type';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['forum_user_settings'] = '{type_legend},name,headline,type';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_moderator_panel'] = '{type_legend},name,headline,type';
 
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['forum_use_fixed_forum'] = 'forum_fixed_forum';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['forum_use_fixed_thread'] = 'forum_fixed_thread';
@@ -76,34 +77,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['forum_fixed_thread'] = array
 	'eval'                    => array('mandatory'=>true),
 	'options_callback'        => array('tl_content_forum', 'getThreads')
 );
-$GLOBALS['TL_DCA']['tl_content']['fields']['forum_redirect_threadreader'] = array
-(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['forum_redirect_threadreader'],
-	'exclude'                 => false,
-	'inputType'               => 'pageTree',
-	'eval'                    => array('mandatory'=>true,'fieldType'=>'radio', 'tl_class'=>'clr')
-);
-$GLOBALS['TL_DCA']['tl_content']['fields']['forum_redirect_threadeditor'] = array
-(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['forum_redirect_threadeditor'],
-	'exclude'                 => false,
-	'inputType'               => 'pageTree',
-	'eval'                    => array('mandatory'=>true,'fieldType'=>'radio', 'tl_class'=>'clr')
-);
-$GLOBALS['TL_DCA']['tl_content']['fields']['forum_redirect_forumlist'] = array
-(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['forum_redirect_forumlist'],
-	'exclude'                 => false,
-	'inputType'               => 'pageTree',
-	'eval'                    => array('mandatory'=>true,'fieldType'=>'radio', 'tl_class'=>'clr')
-);
-$GLOBALS['TL_DCA']['tl_content']['fields']['forum_redirect_posteditor'] = array
-(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['forum_redirect_posteditor'],
-	'exclude'                 => false,
-	'inputType'               => 'pageTree',
-	'eval'                    => array('mandatory'=>true,'fieldType'=>'radio', 'tl_class'=>'clr')
-);
+
 class tl_content_forum extends Backend
 {
 	public function getForums()

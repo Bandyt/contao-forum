@@ -37,12 +37,6 @@ $GLOBALS['TL_LANG']['tl_content']['forum_use_fixed_forum'] = array('Use fixed fo
 $GLOBALS['TL_LANG']['tl_content']['forum_fixed_forum'] = array('Fixed forum', 'Select the fixed forum this content element should use');
 $GLOBALS['TL_LANG']['tl_content']['forum_use_fixed_thread'] = array('Use fixed thread', 'Click if this content element should use a fix thread');
 $GLOBALS['TL_LANG']['tl_content']['forum_fixed_thread'] = array('Fixed thread', 'Select the fixed thread this content element should use');
-$GLOBALS['TL_LANG']['tl_content']['forum_redirect_threadreader'] = array('Redirect - Thread reader', 'Select the page containing the thread reader this element should use');
-$GLOBALS['TL_LANG']['tl_content']['forum_redirect_threadeditor'] = array('Redirect - Thread editor', 'Select the page containing the thread editor this element should use');
-$GLOBALS['TL_LANG']['tl_content']['forum_redirect_forumlist'] = array('Redirect - Forum list', 'Select the page containing the forum list this element should use');
-$GLOBALS['TL_LANG']['tl_content']['forum_redirect_posteditor'] = array('Redirect - Post editor', 'Select the page containing the post editor this element should use');
-
-
 /**
  * Reference
  */

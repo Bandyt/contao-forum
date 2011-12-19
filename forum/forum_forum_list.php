@@ -197,7 +197,7 @@ class forum_forum_list extends Module
 	{
 		//We are checking currently the last_post_time. This could change in the future
 		$arrStatus=array();
-		$objTracker = $this->Database->prepare("SELECT thread.last_change_time,thread.last_post_time,tracker.tstamp 
+		$objTracker = $this->Database->prepare("SELECT thread.last_change_time, thread.last_post_time, thread.global_thread, thread.important_thread, thread.locked, tracker.tstamp 
 														FROM tl_forum_threads as thread 
 														JOIN tl_forum_thread_tracker as tracker
 														ON thread.id=tracker.thread
@@ -218,18 +218,32 @@ class forum_forum_list extends Module
 			//Last visit was after the last change
 			$arrStatus[]='read';
 		}
+		//Check for special threads
+		if($objTracker->global_thread==1)
+		{
+			$arrStatus[]='global';
+		}
+		if($objTracker->important_thread==1)
+		{
+			$arrStatus[]='important';
+		}
+		if($objTracker->locked==1)
+		{
+			$arrStatus[]='locked';
+		}
 		return $arrStatus;
 	}//private function getForumStatus()
 	
 	private function getInternalLinks()
 	{
+		
 		$this->objThreadReader = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
 												->limit(1)
-												->execute($this->forum_redirect_threadreader);
+												->execute($GLOBALS['TL_CONFIG']['forum_redirect_threadreader']);		
 												
 		$this->objThreadEditor = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
 												->limit(1)
-												->execute($this->forum_redirect_threadeditor);
+												->execute($GLOBALS['TL_CONFIG']['forum_redirect_threadeditor']);
 	}//private function getInternalLinks()
 	
 	private function getForums()
@@ -284,7 +298,7 @@ class forum_forum_list extends Module
 				'redirect'=>$this->generateFrontendUrl($this->objThreadReader->row(),'/thread/' . $objThreads->id),
 				'post_count'=>$objPosts->cnt,
 				'last_post_id'=>$objLastThreadPost->id,
-				'last_post_user'=>$arrMember[$objLastThreadPost->created_by]['username'],
+				'last_post_user'=>$this->arrMember[$objLastThreadPost->created_by]['username'],
 				'last_post_title'=>$objLastThreadPost->title,
 				'last_post_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objLastThreadPost->created_date),
 				'last_post_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objLastThreadPost->created_time),

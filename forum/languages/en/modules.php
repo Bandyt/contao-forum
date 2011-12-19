@@ -36,6 +36,7 @@ $GLOBALS['TL_LANG']['MOD']['forum'] = 'Forum';
 $GLOBALS['TL_LANG']['MOD']['tl_forum_forums'] = array('Forums', 'Manage forums and their structure');
 $GLOBALS['TL_LANG']['MOD']['tl_forum_threads'] = array('Threads', 'Manage threads and posts');
 $GLOBALS['TL_LANG']['MOD']['tl_forum_user_settings'] = array('User settings', 'Manage the user settings');
+$GLOBALS['TL_LANG']['MOD']['tl_forum_settings'] = array('Forum settings', 'Manage the general settings');
 
 
 /**

@@ -48,7 +48,59 @@ class forum_thread_reader extends Module
 	private $threadid;
 	private $user=array();
 	private $user_logged_in=false;
+	private $objPostEditor;
+	private $objThreadReader;
+	private $objModeratorPanel;
+	private $arrThread=array();
 	
+	private function getThreadInformation()
+	{
+		$objThread = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE id=?")->execute($this->threadid);
+		$this->arrThread['title']=$objThread->title;
+		$this->arrThread['locked']=$objThread->locked;
+	}
+	private function getInternalLinks()
+	{
+		$this->objPostEditor = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
+												->limit(1)
+												->execute($GLOBALS['TL_CONFIG']['forum_redirect_posteditor']);
+		
+		$this->objThreadReader = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
+												->limit(1)
+												->execute($GLOBALS['TL_CONFIG']['forum_redirect_threadreader']);
+		$this->objModeratorPanel = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
+												->limit(1)
+												->execute($GLOBALS['TL_CONFIG']['forum_redirect_moderator_panel']);
+	}
+	private function getPosts()
+	{
+		$objPosts = $this->Database->prepare("SELECT * FROM tl_forum_posts WHERE pid=? AND deleted=? ORDER BY order_no ASC")->execute($this->threadid,'');
+		$i=0;
+		while($objPosts->next()){
+				$i++;
+				$arrPosts[]=array(
+				'id'=>$objPosts->id,
+				'class'=>(($i == 1) ? 'first ' : '') . (($i == $objPosts->numRows) ? 'last ' : '') . ((($i % 2) == 0) ? 'even' : 'odd'),
+				'post_no'=>$i,
+				'created_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objPosts->created_date),
+				'created_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objPosts->created_time),
+				'creator_id'=>$this->arrMember[$objPosts->created_by]['id'],
+				'creator_username'=>$this->arrMember[$objPosts->created_by]['username'],
+				'creator_signature'=>$this->arrMember[$objPosts->created_by]['signature'],
+				'title'=>$objPosts->title,
+				'text'=>$objPosts->text,
+				'changed'=>$objPosts->changed,
+				'last_change_by'=>$this->arrMember[$objPosts->last_change_by]['username'],
+				'last_change_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objPosts->last_change_date),
+				'last_change_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objPosts->last_change_time),
+				'last_change_reason'=>$objPosts->last_change_reason,
+				'quote_link'=>$this->generateFrontendUrl($this->objPostEditor->row(),'/thread/' . $this->threadid . '/mode/quote/post/' . $objPosts->id),
+				'edit_link'=>$this->generateFrontendUrl($this->objPostEditor->row(),'/thread/' . $this->threadid . '/mode/edit/post/' . $objPosts->id),
+				'mod_tools_delete_link'=>$this->generateFrontendUrl($this->objThreadReader->row(),'/thread/' . $this->threadid . '/mode/mod-delete-post/post/' . $objPosts->id),
+				);
+		}
+		return $arrPosts;
+	}
 	private function getUser()
 	{
 		$this->import('FrontendUser', 'Member');
@@ -109,7 +161,7 @@ class forum_thread_reader extends Module
 			
 		}
 	}
-	
+
 	private function getMember()
 	{
 		$objMembers = $this->Database->prepare("SELECT * FROM tl_member")->execute();
@@ -142,44 +194,13 @@ class forum_thread_reader extends Module
 	{
 		$this->getUser();
 		$this->getThreadId();
-		$objPostEditor = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
-												->limit(1)
-												->execute($this->forum_redirect_posteditor);
-		$this->Template->postcreator=$this->generateFrontendUrl($objPostEditor->row(),'/thread/' . $this->threadid . '/mode/new');
-		
-		//Get thread information
-		$objThread = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE id=?")->execute($this->threadid);
-		$this->Template->title=$objThread->title;
-		
+		$this->getInternalLinks();
+		$this->Template->postcreator=$this->generateFrontendUrl($this->objPostEditor->row(),'/thread/' . $this->threadid . '/mode/new');
+		$this->getThreadInformation();
+		$this->Template->thread = $this->arrThread;
 		$this->getMember();
 		$this->updateTracker();
-		
-		//Get post information
-		$objPosts = $this->Database->prepare("SELECT * FROM tl_forum_posts WHERE pid=? ORDER BY order_no ASC")->execute($this->threadid);
-		$i=0;
-		while($objPosts->next()){
-				$i++;
-				$arrPosts[]=array(
-				'id'=>$objPosts->id,
-				'class'=>(($i == 1) ? 'first ' : '') . (($i == $objPosts->numRows) ? 'last ' : '') . ((($i % 2) == 0) ? 'even' : 'odd'),
-				'order_no'=>$objPosts->order_no+1,
-				'created_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objPosts->created_date),
-				'created_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objPosts->created_time),
-				'creator_id'=>$this->arrMember[$objPosts->created_by]['id'],
-				'creator_username'=>$this->arrMember[$objPosts->created_by]['username'],
-				'creator_signature'=>$this->arrMember[$objPosts->created_by]['signature'],
-				'title'=>$objPosts->title,
-				'text'=>$objPosts->text,
-				'changed'=>$objPosts->changed,
-				'last_change_by'=>$this->arrMember[$objPosts->last_change_by]['username'],
-				'last_change_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objPosts->last_change_date),
-				'last_change_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objPosts->last_change_time),
-				'last_change_reason'=>$objPosts->last_change_reason,
-				'quote_link'=>$this->generateFrontendUrl($objPostEditor->row(),'/thread/' . $this->threadid . '/mode/quote/post/' . $objPosts->id),
-				'edit_link'=>$this->generateFrontendUrl($objPostEditor->row(),'/thread/' . $this->threadid . '/mode/edit/post/' . $objPosts->id)
-				);
-		}
-		$this->Template->posts=$arrPosts;
+		$this->Template->posts=$this->getPosts();
 		
 		
 	}

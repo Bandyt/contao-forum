@@ -46,7 +46,7 @@
 				<?php if(count($this->global_threads>0)): ?>
 					<?php foreach($this->global_threads as $global_thread): ?>
 						<tr class="global_thread">
-							<td class="icon"><?php foreach($global_thread['status'] as $status): ?><?php echo($status); ?><?php endforeach; ?></td>
+							<td class="icon"><?php foreach($global_thread['status'] as $status): ?><?php echo($status); ?><br /><?php endforeach; ?></td>
 							<td class="name"><a href="<?php echo($global_thread['redirect']); ?>"><?php echo($global_thread['title']); ?></a></td>
 							<td class="created_by"><?php echo($global_thread['created_by']); ?></td>
 							<td class="posts"><?php echo($global_thread['post_count']); ?></td>
@@ -63,7 +63,7 @@
 				<?php if(count($this->important_threads>0)): ?>
 					<?php foreach($this->important_threads as $important_thread): ?>
 						<tr class="important_thread">
-							<td class="icon"><?php foreach($important_thread['status'] as $status): ?><?php echo($status); ?><?php endforeach; ?></td>
+							<td class="icon"><?php foreach($important_thread['status'] as $status): ?><?php echo($status); ?><br /><?php endforeach; ?></td>
 							<td class="name"><a href="<?php echo($important_thread['redirect']); ?>"><?php echo($important_thread['title']); ?></a></td>
 							<td class="created_by"><?php echo($important_thread['created_by']); ?></td>
 							<td class="posts"><?php echo($important_thread['post_count']); ?></td>
@@ -79,7 +79,7 @@
 				
 				<?php foreach($this->threads as $thread): ?>
 					<tr class="thread">
-						<td class="icon"><?php foreach($thread['status'] as $status): ?><?php echo($status); ?><?php endforeach; ?></td>
+						<td class="icon"><?php foreach($thread['status'] as $status): ?><?php echo($status); ?><br /><?php endforeach; ?></td>
 						<td class="name"><a href="<?php echo($thread['redirect']); ?>"><?php echo($thread['title']); ?></a></td>
 						<td class="created_by"><?php echo($thread['created_by']); ?></td>
 						<td class="posts"><?php echo($thread['post_count']); ?></td>

@@ -137,7 +137,7 @@ class forum_post_editor extends Module
 				//Post added. Now redirect to thread reader
 				$objTargetPage = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
 												->limit(1)
-												->execute($this->forum_redirect_threadreader);
+												->execute($GLOBALS['TL_CONFIG']['forum_redirect_threadreader']);
 				$this->redirect($this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $threadid));
 			}//if(($this->Input->post('mode')=='new')||($this->Input->post('mode')=='quote'))
 			elseif($this->Input->post('mode')=='edit')
@@ -165,7 +165,7 @@ class forum_post_editor extends Module
 					
 				$objTargetPage = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
 												->limit(1)
-												->execute($this->forum_redirect_threadreader);
+												->execute($GLOBALS['TL_CONFIG']['forum_redirect_threadreader']);
 				$this->redirect($this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $threadid));
 			}//elseif($this->Input->post('mode')=='edit')
 			//Post created/edited. Now update forum and thread

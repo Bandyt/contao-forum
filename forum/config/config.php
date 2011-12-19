@@ -69,7 +69,11 @@
 	'tl_forum_user_settings' => array
 	 (
 	    'tables' => array('tl_forum_user_settings')
-	 ) 
+	 ),
+	'tl_forum_settings' => array
+	 (
+	    'tables' => array('tl_forum_settings')
+	 )	 
  );
 
 /**
@@ -115,6 +119,7 @@ $GLOBALS['TL_CTE']['tl_forum']['forum_thread_reader'] = 'forum_thread_reader';
 $GLOBALS['TL_CTE']['tl_forum']['forum_thread_editor'] = 'forum_thread_editor'; 
 $GLOBALS['TL_CTE']['tl_forum']['forum_post_editor'] = 'forum_post_editor'; 
 $GLOBALS['TL_CTE']['tl_forum']['forum_user_settings'] = 'forum_user_settings'; 
+$GLOBALS['TL_CTE']['tl_forum']['forum_moderator_panel'] = 'forum_moderator_panel'; 
 
 /**
  * -------------------------------------------------------------------------
