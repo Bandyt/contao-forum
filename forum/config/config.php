@@ -33,28 +33,6 @@
  * -------------------------------------------------------------------------
  * BACK END MODULES
  * -------------------------------------------------------------------------
- *
- * Back end modules are stored in a global array called "BE_MOD". Each module 
- * has certain properties like an icon, an optional callback function and one 
- * or more tables. Each module belongs to a particular group.
- * 
- *   $GLOBALS['BE_MOD'] = array
- *   (
- *       'group_1' => array
- *       (
- *           'module_1' => array
- *           (
- *               'tables'       => array('table_1', 'table_2'),
- *               'key'          => array('Class', 'method'),
- *               'callback'     => 'ClassName',
- *               'icon'         => 'path/to/icon.gif',
- *               'stylesheet'   => 'path/to/stylesheet.css',
- *               'javascript'   => 'path/to/javascript.js'
- *           )
- *       )
- *   );
- * 
- * Use function array_insert() to modify an existing modules array.
  */
  $GLOBALS['BE_MOD']['forum'] = array
  (
@@ -73,7 +51,7 @@
 	'tl_forum_settings' => array
 	 (
 	    'tables' => array('tl_forum_settings')
-	 )	 
+	 )
  );
 
 /**
@@ -100,25 +78,12 @@
  * -------------------------------------------------------------------------
  * CONTENT ELEMENTS
  * -------------------------------------------------------------------------
- *
- * List all content elements and their class names.
- * 
- *   $GLOBALS['TL_CTE'] = array
- *   (
- *       'group_1' => array
- *       (
- *           'cte_1' => 'Contentlass',
- *           'cte_2' => 'Contentlass'
- *       )
- *   );
- * 
- * Use function array_insert() to modify an existing CTE array.
  */
 $GLOBALS['TL_CTE']['tl_forum']['forum_forum_list'] = 'forum_forum_list';  
 $GLOBALS['TL_CTE']['tl_forum']['forum_thread_reader'] = 'forum_thread_reader'; 
 $GLOBALS['TL_CTE']['tl_forum']['forum_thread_editor'] = 'forum_thread_editor'; 
 $GLOBALS['TL_CTE']['tl_forum']['forum_post_editor'] = 'forum_post_editor'; 
-$GLOBALS['TL_CTE']['tl_forum']['forum_user_settings'] = 'forum_user_settings'; 
+$GLOBALS['TL_CTE']['tl_forum']['forum_user_panel'] = 'forum_user_panel'; 
 $GLOBALS['TL_CTE']['tl_forum']['forum_moderator_panel'] = 'forum_moderator_panel'; 
 
 /**
@@ -177,24 +142,8 @@ $GLOBALS['TL_CTE']['tl_forum']['forum_moderator_panel'] = 'forum_moderator_panel
  * -------------------------------------------------------------------------
  * HOOKS
  * -------------------------------------------------------------------------
- *
- * Hooking allows you to register one or more callback functions that are 
- * called on a particular event in a specific order. Thus, third party 
- * extensions can add functionality to the core system without having to
- * modify the source code.
- * 
- *   $GLOBALS['TL_HOOKS'] = array
- *   (
- *       'hook_1' => array
- *       (
- *           array('Class', 'Method'),
- *           array('Class', 'Method')
- *       )
- *   );
- * 
- * Use function array_insert() to modify an existing hooks array.
  */
-
+$GLOBALS['TL_HOOKS']['forum_quotePostText'][] = array('forum_BBCODE', 'quotePost');
 
 /**
  * -------------------------------------------------------------------------

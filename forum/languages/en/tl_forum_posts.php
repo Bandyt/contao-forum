@@ -39,6 +39,7 @@ $GLOBALS['TL_LANG']['tl_forum_posts']['forum_creator_information'] = 'Forum - Cr
 $GLOBALS['TL_LANG']['tl_forum_posts']['created_by'] = array('Created by', 'User which created this post');
 $GLOBALS['TL_LANG']['tl_forum_posts']['created_date'] = array('Date of creation', 'Date this post was created');
 $GLOBALS['TL_LANG']['tl_forum_posts']['created_time'] = array('Time of creation', 'Time this post was created');
+$GLOBALS['TL_LANG']['tl_forum_posts']['created_ip'] = array('IP', 'IP address of the creator');
 
 $GLOBALS['TL_LANG']['tl_forum_posts']['forum_additional_settings'] = 'Forum - Additional settings';
 $GLOBALS['TL_LANG']['tl_forum_posts']['changed'] = array('Changed', 'Check if this post has been changed after creation');

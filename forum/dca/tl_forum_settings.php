@@ -43,7 +43,8 @@ $GLOBALS['TL_DCA']['tl_forum_settings'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{forum_redirect_settings},forum_redirect_threadreader,forum_redirect_threadeditor,forum_redirect_forumlist,forum_redirect_posteditor'
+		'default'                     => '{forum_redirect_settings},forum_redirect_threadreader,forum_redirect_threadeditor,forum_redirect_forumlist,forum_redirect_posteditor,forum_redirect_moderator_panel;
+		{forum_logging},forum_logging_mod_delete_post'
 	),
 
 	// Subpalettes
@@ -88,6 +89,15 @@ $GLOBALS['TL_DCA']['tl_forum_settings'] = array
 			'exclude'                 => false,
 			'inputType'               => 'pageTree',
 			'eval'                    => array('mandatory'=>true,'fieldType'=>'radio', 'tl_class'=>'clr')
+		),
+		'forum_logging_mod_delete_post' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_settings']['forum_loggin_mod_delete_post'],
+			'exclude'                 => false,
+			'inputType'               => 'select',
+			'options'				  => array('L','N'),
+			'reference'				  => &$GLOBALS['TL_LANG']['tl_forum_settings']['logging']['reference'],
+			'eval'                    => array('mandatory'=>true)
 		)
 	)
 );

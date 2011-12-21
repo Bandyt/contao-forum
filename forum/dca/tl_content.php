@@ -39,7 +39,7 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['forum_forum_list'] = '{type_legend
 $GLOBALS['TL_DCA']['tl_content']['palettes']['forum_thread_reader'] = '{type_legend},name,headline,type;{forum_settings},forum_use_fixed_thread';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['forum_thread_editor'] = '{type_legend},name,headline,type';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['forum_post_editor'] = '{type_legend},name,headline,type';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_user_settings'] = '{type_legend},name,headline,type';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_user_panel'] = '{type_legend},name,headline,type';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['forum_moderator_panel'] = '{type_legend},name,headline,type';
 
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['forum_use_fixed_forum'] = 'forum_fixed_forum';

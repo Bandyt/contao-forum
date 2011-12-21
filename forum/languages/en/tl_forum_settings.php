@@ -38,10 +38,15 @@ $GLOBALS['TL_LANG']['tl_forum_settings']['forum_redirect_threadeditor'] = array(
 $GLOBALS['TL_LANG']['tl_forum_settings']['forum_redirect_forumlist'] = array('Forum list', 'Page containing the forum list');
 $GLOBALS['TL_LANG']['tl_forum_settings']['forum_redirect_posteditor'] = array('Post editor', 'Page containing the post editor');
 $GLOBALS['TL_LANG']['tl_forum_settings']['forum_redirect_moderator_panel'] = array('Moderator panel', 'Page containing the moderator panel');
+
+$GLOBALS['TL_LANG']['tl_forum_settings']['forum_logging'] = 'Logging';
+$GLOBALS['TL_LANG']['tl_forum_settings']['forum_loggin_mod_delete_post'] = array('Moderator - Delete post', 'Enables or disables the logging of post deletions by moderators');
+
 /**
  * Reference
  */
-
+$GLOBALS['TL_LANG']['tl_forum_settings']['logging']['reference']['L'] = 'Enabled'; 
+$GLOBALS['TL_LANG']['tl_forum_settings']['logging']['reference']['N'] = 'Disabled'; 
 
 /**
  * Buttons

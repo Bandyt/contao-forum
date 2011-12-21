@@ -38,10 +38,14 @@ $GLOBALS['TL_LANG']['tl_forum_settings']['forum_redirect_threadeditor'] = array(
 $GLOBALS['TL_LANG']['tl_forum_settings']['forum_redirect_forumlist'] = array('Forenliste', 'Seite, die die Forenliste beinhaltet');
 $GLOBALS['TL_LANG']['tl_forum_settings']['forum_redirect_posteditor'] = array('Beitragseditor', 'Seite, die den Beitragseditor beinhaltet');
 $GLOBALS['TL_LANG']['tl_forum_settings']['forum_redirect_moderator_panel'] = array('Moderatorenbereich', 'Seite, die den Moderatorenbereich beinhaltet');
+
+$GLOBALS['TL_LANG']['tl_forum_settings']['forum_logging'] = 'Protokollierung';
+$GLOBALS['TL_LANG']['tl_forum_settings']['forum_loggin_mod_delete_post'] = array('Moderator - Beitrag l&ouml;schen', 'Aktiviert oder deaktiviert das Protokollien von Beitragsl&ouml;schungen durch Moderatoren');
 /**
  * Reference
  */
-
+$GLOBALS['TL_LANG']['tl_forum_settings']['logging']['reference']['L'] = 'Aktiviert'; 
+$GLOBALS['TL_LANG']['tl_forum_settings']['logging']['reference']['N'] = 'Deaktiviert'; 
 
 /**
  * Buttons

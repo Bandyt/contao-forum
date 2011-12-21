@@ -39,6 +39,7 @@ $GLOBALS['TL_LANG']['tl_forum_posts']['forum_creator_information'] = 'Forum - Er
 $GLOBALS['TL_LANG']['tl_forum_posts']['created_by'] = array('Ertellt von', 'Benutzer, der diesen Beitrag erstellt hat');
 $GLOBALS['TL_LANG']['tl_forum_posts']['created_date'] = array('Erstellungsdatum', 'Datum der Erstellung');
 $GLOBALS['TL_LANG']['tl_forum_posts']['created_time'] = array('Erstellungsuhrzeit', 'Uhrzeit der Erstellung');
+$GLOBALS['TL_LANG']['tl_forum_posts']['created_ip'] = array('IP', 'IP-Adresse des Erstellers');
 
 $GLOBALS['TL_LANG']['tl_forum_posts']['forum_additional_settings'] = 'Forum - Erweiterte Einstellugnen';
 $GLOBALS['TL_LANG']['tl_forum_posts']['changed'] = array('Ge&auml;ndert', 'Anklicken, wenn der Beitrag ver&auml;ndert wurde nach der Erstellung');

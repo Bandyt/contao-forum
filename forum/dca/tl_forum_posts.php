@@ -108,7 +108,7 @@ $GLOBALS['TL_DCA']['tl_forum_posts'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array('changed'),
-		'default'                     => 'title,text;{forum_creator_information},created_by,created_date,created_time;{forum_additional_settings},changed,deleted'
+		'default'                     => 'title,text;{forum_creator_information},created_by,created_date,created_time,created_ip;{forum_additional_settings},changed,deleted'
 	),
 
 	// Subpalettes
@@ -147,7 +147,7 @@ $GLOBALS['TL_DCA']['tl_forum_posts'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_posts']['created_date'],
 			'exclude'                 => false,
 			'inputType'               => 'text',
-			'eval'                    => array('mandatory'=>true,'rgxp'=>'date', 'datepicker'=>$this->getDatePickerString())
+			'eval'                    => array('mandatory'=>true,'rgxp'=>'date', 'datepicker'=>$this->getDatePickerString(), 'tl_class'=>'w50 wizard')
 		),
 		'created_time' => array
 		(
@@ -155,6 +155,13 @@ $GLOBALS['TL_DCA']['tl_forum_posts'] = array
 			'exclude'                 => false,
 			'inputType'               => 'text',
 			'eval'                    => array('mandatory'=>true,'rgxp'=>'time')
+		),
+		'created_ip' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_posts']['created_ip'],
+			'exclude'                 => false,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>true)
 		),
 		'changed' => array
 		(

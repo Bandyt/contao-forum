@@ -37,7 +37,7 @@ $GLOBALS['TL_LANG']['CTE']['forum_forum_list'] = array('Forum - Forenliste', 'Ze
 $GLOBALS['TL_LANG']['CTE']['forum_thread_reader'] = array('Forum - Themenleser', 'Zeigt ein Thema und deren Beitr&auml;ge an');
 $GLOBALS['TL_LANG']['CTE']['forum_thread_editor'] = array('Forum - Themeneditor', 'Erstellt oder bearbeitet ein Thema');
 $GLOBALS['TL_LANG']['CTE']['forum_post_editor'] = array('Forum - Beitrageditor', 'Erstellt oder bearbeitet einen Beitrag');
-$GLOBALS['TL_LANG']['CTE']['forum_user_settings'] = array('Forum - Benutzereinstellungen', 'Erstellt oder bearbeitet die Benutzereinstellungen');
+$GLOBALS['TL_LANG']['CTE']['forum_user_panel'] = array('Forum - Benutzerbereich', 'Erstellt oder bearbeitet die Benutzereinstellungen');
 $GLOBALS['TL_LANG']['CTE']['forum_moderator_panel'] = array('Forum - Moderatorenbereich', 'Enth&auml;lt Funktionalit&auml;ten f&uuml;r Moderatoren');
 /*
  * Miscellaneous

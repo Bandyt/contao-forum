@@ -44,7 +44,10 @@ class forum_post_editor extends Module
 	 * @var string
 	 */
 	protected $strTemplate = 'forum_post_editor';
-
+	private $arrMember=array();
+	private $user=array();
+	private $user_logged_in=false;
+	
 	public function generate()
 	{
 		if (TL_MODE == 'BE')
@@ -54,12 +57,15 @@ class forum_post_editor extends Module
 		}
 		return parent::generate();
 	}
-
+	
 	/**
 	 * Generate module
 	 */
 	protected function compile()
 	{
+		$functions = new forum_common_functions();
+		$this->arrMember=$functions->getMember();
+		
 		//###########################################
 		//Get forum id
 		//###########################################
@@ -83,7 +89,8 @@ class forum_post_editor extends Module
 		if(FE_USER_LOGGED_IN)
 		{
 			$user=array(
-				'id'=>$this->Member->id
+				'id'=>$this->Member->id,
+				'username' => $this->Member->username
 			);
 			$this->Template->member=$user;
 			$this->Template->member_loggedin=true;
@@ -119,6 +126,7 @@ class forum_post_editor extends Module
 					'created_date' => $currenttime,
 					'created_time' => $currenttime,
 					'created_by' => $user['id'],
+					'created_ip' => $this->Environment->ip,
 					'quoted_post' => $quoted_post,
 					'order_no' => $posts->order_no+1
 				);
@@ -211,9 +219,16 @@ class forum_post_editor extends Module
 				if(is_int($quoteid)==true)
 				{
 					$quoted_post = $this->Database->prepare("SELECT created_by,text FROM tl_forum_posts WHERE id=?")->executeUncached($quoteid);
-					$this->Template->quoted_id=$quoteid;
-					$this->Template->quoted_creator=$quoted_post->created_by;
-					$this->Template->quoted_text=$quoted_post->text;
+					$strQuoteText=$quoted_post->text;
+					if (isset($GLOBALS['TL_HOOKS']['forum_quotePostText']) && is_array($GLOBALS['TL_HOOKS']['forum_quotePostText'])) 
+					{ 
+						foreach ($GLOBALS['TL_HOOKS']['forum_quotePostText'] as $callback) 
+						{ 
+							$this->import($callback[0]); 
+							$strQuoteText = $this->$callback[0]->$callback[1]($strQuoteText,$quoteid,$this->arrMember[$quoted_post->created_by]); 
+						} 
+					}  
+					$this->Template->quoted_text=$strQuoteText;
 				}
 				
 			}

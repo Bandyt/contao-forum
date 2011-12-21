@@ -36,7 +36,7 @@ $GLOBALS['TL_LANG']['CTE']['forum_forum_list'] = array('Forum - Forum list', 'Li
 $GLOBALS['TL_LANG']['CTE']['forum_thread_reader'] = array('Forum - Thread reader', 'Shows a thread and its posts');
 $GLOBALS['TL_LANG']['CTE']['forum_thread_editor'] = array('Forum - Thread editor', 'Creates or edits a thread');
 $GLOBALS['TL_LANG']['CTE']['forum_post_editor'] = array('Forum - Post editor', 'Creates or edits a post');
-$GLOBALS['TL_LANG']['CTE']['forum_user_settings'] = array('Forum - User settings', 'Add or changes user settings');
+$GLOBALS['TL_LANG']['CTE']['forum_user_panel'] = array('Forum - User panel', 'Add or changes user settings');
 $GLOBALS['TL_LANG']['CTE']['forum_moderator_panel'] = array('Forum - Moderator panel', 'Contains moderator functionalities');
 /*
  * Miscellaneous

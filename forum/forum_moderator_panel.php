@@ -101,9 +101,23 @@ class forum_moderator_panel extends Module
 					(
 						'deleted' => '1'
 					);
-					$this->log("Moderator " . $this->user['id'] . " (" . $this->user['username'] . ") deleted post " . $this->Input->get('post'), 'Forum thread reader - processInput()', TL_INFO);
 					$this->Database->prepare("UPDATE tl_forum_posts %s WHERE id=?")->set($arrSetPost)->execute($this->Input->get('post'));
-					$this->redirect($this->generateFrontendUrl($this->objThreadReader->row(),'/thread/' . $this->threadid));
+					if ($GLOBALS['TL_CONFIG']['forum_logging_mod_delete_post']='' || $GLOBALS['TL_CONFIG']['forum_logging_mod_delete_post']=='L')
+					{
+						$arrSetLog = array
+						(
+							'post' => $this->Input->get('post'),
+							'committer' => $this->user['id'],
+							'change_time' => time(),
+							'change_ip' => $this->Environment->ip,
+							'change_type' => 'MOD_DELETE_POST',
+							'field' => 'TL_FORUM_POSTS.DELETED',
+							'old_value' => '',
+							'new_value' => '1'
+						);
+						$this->Database->prepare("INSERT INTO tl_forum_moderator_log %s")->set($arrSetLog)->execute();
+					}
+					$this->redirect($this->generateFrontendUrl($this->objThreadReader->row(),'/thread/' . $this->Input->get('thread')));
 				}
 				break;
 		}

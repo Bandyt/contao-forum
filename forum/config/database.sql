@@ -74,6 +74,7 @@ CREATE TABLE `tl_forum_posts` (
   `created_by` int(10) unsigned NOT NULL default '0',
   `created_date` int(10) unsigned NOT NULL default '0',
   `created_time` int(10) unsigned NOT NULL default '0',
+  `created_ip` varchar(255) NOT NULL default '',
   `changed` char(1) NOT NULL default '',
   `last_change_by` int(10) unsigned NOT NULL default '0',
   `last_change_date` int(10) unsigned NOT NULL default '0',
@@ -126,6 +127,25 @@ CREATE TABLE `tl_forum_thread_tracker` (
   `thread` int(10) unsigned NOT NULL default '0',
   `user` int(10) unsigned NOT NULL default '0',
   `tstamp` int(10) unsigned NOT NULL default '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+-- --------------------------------------------------------
+
+-- 
+-- Table `tl_forum_moderator_log`
+-- 
+
+CREATE TABLE `tl_forum_moderator_log` (
+  `forum` int(10) unsigned NOT NULL default '0',
+  `thread` int(10) unsigned NOT NULL default '0',
+  `post` int(10) unsigned NOT NULL default '0',
+  `user` int(10) unsigned NOT NULL default '0',
+  `committer` int(10) unsigned NOT NULL default '0',
+  `change_time` int(10) unsigned NOT NULL default '0',
+  `change_ip` varchar(255) NOT NULL default '',
+  `change_type` varchar(255) NOT NULL default '',
+  `field` varchar(255) NOT NULL default '',
+  `old_value` blob NULL,
+  `new_value` blob NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- --------------------------------------------------------
 
