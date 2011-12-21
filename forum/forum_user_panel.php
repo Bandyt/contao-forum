@@ -30,26 +30,26 @@
 
 
 /**
- * Class forum_user_settings 
+ * Class forum_user_panel
  *
  * @copyright  2011 Andreas Koob 
  * @author     Andreas Koob 
  * @package    Controller
  */
-class forum_user_settings extends Module
+class forum_user_panel extends Module
 {
 
 	/**
 	 * Template
 	 * @var string
 	 */
-	protected $strTemplate = 'forum_user_settings';
+	protected $strTemplate = 'forum_user_panel';
 	
 	public function generate()
 	{
 		if (TL_MODE == 'BE')
 		{
-			$return="Forum - User settings";
+			$return="Forum - User panel";
 			return $return;
 		}
 		return parent::generate();
