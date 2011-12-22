@@ -158,11 +158,12 @@ class forum_forum_list extends Module
 	{
 		//We are checking currently the last_post_time. This could change in the future
 		$arrStatus=array();
-		$objTracker = $this->Database->prepare("SELECT thread.last_change_time, thread.last_post_time, thread.global_thread, thread.important_thread, thread.locked, tracker.tstamp 
+		$objThread = $this->Database->prepare("SELECT thread_type, locked, deleted FROM tl_forum_threads WHERE id=?")->executeUncached($threadid);
+		$objTracker = $this->Database->prepare("SELECT thread.last_change_time, thread.last_post_time, tracker.tstamp 
 														FROM tl_forum_threads as thread 
 														JOIN tl_forum_thread_tracker as tracker
 														ON thread.id=tracker.thread
-														WHERE tracker.thread=? AND tracker.user=?")->execute($threadid,$this->arrUser['id']);
+														WHERE tracker.thread=? AND tracker.user=?")->executeUncached($threadid,$this->arrUser['id']);
 		//Check if anything new has happened afer the user's last visit
 		if ($objTracker->numRows==0)
 		{
@@ -179,18 +180,26 @@ class forum_forum_list extends Module
 			//Last visit was after the last change
 			$arrStatus[]='read';
 		}
-		//Check for special threads
-		if($objTracker->global_thread==1)
+		//Check for thread type
+		switch($objThread->thread_type)
 		{
-			$arrStatus[]='global';
+			case 'N':
+				$arrStatus[]='normal';
+				break;
+			case 'A':
+				$arrStatus[]='announcement';
+				break;
+			case 'B':
+				$arrStatus[]='broadcast';
+				break;
 		}
-		if($objTracker->important_thread==1)
-		{
-			$arrStatus[]='important';
-		}
-		if($objTracker->locked==1)
+		if($objThread->locked=='1')
 		{
 			$arrStatus[]='locked';
+		}
+		if($objThread->deleted=='1')
+		{
+			$arrStatus[]='deleted';
 		}
 		return $arrStatus;
 	}//private function getForumStatus()
@@ -225,17 +234,18 @@ class forum_forum_list extends Module
 		return $arrForums;
 	}//private function getForums()
 	
-	private function getThreads($deleted,$global,$important)
+	private function getThreads($deleted,$thread_type)
 	{
 		$arrThreads=array();
-		if($global=='1')
+		if($thread_type=='B')//Broadcasted thread must not be search with pid
 		{
-			$objThreads = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE deleted=? AND global_thread=? ORDER BY sorting ASC")->execute($deleted,$global);
+			$objThreads = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE deleted=? AND thread_type=? ORDER BY sorting ASC")->execute($deleted,$thread_type);
 		}
 		else
 		{
-			$objThreads = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE pid=? AND deleted=? AND important_thread=? and global_thread=? ORDER BY sorting ASC")->execute($this->forumid,$deleted,$important,$global);
+			$objThreads = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE pid=? AND deleted=? AND thread_type=? ORDER BY sorting ASC")->execute($this->forumid,$deleted,$thread_type);
 		}
+		
 		
 		while($objThreads->next()){
 			$objPosts = $this->Database->prepare("SELECT count(id) as cnt FROM tl_forum_posts WHERE pid=? AND deleted=?")->execute($objThreads->id,'');
@@ -252,6 +262,7 @@ class forum_forum_list extends Module
 				'last_post_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objLastThreadPost->created_date),
 				'last_post_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objLastThreadPost->created_time),
 				'last_post_link'=>$this->generateFrontendUrl($this->arrLinks['thread_reader']->row(),'/thread/' . $objLastThreadPost->pid) . '#' . $objLastThreadPost->id,
+				'thread_type'=>$objThreads->thread_type,
 				'status'=>$this->getThreadStatus($objThreads->id)
 			);
 		}
@@ -285,10 +296,10 @@ class forum_forum_list extends Module
 		//Get data and send them to template
 		$this->Template->forums=$this->getForums();
 		$this->Template->threadcreator=$this->generateFrontendUrl($this->arrLinks['thread_editor']->row(),'/forum/' . $this->forumid . '/mode/new');
-		$this->Template->threads=$this->getThreads('','',''); //Get the normal threads
-		$this->Template->important_threads=$this->getThreads('','','1'); //Get the important threads
-		$this->Template->global_threads=$this->getThreads('','1',''); //Get the global threads
-		$this->Template->num_threads=count($this->Template->threads);
+		$this->Template->threads=$this->getThreads('','N'); //Get the normal threads
+		$this->Template->announcements=$this->getThreads('','A'); //Get announcements
+		$this->Template->broadcasts=$this->getThreads('','B'); //Get broadcasts
+		$this->Template->num_threads=count($this->Template->threads)+count($this->Template->announcements)+count($this->Template->broadcasts);
 		$this->Template->forumid=$this->forumid;
 		$this->Template->forumbreadcrumbs=$this->getForumBreadcrumb($this->forumid,array());
 	}//protected function compile()

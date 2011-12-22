@@ -124,6 +124,7 @@ class forum_thread_editor extends Module
 					'created_date' => $currenttime,
 					'created_time' => $currenttime,
 					'created_by' => $user['id'],
+					'thread_type' => $this->Input->post('thread_type')
 				);
 				$insertId = $this->Database->prepare("INSERT INTO tl_forum_threads %s")->set($arrSetthread)->execute()->insertId;
 				$arrSetpost=array
@@ -153,7 +154,7 @@ class forum_thread_editor extends Module
 												->limit(1)
 												->execute($GLOBALS['TL_CONFIG']['forum_redirect_threadreader']);
 				$this->redirect($this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $insertId));
-			}	
+			}//if($this->Input->post('mode')=='new')
 		}
 		$this->Template->errors=$errors;
 		

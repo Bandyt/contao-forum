@@ -83,7 +83,7 @@ class forum_thread_reader extends Module
 				'creator_username'=>$this->arrMember[$objPosts->created_by]['username'],
 				'creator_signature'=>$this->arrMember[$objPosts->created_by]['signature'],
 				'title'=>$objPosts->title,
-				'text'=>$objPosts->text,
+				'text'=>$strPostText,
 				'changed'=>$objPosts->changed,
 				'last_change_by'=>$this->arrMember[$objPosts->last_change_by]['username'],
 				'last_change_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objPosts->last_change_date),
@@ -96,6 +96,52 @@ class forum_thread_reader extends Module
 		}
 		return $arrPosts;
 	}
+	
+	private function getBreadcrumb($intForumId, $arrCrumbs)
+	{
+		if(count($arrCrumbs)==0) //Array is empty. Prefill with thread information
+		{
+			$objThread = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE id=?")->execute($this->intThreadId);
+			$arrCrumbs[]=array(
+				'id'=>$objThread->id,
+				'title'=>$objThread->title,
+				'link'=>$this->generateFrontendUrl($this->arrLinks['thread_reader']->row(),'/thread/' . $this->intThreadId),
+				'class'=>''
+			);
+			$intForumId=$objThread->pid;
+		} 
+		$objForum = $this->Database->prepare("SELECT id,title,pid FROM tl_forum_forums WHERE id=?")->execute($intForumId);
+		$class='';
+		if($intForumId==0)
+		{
+			$arrNewCrumb = array(
+				'id' => $objForum->id,
+				'title' => $GLOBALS['TL_LANG']['forum']['forum'],
+				'link' => $this->generateFrontendUrl($this->arrLinks['forum_list']->row(),'/forum/0'),
+				'class' => $class
+			);
+		}
+		else
+		{
+			$arrNewCrumb = array(
+				'id' => $objForum->id,
+				'title' => $objForum->title,
+				'link' => $this->generateFrontendUrl($this->arrLinks['forum_list']->row(),'/forum/' . $objForum->id),
+				'class' => $class
+			);
+		}
+		
+		array_unshift($arrCrumbs,$arrNewCrumb);
+		if($objForum->id!=0)
+		{
+			$arrTotalArray=$this->getBreadcrumb($objForum->pid,$arrCrumbs);
+			return $arrTotalArray;
+		}
+		else
+		{
+			return $arrCrumbs;
+		}
+	}//private function getForumBreadcrumb
 	
 	private function getThreadId()
 	{
@@ -110,10 +156,11 @@ class forum_thread_reader extends Module
 	
 	private function updateTracker()
 	{
-		if(($this->intThreadId!=0) && ($this->user_logged_in==true))
+		if(($this->intThreadId!=0) && ($this->arrUser['logged_in']==true))
 		{
 			$currenttime=time();
 			$objTracker = $this->Database->prepare("SELECT tstamp FROM tl_forum_thread_tracker WHERE user=? AND thread=?")->execute($this->arrUser['id'],$this->intThreadId);
+			
 			if($objTracker->numRows!=0)
 			{
 				$arrSetTracker = array
@@ -162,6 +209,7 @@ class forum_thread_reader extends Module
 		$this->Template->thread = $this->arrThread;
 		$this->updateTracker();
 		$this->Template->posts=$this->getPosts();
+		$this->Template->breadcrumbs=$this->getBreadcrumb($this->intThreadId,array());
 		
 		
 	}

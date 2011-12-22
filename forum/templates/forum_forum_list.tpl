@@ -43,43 +43,42 @@
 				<th><?php echo($GLOBALS['TL_LANG']['forum']['posts']); ?></th>
 				<th><?php echo($GLOBALS['TL_LANG']['forum']['last_post']); ?></th>
 			</tr>
-				<?php if(count($this->global_threads>0)): ?>
-					<?php foreach($this->global_threads as $global_thread): ?>
-						<tr class="global_thread">
-							<td class="icon"><?php foreach($global_thread['status'] as $status): ?><?php echo($status); ?><?php endforeach; ?></td>
-							<td class="name"><a href="<?php echo($global_thread['redirect']); ?>"><?php echo($global_thread['title']); ?></a></td>
-							<td class="created_by"><?php echo($global_thread['created_by']); ?></td>
-							<td class="posts"><?php echo($global_thread['post_count']); ?></td>
+				<?php if(count($this->broadcasts>0)): ?>
+					<?php foreach($this->broadcasts as $broadcast): ?>
+						<tr class="broadcast">
+							<td class="icon"><?php foreach($broadcast['status'] as $status): ?><?php echo($status); ?><br /><?php endforeach; ?></td>
+							<td class="name"><a href="<?php echo($broadcast['redirect']); ?>"><?php echo($broadcast['title']); ?></a></td>
+							<td class="created_by"><?php echo($broadcast['created_by']); ?></td>
+							<td class="posts"><?php echo($broadcast['post_count']); ?></td>
 							<td class="last_post">
-								<?php echo($global_thread['last_post_user']); ?><br />
-								<a href="<?php echo($global_thread['last_post_link']); ?>"><?php if($global_thread['last_post_title']!=''): ?><?php echo($global_thread['last_post_title']); ?><br /><?php endif; ?>
-								<?php echo($global_thread['last_post_date']); ?>&nbsp;
-								<?php echo($global_thread['last_post_time']); ?></a>
+								<?php echo($broadcast['last_post_user']); ?><br />
+								<a href="<?php echo($broadcast['last_post_link']); ?>"><?php if($broadcast['last_post_title']!=''): ?><?php echo($broadcast['last_post_title']); ?><br /><?php endif; ?>
+								<?php echo($broadcast['last_post_date']); ?>&nbsp;
+								<?php echo($broadcast['last_post_time']); ?></a>
 							</td>
 						</tr>
 					<?php endforeach; ?>
 				<?php endif; ?>
-				
-				<?php if(count($this->important_threads>0)): ?>
-					<?php foreach($this->important_threads as $important_thread): ?>
-						<tr class="important_thread">
-							<td class="icon"><?php foreach($important_thread['status'] as $status): ?><?php echo($status); ?><?php endforeach; ?></td>
-							<td class="name"><a href="<?php echo($important_thread['redirect']); ?>"><?php echo($important_thread['title']); ?></a></td>
-							<td class="created_by"><?php echo($important_thread['created_by']); ?></td>
-							<td class="posts"><?php echo($important_thread['post_count']); ?></td>
+				<?php if(count($this->announcements>0)): ?>
+					<?php foreach($this->announcements as $announcement): ?>
+						<tr class="announcement">
+							<td class="icon"><?php foreach($announcement['status'] as $status): ?><?php echo($status); ?><br /><?php endforeach; ?></td>
+							<td class="name"><a href="<?php echo($announcement['redirect']); ?>"><?php echo($announcement['title']); ?></a></td>
+							<td class="created_by"><?php echo($announcement['created_by']); ?></td>
+							<td class="posts"><?php echo($announcement['post_count']); ?></td>
 							<td class="last_post">
-								<?php echo($important_thread['last_post_user']); ?><br />
-								<a href="<?php echo($important_thread['last_post_link']); ?>"><?php if($important_thread['last_post_title']!=''): ?><?php echo($important_thread['last_post_title']); ?><br /><?php endif; ?>
-								<?php echo($important_thread['last_post_date']); ?>&nbsp;
-								<?php echo($important_thread['last_post_time']); ?></a>
+								<?php echo($announcement['last_post_user']); ?><br />
+								<a href="<?php echo($announcement['last_post_link']); ?>"><?php if($announcement['last_post_title']!=''): ?><?php echo($announcement['last_post_title']); ?><br /><?php endif; ?>
+								<?php echo($announcement['last_post_date']); ?>&nbsp;
+								<?php echo($announcement['last_post_time']); ?></a>
 							</td>
 						</tr>
 					<?php endforeach; ?>
 				<?php endif; ?>
 				
 				<?php foreach($this->threads as $thread): ?>
-					<tr class="thread">
-						<td class="icon"><?php foreach($thread['status'] as $status): ?><?php echo($status); ?><?php endforeach; ?></td>
+					<tr class="normal">
+						<td class="icon"><?php foreach($thread['status'] as $status): ?><?php echo($status); ?><br /><?php endforeach; ?></td>
 						<td class="name"><a href="<?php echo($thread['redirect']); ?>"><?php echo($thread['title']); ?></a></td>
 						<td class="created_by"><?php echo($thread['created_by']); ?></td>
 						<td class="posts"><?php echo($thread['post_count']); ?></td>

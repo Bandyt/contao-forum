@@ -52,6 +52,48 @@ class forum_BBCODE extends Frontend
 		$strNewText='[QUOTE=' . $intQuoteId . ';' . $arrUser['username'] . ']' . $strText . '[/QUOTE]';
 		return $strNewText;
 	}
+
+	public function parseBBCode($strText,$intPostId,$intThreadId)
+	{
+		$arrSearch = array
+		(
+			'@\[b\](.*)\[/b\]@Uis',
+			'@\[i\](.*)\[/i\]@Uis',
+			'@\[u\](.*)\[/u\]@Uis',
+			'@\s*\[code\](.*)\[/code\]\s*@Uis',
+			'@\[color=([^\]" ]+)\](.*)\[/color\]@Uis',
+			'@\s*\[quote\](.*)\[/quote\]\s*@Uis',
+			'@\s*\[quote=([^\]]+)\](.*)\[/quote\]\s*@Uis', 
+			'@\[img\]\s*([^\[" ]+\.(jpe?g|png|gif|bmp|tiff?|ico))\s*\[/img\]@i',
+			'@\[url\]\s*([^\[" ]+)\s*\[/url\]@i',
+			'@\[url=([^\]" ]+)\](.*)\[/url\]@Uis',
+			'@\[email\]\s*([^\[" ]+)\s*\[/email\]@i',
+			'@\[email=([^\]" ]+)\](.*)\[/email\]@Uis',
+			'@href="(([a-z0-9]+\.)*[a-z0-9]+\.([a-z]{2}|asia|biz|com|info|name|net|org|tel)(/|"))@i'
+		);
+
+		$arrReplace = array
+		(
+			'<strong>$1</strong>',
+			'<em>$1</em>',
+			'<span style="text-decoration:underline;">$1</span>',
+			"\n\n" . '<div class="code"><p>'. $GLOBALS['TL_LANG']['MSC']['com_code'] .'</p><pre>$1</pre></div>' . "\n\n",
+			'<span style="color:$1;">$2</span>',
+			"\n\n" . '<div class="quote">$1</div>' . "\n\n",
+			"\n\n" . '<div class="quote"><p>'. sprintf($GLOBALS['TL_LANG']['MSC']['com_quote'], '$1') .'</p>$2</div>' . "\n\n",
+			'<img src="$1" alt="" />',
+			'<a href="$1">$1</a>',
+			'<a href="$1">$2</a>',
+			'<a href="mailto:$1">$1</a>',
+			'<a href="mailto:$1">$2</a>',
+			'href="http://$1'
+		);
+
+		$strText = preg_replace($arrSearch, $arrReplace, $strText);
+
+
+		return $strText;
+	}
 	
 	public function generate()
 	{

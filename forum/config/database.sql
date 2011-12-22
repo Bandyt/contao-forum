@@ -52,8 +52,8 @@ CREATE TABLE `tl_forum_threads` (
   `last_post_time` int(10) unsigned NOT NULL default '0',
   `deleted` char(1) NOT NULL default '',
   `locked` char(1) NOT NULL default '',
-  `important_thread` char(1) NOT NULL default '',
-  `global_thread` char(1) NOT NULL default '',
+  `thread_type` char(1) NOT NULL default 'N',
+  `special` char(1) NOT NULL default '',
   PRIMARY KEY  (`id`),
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

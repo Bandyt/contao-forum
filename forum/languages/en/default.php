@@ -52,6 +52,7 @@ $GLOBALS['TL_LANG']['forum']['threads']   = 'Threads';
 $GLOBALS['TL_LANG']['forum']['last_post']   = 'Last post';
 $GLOBALS['TL_LANG']['forum']['creator']   = 'Creator';
 $GLOBALS['TL_LANG']['forum']['title']   = 'Title';
+$GLOBALS['TL_LANG']['forum']['thread_type']   = 'Thread type';
 $GLOBALS['TL_LANG']['forum']['reason']   = 'Reason for edit';
 $GLOBALS['TL_LANG']['forum']['no_forums']   = 'No forums';
 $GLOBALS['TL_LANG']['forum']['add_thread']   = 'Add new thread';
@@ -60,7 +61,9 @@ $GLOBALS['TL_LANG']['forum']['created_by']   = 'Created by';
 $GLOBALS['TL_LANG']['forum']['no_threads']   = 'No threads';
 $GLOBALS['TL_LANG']['forum']['signature']   = 'Signature';
 $GLOBALS['TL_LANG']['forum']['delete_post']   = 'Delete post';
-
 $GLOBALS['TL_LANG']['forum']['text']   = 'Text';
 
+$GLOBALS['TL_LANG']['forum']['thread_type_n']='Normal';
+$GLOBALS['TL_LANG']['forum']['thread_type_a']='Announcement';
+$GLOBALS['TL_LANG']['forum']['thread_type_b']='Broadcast';
 ?>

@@ -53,6 +53,7 @@ $GLOBALS['TL_LANG']['forum']['threads']   = 'Themen';
 $GLOBALS['TL_LANG']['forum']['last_post']   = 'Letzter Beitrag';
 $GLOBALS['TL_LANG']['forum']['creator']   = 'Ersteller';
 $GLOBALS['TL_LANG']['forum']['title']   = 'Titel';
+$GLOBALS['TL_LANG']['forum']['thread_type']   = 'Thementyp';
 $GLOBALS['TL_LANG']['forum']['reason']   = 'Grund der Bearbeitung';
 $GLOBALS['TL_LANG']['forum']['no_forums']   = 'Keine Foren';
 $GLOBALS['TL_LANG']['forum']['add_thread']   = 'Neues Thema erstellen';
@@ -61,6 +62,9 @@ $GLOBALS['TL_LANG']['forum']['created_by']   = 'Erstellt von';
 $GLOBALS['TL_LANG']['forum']['no_threads']   = 'Keine Themen';
 $GLOBALS['TL_LANG']['forum']['signature']   = 'Signatur';
 $GLOBALS['TL_LANG']['forum']['delete_post']   = 'Beitrag l&ouml;schen';
-
 $GLOBALS['TL_LANG']['forum']['text']   = 'Text';
+
+$GLOBALS['TL_LANG']['forum']['thread_type_n']='Normal';
+$GLOBALS['TL_LANG']['forum']['thread_type_a']='Ank&uuml;digung';
+$GLOBALS['TL_LANG']['forum']['thread_type_b']='Bekanntmachung';
 ?>

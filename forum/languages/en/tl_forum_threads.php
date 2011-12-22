@@ -42,11 +42,13 @@ $GLOBALS['TL_LANG']['tl_forum_threads']['created_time'] = array('Time of creatio
 $GLOBALS['TL_LANG']['tl_forum_threads']['forum_additional_settings'] = 'Forum - Additional settings';
 $GLOBALS['TL_LANG']['tl_forum_threads']['deleted'] = array('Deleted', 'Check if this thread has been deleted');
 $GLOBALS['TL_LANG']['tl_forum_threads']['locked'] = array('Locked', 'Check if this thread is locked. Locked threads cannot be answered');
-$GLOBALS['TL_LANG']['tl_forum_threads']['important_thread'] = array('Important thread', 'Important threads will be listed on top of the forums list');
-$GLOBALS['TL_LANG']['tl_forum_threads']['global_thread'] = array('Global thread', 'Global threads will be listed on on top of every forums list');
+$GLOBALS['TL_LANG']['tl_forum_threads']['thread_type'] = array('Thread type', 'Defines the type of thread');
 /**
  * Reference
  */
+$GLOBALS['TL_LANG']['tl_forum_threads']['thread_type']['reference']['N']='Normal';
+$GLOBALS['TL_LANG']['tl_forum_threads']['thread_type']['reference']['A']='Announcement';
+$GLOBALS['TL_LANG']['tl_forum_threads']['thread_type']['reference']['B']='Broadcast';
 
 
 /**

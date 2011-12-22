@@ -144,7 +144,7 @@ $GLOBALS['TL_CTE']['tl_forum']['forum_moderator_panel'] = 'forum_moderator_panel
  * -------------------------------------------------------------------------
  */
 $GLOBALS['TL_HOOKS']['forum_quotePostText'][] = array('forum_BBCODE', 'quotePost');
-
+$GLOBALS['TL_HOOKS']['forum_parsePostText'][] = array('forum_BBCODE', 'parseBBCode');
 /**
  * -------------------------------------------------------------------------
  * PAGE TYPES
