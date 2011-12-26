@@ -201,6 +201,10 @@ class forum_forum_list extends Module
 		{
 			$arrStatus[]='deleted';
 		}
+		if($objThread->special=='1')
+		{
+			$arrStatus[]='special';
+		}
 		return $arrStatus;
 	}//private function getForumStatus()
 	
@@ -228,7 +232,8 @@ class forum_forum_list extends Module
 				'last_post_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objLastPost->created_time),
 				'last_post_title'=>$objLastPost->thread_title,
 				'last_post_link'=>$this->generateFrontendUrl($this->arrLinks['thread_reader']->row(),'/thread/' . $objLastPost->pid) . '#' . $objLastPost->id,
-				'status'=>$this->getForumStatus($objForums->id)
+				'status'=>$this->getForumStatus($objForums->id),
+				'special'=>$objForums->special
 			);
 		}
 		return $arrForums;

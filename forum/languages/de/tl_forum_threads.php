@@ -43,6 +43,7 @@ $GLOBALS['TL_LANG']['tl_forum_threads']['forum_additional_settings'] = 'Forum - 
 $GLOBALS['TL_LANG']['tl_forum_threads']['deleted'] = array('Gel&ouml;scht', 'Anklicken, wenn das Thema gel&ouml;scht wurde');
 $GLOBALS['TL_LANG']['tl_forum_threads']['locked'] = array('Gesperrt', 'Anklicken, wenn das Thema gesperrt ist. Gesperrte Themen k&ouml;nnen nicht beantwortet werden');
 $GLOBALS['TL_LANG']['tl_forum_threads']['thread_type'] = array('Thementyp', 'Legt den Typ des Themas fest');
+$GLOBALS['TL_LANG']['tl_forum_threads']['special'] = array('Besonders', 'Besondere Themen verhalten sich wie normale, haben aber eine andere CSS Klasse');
 /**
  * Reference
  */

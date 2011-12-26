@@ -81,6 +81,7 @@ CREATE TABLE `tl_forum_posts` (
   `last_change_time` int(10) unsigned NOT NULL default '0',
   `last_change_reason` varchar(255) NOT NULL default '',
   `quoted_post` int(10) unsigned NOT NULL default '0',
+  `answered_post` int(10) unsigned NOT NULL default '0',
   `deleted` char(1) NOT NULL default '',
   `title` varchar(255) NOT NULL default '',
   `text` blob NULL,
@@ -147,6 +148,8 @@ CREATE TABLE `tl_forum_moderator_log` (
   `old_value` blob NULL,
   `new_value` blob NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
 -- --------------------------------------------------------
 
 -- 

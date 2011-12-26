@@ -106,7 +106,7 @@ class forum_post_editor extends Module
 		if($this->Input->post('submit'))
 		{
 			$currenttime=time();
-			if(($this->Input->post('mode')=='new')||($this->Input->post('mode')=='quote'))
+			if(($this->Input->post('mode')=='new')||($this->Input->post('mode')=='quote')||($this->Input->post('mode')=='answer'))
 			{
 				if(!$this->Input->post('quoted_id'))
 				{
@@ -115,6 +115,14 @@ class forum_post_editor extends Module
 				else
 				{
 					$quoted_post=$this->Input->post('quoted_id');
+				}
+				if(!$this->Input->post('answered_id'))
+				{
+					$answered_post=0;
+				}
+				else
+				{
+					$answered_post=$this->Input->post('answered_id');
 				}
 				//Add post to database
 				$posts = $this->Database->prepare("SELECT max(order_no) as order_no FROM tl_forum_posts WHERE pid=?")->execute($threadid);
@@ -127,6 +135,7 @@ class forum_post_editor extends Module
 					'created_time' => $currenttime,
 					'created_by' => $user['id'],
 					'created_ip' => $this->Environment->ip,
+					'answered_post' => $answered_post,
 					'quoted_post' => $quoted_post,
 					'order_no' => $posts->order_no+1
 				);
@@ -209,6 +218,12 @@ class forum_post_editor extends Module
 				}
 			}
 		}
+		elseif($this->Input->get('mode')=='answer')
+		{
+			$mode='answer';
+			$answeredid=intval($this->Input->get('post'));
+			$this->Template->answered_id=$answeredid;
+		}
 		elseif($this->Input->get('mode')=='quote')
 		{
 			$mode='quote';
@@ -227,7 +242,8 @@ class forum_post_editor extends Module
 							$this->import($callback[0]); 
 							$strQuoteText = $this->$callback[0]->$callback[1]($strQuoteText,$quoteid,$this->arrMember[$quoted_post->created_by]); 
 						} 
-					}  
+					}
+					$this->Template->quoted_id=$quoteid;
 					$this->Template->quoted_text=$strQuoteText;
 				}
 				

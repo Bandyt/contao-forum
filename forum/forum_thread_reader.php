@@ -89,6 +89,7 @@ class forum_thread_reader extends Module
 				'last_change_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objPosts->last_change_date),
 				'last_change_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objPosts->last_change_time),
 				'last_change_reason'=>$objPosts->last_change_reason,
+				'answer_link'=>$this->generateFrontendUrl($this->arrLinks['post_editor']->row(),'/thread/' . $this->intThreadId . '/mode/answer/post/' . $objPosts->id),
 				'quote_link'=>$this->generateFrontendUrl($this->arrLinks['post_editor']->row(),'/thread/' . $this->intThreadId . '/mode/quote/post/' . $objPosts->id),
 				'edit_link'=>$this->generateFrontendUrl($this->arrLinks['post_editor']->row(),'/thread/' . $this->intThreadId . '/mode/edit/post/' . $objPosts->id),
 				'mod_tools_delete_link'=>$this->generateFrontendUrl($this->arrLinks['moderator_panel']->row(),'/thread/' . $this->intThreadId . '/mode/mod-delete-post/post/' . $objPosts->id),

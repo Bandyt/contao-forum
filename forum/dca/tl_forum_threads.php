@@ -174,6 +174,13 @@ $GLOBALS['TL_DCA']['tl_forum_threads'] = array
 			'options'				  => array('N','A','B'),
 			'reference'				  => &$GLOBALS['TL_LANG']['tl_forum_threads']['thread_type']['reference'],
 			'eval'                    => array('mandatory'=>true)
+		),
+		'special' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_threads']['special'],
+			'exclude'                 => false,
+			'inputType'               => 'checkbox',
+			'eval'                    => array('mandatory'=>false)
 		)
 	)
 );

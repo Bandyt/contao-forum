@@ -43,6 +43,7 @@ $GLOBALS['TL_LANG']['tl_forum_threads']['forum_additional_settings'] = 'Forum - 
 $GLOBALS['TL_LANG']['tl_forum_threads']['deleted'] = array('Deleted', 'Check if this thread has been deleted');
 $GLOBALS['TL_LANG']['tl_forum_threads']['locked'] = array('Locked', 'Check if this thread is locked. Locked threads cannot be answered');
 $GLOBALS['TL_LANG']['tl_forum_threads']['thread_type'] = array('Thread type', 'Defines the type of thread');
+$GLOBALS['TL_LANG']['tl_forum_threads']['special'] = array('Special', 'Special threads behave like normal threads, but have another css class');
 /**
  * Reference
  */
