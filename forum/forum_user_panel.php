@@ -36,7 +36,7 @@
  * @author     Andreas Koob 
  * @package    Controller
  */
-class forum_user_panel extends Module
+class forum_user_panel extends ContentElement
 {
 
 	/**
@@ -85,26 +85,27 @@ class forum_user_panel extends Module
 		//###########################################
 		if($this->Input->post('submit'))
 		{
-			$objUserSettings = $this->Database->prepare("SELECT * FROM tl_forum_user_settings WHERE user=?")->execute($user['id']);
+			$objUserSettings = $this->Database->prepare("SELECT * FROM tl_forum_user_settings WHERE pid=? AND user=?")->execute($this->forum_forum_root,$user['id']);
 			$arrSetSettings = array
 			(
 				'user'      => $user['id'],
-				'signature' => $this->Input->post('signature')
+				'signature' => $this->Input->post('signature'),
+				'pid'		=> $this->forum_forum_root
 			);
 			if($objUserSettings->numRows==0)//No settings stored up to now
 			{
 				
-				$insertId = $this->Database->prepare("INSERT INTO tl_forum_user_settings %s")->set($arrSetSettings)->execute()->insertId;
+				$insertId = $this->Database->prepare("INSERT INTO tl_forum_user_settings %s WHERE")->set($arrSetSettings)->execute()->insertId;
 			}
 			else
 			{
-				$this->Database->prepare("UPDATE tl_forum_user_settings %s WHERE user=?")->set($arrSetSettings)->execute($user['id']);
+				$this->Database->prepare("UPDATE tl_forum_user_settings %s WHERE pid=? AND user=?")->set($arrSetSettings)->execute($this->forum_forum_root,$user['id']);
 			}
 		}
 		//###########################################
 		//Get user settings
 		//###########################################
-		$objUserSettings = $this->Database->prepare("SELECT * FROM tl_forum_user_settings WHERE user=?")->executeUncached($user['id']);
+		$objUserSettings = $this->Database->prepare("SELECT * FROM tl_forum_user_settings WHERE pid=? AND user=?")->executeUncached($this->forum_forum_root,$user['id']);
 		
 		//###########################################
 		//Send data to template

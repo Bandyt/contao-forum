@@ -39,7 +39,8 @@ $GLOBALS['TL_DCA']['tl_forum_user_settings'] = array
 	'config' => array
 	(
 		'dataContainer'               => 'Table',
-		'enableVersioning'            => true
+		'enableVersioning'            => true,
+		'ptable'                      => 'tl_forum_forums'
 	),
 
 	// List
@@ -47,16 +48,17 @@ $GLOBALS['TL_DCA']['tl_forum_user_settings'] = array
 	(
 		'sorting' => array
 		(
-			'mode'                    => 1,
+			'mode'                    => 4,
 			'fields'                  => array('user'),
-			'flag'                    => 1,
+			'headerFields'            => array('title'),
+			'flag'                    => 11,
 			'disableGrouping'		  => true,
+			'child_record_callback'   => array('tl_forum_user_settings', 'listSettings'),
 		),
 		'label' => array
 		(
 			'fields'                  => array('user'),
-			'format'                  => '%s',
-			'label_callback'          => array('tl_forum_user_settings', 'addLabel')
+			'format'                  => '%s'
 		),
 		'global_operations' => array
 		(
@@ -72,26 +74,26 @@ $GLOBALS['TL_DCA']['tl_forum_user_settings'] = array
 		(
 			'edit' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_forum_posts']['edit'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_forum_user_settings']['edit'],
 				'href'                => 'act=edit',
 				'icon'                => 'edit.gif'
 			),
 			'copy' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_forum_posts']['copy'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_forum_user_settings']['copy'],
 				'href'                => 'act=copy',
 				'icon'                => 'copy.gif'
 			),
 			'delete' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_forum_posts']['delete'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_forum_user_settings']['delete'],
 				'href'                => 'act=delete',
 				'icon'                => 'delete.gif',
 				'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
 			),
 			'show' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_forum_posts']['show'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_forum_user_settings']['show'],
 				'href'                => 'act=show',
 				'icon'                => 'show.gif'
 			)
@@ -132,10 +134,11 @@ $GLOBALS['TL_DCA']['tl_forum_user_settings'] = array
 
 class tl_forum_user_settings extends Backend
 {	
-	public function addLabel($row, $label)
+	public function listSettings($arrRow)
 	{
-		$objMember = $this->Database->prepare("SELECT username FROM tl_member WHERE id=?")->execute($row['user']);
-		return $objMember->username;
+		$objMember = $this->Database->prepare("SELECT username FROM tl_member WHERE id=?")->execute($arrRow['user']);
+		return '<div>' . $objMember->username . '</div>';
+		//return 'Test';
 	}
 }
 ?>

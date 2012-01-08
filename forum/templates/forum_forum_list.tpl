@@ -6,13 +6,14 @@
 		<a href="<?php echo($breadcrumb['link']); ?>"><?php echo($breadcrumb['title']); ?></a> <?php if($breadcrumb['class']!='last'): ?>><?php endif; ?>
 	<?php endforeach; ?>
 	<table class="forums">
+		<?php if(count($this->forums)>0): ?>
 		<tr class="header">
 			<th>&nbsp;</th>
 			<th><?php echo($GLOBALS['TL_LANG']['forum']['forum']); ?></th>
 			<th><?php echo($GLOBALS['TL_LANG']['forum']['threads']); ?></th>
 			<th><?php echo($GLOBALS['TL_LANG']['forum']['last_post']); ?></th>
 		</tr>
-		<?php if(count($this->forums)>0): ?>
+		
 			<?php foreach($this->forums as $forum): ?>
 				<tr class="forum">
 					<td class="icon"><?php foreach($forum['status'] as $status): ?><?php echo($status); ?><?php endforeach; ?></td>
@@ -77,7 +78,11 @@
 				<?php endif; ?>
 				
 				<?php foreach($this->threads as $thread): ?>
-					<tr class="normal">
+					<?php if($thread['special']==1): ?>
+						<tr class="special">
+					<?php else: ?>
+						<tr class="normal">
+					<?php endif; ?>
 						<td class="icon"><?php foreach($thread['status'] as $status): ?><?php echo($status); ?><br /><?php endforeach; ?></td>
 						<td class="name"><a href="<?php echo($thread['redirect']); ?>"><?php echo($thread['title']); ?></a></td>
 						<td class="created_by"><?php echo($thread['created_by']); ?></td>

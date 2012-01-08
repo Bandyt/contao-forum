@@ -36,7 +36,7 @@
  * @author     Andreas Koob 
  * @package    Controller
  */
-class forum_thread_reader extends Module
+class forum_thread_reader extends ContentElement
 {
 
 	/**
@@ -49,12 +49,15 @@ class forum_thread_reader extends Module
 	private $arrUser=array();
 	private $arrLinks=array();
 	private $arrThread=array();
+	private $arrSignatures=array();
 	
 	private function getThreadInformation()
 	{
+		$functions = new forum_common_functions();
 		$objThread = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE id=?")->execute($this->intThreadId);
 		$this->arrThread['title']=$objThread->title;
 		$this->arrThread['locked']=$objThread->locked;
+		$this->arrThread['root']=$functions->getRootFromForum($objThread->pid);
 	}
 	
 	private function getPosts()
@@ -72,27 +75,27 @@ class forum_thread_reader extends Module
 						$this->import($callback[0]); 
 						$strPostText = $this->$callback[0]->$callback[1]($strPostText,$objPosts->id,$this->intThreadId); 
 					} 
-				}  
+				}
 				$arrPosts[]=array(
-				'id'=>$objPosts->id,
-				'class'=>(($intI == 1) ? 'first ' : '') . (($intI == $objPosts->numRows) ? 'last ' : '') . ((($intI % 2) == 0) ? 'even' : 'odd'),
-				'post_no'=>$intI,
-				'created_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objPosts->created_date),
-				'created_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objPosts->created_time),
-				'creator_id'=>$this->arrMember[$objPosts->created_by]['id'],
-				'creator_username'=>$this->arrMember[$objPosts->created_by]['username'],
-				'creator_signature'=>$this->arrMember[$objPosts->created_by]['signature'],
-				'title'=>$objPosts->title,
-				'text'=>$strPostText,
-				'changed'=>$objPosts->changed,
-				'last_change_by'=>$this->arrMember[$objPosts->last_change_by]['username'],
-				'last_change_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objPosts->last_change_date),
-				'last_change_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objPosts->last_change_time),
-				'last_change_reason'=>$objPosts->last_change_reason,
-				'answer_link'=>$this->generateFrontendUrl($this->arrLinks['post_editor']->row(),'/thread/' . $this->intThreadId . '/mode/answer/post/' . $objPosts->id),
-				'quote_link'=>$this->generateFrontendUrl($this->arrLinks['post_editor']->row(),'/thread/' . $this->intThreadId . '/mode/quote/post/' . $objPosts->id),
-				'edit_link'=>$this->generateFrontendUrl($this->arrLinks['post_editor']->row(),'/thread/' . $this->intThreadId . '/mode/edit/post/' . $objPosts->id),
-				'mod_tools_delete_link'=>$this->generateFrontendUrl($this->arrLinks['moderator_panel']->row(),'/thread/' . $this->intThreadId . '/mode/mod-delete-post/post/' . $objPosts->id),
+					'id'=>$objPosts->id,
+					'class'=>(($intI == 1) ? 'first ' : '') . (($intI == $objPosts->numRows) ? 'last ' : '') . ((($intI % 2) == 0) ? 'even' : 'odd'),
+					'post_no'=>$intI,
+					'created_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objPosts->created_date),
+					'created_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objPosts->created_time),
+					'creator_id'=>$this->arrMember[$objPosts->created_by]['id'],
+					'creator_username'=>$this->arrMember[$objPosts->created_by]['username'],
+					'creator_signature'=>$this->arrSignatures[$objPosts->created_by]['signature'],
+					'title'=>$objPosts->title,
+					'text'=>$strPostText,
+					'changed'=>$objPosts->changed,
+					'last_change_by'=>$this->arrMember[$objPosts->last_change_by]['username'],
+					'last_change_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objPosts->last_change_date),
+					'last_change_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objPosts->last_change_time),
+					'last_change_reason'=>$objPosts->last_change_reason,
+					'answer_link'=>$this->generateFrontendUrl($this->arrLinks['post_editor']->row(),'/thread/' . $this->intThreadId . '/mode/answer/post/' . $objPosts->id),
+					'quote_link'=>$this->generateFrontendUrl($this->arrLinks['post_editor']->row(),'/thread/' . $this->intThreadId . '/mode/quote/post/' . $objPosts->id),
+					'edit_link'=>$this->generateFrontendUrl($this->arrLinks['post_editor']->row(),'/thread/' . $this->intThreadId . '/mode/edit/post/' . $objPosts->id),
+					'mod_tools_delete_link'=>$this->generateFrontendUrl($this->arrLinks['moderator_panel']->row(),'/thread/' . $this->intThreadId . '/mode/mod-delete-post/post/' . $objPosts->id),
 				);
 		}
 		return $arrPosts;
@@ -199,14 +202,18 @@ class forum_thread_reader extends Module
 	 */
 	protected function compile()
 	{
+		$this->getThreadId();
+		$this->getThreadInformation();
+		
 		$functions = new forum_common_functions();
 		$this->arrMember=$functions->getMember();
 		$this->arrUser=$functions->getUser();
-		$this->arrLinks= $functions->getInternalLinks();
+		$this->arrLinks= $functions->getInternalLinksFromForum($this->arrThread['root']);
+		$this->arrSignatures = $functions->getSignatures($this->arrThread['root']);
 		
-		$this->getThreadId();
+		
 		$this->Template->postcreator=$this->generateFrontendUrl($this->arrLinks['post_editor']->row(),'/thread/' . $this->intThreadId . '/mode/new');
-		$this->getThreadInformation();
+		
 		$this->Template->thread = $this->arrThread;
 		$this->updateTracker();
 		$this->Template->posts=$this->getPosts();

@@ -36,7 +36,7 @@
  * @author     Andreas Koob 
  * @package    Controller
  */
-class forum_thread_editor extends Module
+class forum_thread_editor extends ContentElement
 {
 
 	/**

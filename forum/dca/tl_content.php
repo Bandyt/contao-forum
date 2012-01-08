@@ -35,12 +35,12 @@
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'forum_use_fixed_forum';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'forum_use_fixed_thread';
 
-$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_forum_list'] = '{type_legend},name,headline,type;{forum_settings},forum_use_fixed_forum,';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_thread_reader'] = '{type_legend},name,headline,type;{forum_settings},forum_use_fixed_thread';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_thread_editor'] = '{type_legend},name,headline,type';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_post_editor'] = '{type_legend},name,headline,type';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_user_panel'] = '{type_legend},name,headline,type';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_moderator_panel'] = '{type_legend},name,headline,type';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_forum_list'] = '{type_legend},name,type,headline;{forum_settings},forum_use_fixed_forum,forum_forum_root';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_thread_reader'] = '{type_legend},name,type,headline;{forum_settings},forum_use_fixed_thread';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_thread_editor'] = '{type_legend},name,type,headline';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_post_editor'] = '{type_legend},name,type,headline';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_user_panel'] = '{type_legend},name,type,headline;{forum_settings},forum_forum_root';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['forum_moderator_panel'] = '{type_legend},name,type,headline;{forum_settings},forum_forum_root';
 
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['forum_use_fixed_forum'] = 'forum_fixed_forum';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['forum_use_fixed_thread'] = 'forum_fixed_thread';
@@ -77,12 +77,38 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['forum_fixed_thread'] = array
 	'eval'                    => array('mandatory'=>true),
 	'options_callback'        => array('tl_content_forum', 'getThreads')
 );
-
+$GLOBALS['TL_DCA']['tl_content']['fields']['forum_forum_root'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['forum_forum_root'],
+	'exclude'                 => false,
+	'inputType'               => 'select',
+	'eval'                    => array('mandatory'=>true),
+	'options_callback'        => array('tl_content_forum', 'getForumRoots')
+);
 class tl_content_forum extends Backend
 {
 	public function getForums()
 	{
-		$objForums = $this->Database->prepare("SELECT id, name FROM tl_forum_forums")->execute();
+		$objForums = $this->Database->prepare("SELECT id, title FROM tl_forum_forums")->execute();
+
+		if ($objForums->numRows < 1)
+		{
+			return array();
+		}
+
+		$return = array();
+
+		while ($objForums->next())
+		{
+			$return[$objForums->id] = $objForums->title;
+		}
+
+		return $return;
+	}
+	
+	public function getForumRoots()
+	{
+		$objForums = $this->Database->prepare("SELECT id, title FROM tl_forum_forums WHERE forum_type=?")->execute('R');
 
 		if ($objForums->numRows < 1)
 		{

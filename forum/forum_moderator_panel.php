@@ -36,7 +36,7 @@
  * @author     Andreas Koob 
  * @package    Controller
  */
-class forum_moderator_panel extends Module
+class forum_moderator_panel extends ContentElement
 {
 
 	/**
@@ -45,97 +45,9 @@ class forum_moderator_panel extends Module
 	 */
 	protected $strTemplate = 'forum_moderator_panel';
 	private $arrMember=array();
-	private $user=array();
-	private $user_logged_in=false;
-	private $objPostEditor;
-	private $objThreadReader;
+	private $arrUser=array();
+	private $arrInternalLinks=array();
 	private $arrThread=array();
-	
-	private function getThreadInformation()
-	{
-		$objThread = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE id=?")->execute($this->threadid);
-		$this->arrThread['title']=$objThread->title;
-		$this->arrThread['locked']=$objThread->locked;
-	}
-	private function getInternalLinks()
-	{
-		$this->objPostEditor = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
-												->limit(1)
-												->execute($GLOBALS['TL_CONFIG']['forum_redirect_posteditor']);
-		
-		$this->objThreadReader = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
-												->limit(1)
-												->execute($GLOBALS['TL_CONFIG']['forum_redirect_threadreader']);
-	}
-	private function getUser()
-	{
-		$this->import('FrontendUser', 'Member');
-		if(FE_USER_LOGGED_IN)
-		{
-			$this->user=array(
-				'id'=>$this->Member->id,
-				'firstname'=>$this->Member->firstname,
-				'lastname'=>$this->Member->lastname,
-				'username'=>$this->Member->username,
-				'groups'=>$this->Member->groups
-			);
-			$this->Template->member=$user;
-			$this->Template->member_loggedin=true;
-			$this->user_logged_in=true;
-		}
-		else
-		{
-			$this->Template->member_loggedin=false;
-			$this->user_logged_in=false;
-		}
-	}
-	private function processInput()
-	{
-		switch($this->Input->get('mode'))
-		{
-			case 'mod-delete-post':
-				//TODO: mark post as deleted
-				if($this->Input->get('post')!='')
-				{
-					$arrSetPost = array
-					(
-						'deleted' => '1'
-					);
-					$this->Database->prepare("UPDATE tl_forum_posts %s WHERE id=?")->set($arrSetPost)->execute($this->Input->get('post'));
-					if ($GLOBALS['TL_CONFIG']['forum_logging_mod_delete_post']='' || $GLOBALS['TL_CONFIG']['forum_logging_mod_delete_post']=='L')
-					{
-						$arrSetLog = array
-						(
-							'post' => $this->Input->get('post'),
-							'committer' => $this->user['id'],
-							'change_time' => time(),
-							'change_ip' => $this->Environment->ip,
-							'change_type' => 'MOD_DELETE_POST',
-							'field' => 'TL_FORUM_POSTS.DELETED',
-							'old_value' => '',
-							'new_value' => '1'
-						);
-						$this->Database->prepare("INSERT INTO tl_forum_moderator_log %s")->set($arrSetLog)->execute();
-					}
-					$this->redirect($this->generateFrontendUrl($this->objThreadReader->row(),'/thread/' . $this->Input->get('thread')));
-				}
-				break;
-		}
-	}
-	private function getMember()
-	{
-		$objMembers = $this->Database->prepare("SELECT * FROM tl_member")->execute();
-		$objMemberSettings = $this->Database->prepare("SELECT signature FROM tl_forum_user_settings WHERE user=?")->execute($objMembers->id);
-		while($objMembers->next()){
-			$this->arrMember[$objMembers->id]=array(
-			'id'=>$objMembers->id,
-			'username'=>$objMembers->username,
-			'firstname'=>$objMembers->firstname,
-			'lastname'=>$objMembers->lastname,
-			'signature'=>$objMemberSettings->signature
-			);
-		}
-	}
 	
 	public function generate()
 	{
@@ -147,13 +59,46 @@ class forum_moderator_panel extends Module
 		return parent::generate();
 	}
 	
+	private function getThreadInformation()
+	{
+		$objThread = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE id=?")->execute($this->threadid);
+		$this->arrThread['title']=$objThread->title;
+		$this->arrThread['locked']=$objThread->locked;
+	}
+	
+	
+	private function processInput()
+	{
+		$this->log("Mode [" . $this->Input->get('mod') . "]", 'forum_moderator_panel.processInput()', TL_INFO);
+		switch($this->Input->get('mode'))
+		{
+			case 'mod-delete-post':
+				$this->log("Delete post", 'forum_moderator_panel.processInput()', TL_INFO);
+				if($this->Input->get('post')!='')
+				{
+					$arrSetPost = array
+					(
+						'deleted' => '1'
+					);
+					$this->Database->prepare("UPDATE tl_forum_posts %s WHERE id=?")->set($arrSetPost)->execute($this->Input->get('post'));
+					$logging = new forum_logging();
+					$logging->moderator_log($this->forum_forum_root,'forum_logging_mod_delete_post',0,0,$this->Input->get('post'),0,$this->arrUser['id'],$this->Environment->ip,'MOD_DELETE_POST','TL_FORUM_POSTS.DELETED','','1','POST');
+					$this->redirect($this->generateFrontendUrl($this->arrInternalLinks['thread_reader']->row(),'/thread/' . $this->Input->get('thread')));
+				}
+				break;
+		}
+	}
+	
+	
+	
 	/**
 	 * Generate module
 	 */
 	protected function compile()
 	{
-		$this->getUser();
-		$this->getInternalLinks();
+		$functions = new forum_common_functions();
+		$this->arrInternalLinks=$functions->getInternalLinksFromForum($this->forum_forum_root);
+		$this->arrUser=$functions->getUser();
 		$this->processInput();
 	}
 }

@@ -39,9 +39,9 @@ $GLOBALS['TL_DCA']['tl_forum_forums'] = array
 	'config' => array
 	(
 		'dataContainer'               => 'Table',
-		'ctable'                      => array('tl_forum_threads'),
+		'ctable'                      => array('tl_forum_threads','tl_forum_user_settings'),
 		'enableVersioning'            => true,
-		'label'						  => 'Forum'
+		'label'						  => &$GLOBALS['TL_LANG']['tl_forum_forums']['dca_label']
 	),
 
 	// List
@@ -54,7 +54,8 @@ $GLOBALS['TL_DCA']['tl_forum_forums'] = array
 		'label' => array
 		(
 			'fields'                  => array('title','description'),
-			'format'                  => '%s<br /><i>%s</i>'
+			'format'                  => '%s<br /><i>%s</i>',
+			'label_callback'          => array('tl_forum_forums', 'addIcon')
 		),
 		'global_operations' => array
 		(
@@ -92,6 +93,13 @@ $GLOBALS['TL_DCA']['tl_forum_forums'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_forum_forums']['show'],
 				'href'                => 'act=show',
 				'icon'                => 'show.gif'
+			),
+			'user_settings' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_forum_forums']['user_settings'],
+				'href'                => 'table=tl_forum_user_settings',
+				'icon'                => 'edit.gif',
+				'attributes'          => 'class="contextmenu"'
 			)
 		)
 	),
@@ -99,14 +107,15 @@ $GLOBALS['TL_DCA']['tl_forum_forums'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'__selector__'                => array(''),
-		'default'                     => 'forum_type,title,description'
+		'__selector__'                => array('forum_type'),
+		'default'                     => 'forum_type'
 	),
 
 	// Subpalettes
 	'subpalettes' => array
 	(
-		''                            => ''
+		'forum_type_R'			      => 'title;{forum_redirect_settings},forum_redirect_threadreader,forum_redirect_threadeditor,forum_redirect_forumlist,forum_redirect_posteditor,forum_redirect_moderator_panel;{forum_logging},forum_logging_mod_delete_post',
+		'forum_type_F'			      => 'title,description'
 	),
 
 	// Fields
@@ -117,9 +126,9 @@ $GLOBALS['TL_DCA']['tl_forum_forums'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_forums']['forum_type'],
 			'exclude'                 => false,
 			'inputType'               => 'select',
-			'options'				  => array('F'),
+			'options'				  => array('R','F'),
 			'reference'				  => &$GLOBALS['TL_LANG']['tl_forum_forums']['forum_type']['reference'],
-			'eval'                    => array('mandatory'=>true)
+			'eval'                    => array('mandatory'=>true,'submitOnChange'=>true)
 		),
 		'title' => array
 		(
@@ -134,7 +143,70 @@ $GLOBALS['TL_DCA']['tl_forum_forums'] = array
 			'exclude'                 => false,
 			'inputType'               => 'textarea',
 			'eval'                    => array()
+		),
+		'forum_redirect_threadreader' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_forums']['forum_redirect_threadreader'],
+			'exclude'                 => false,
+			'inputType'               => 'pageTree',
+			'eval'                    => array('mandatory'=>true,'fieldType'=>'radio', 'tl_class'=>'clr')
+		),
+		'forum_redirect_threadeditor' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_forums']['forum_redirect_threadeditor'],
+			'exclude'                 => false,
+			'inputType'               => 'pageTree',
+			'eval'                    => array('mandatory'=>true,'fieldType'=>'radio', 'tl_class'=>'clr')
+		),
+		'forum_redirect_forumlist' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_forums']['forum_redirect_forumlist'],
+			'exclude'                 => false,
+			'inputType'               => 'pageTree',
+			'eval'                    => array('mandatory'=>true,'fieldType'=>'radio', 'tl_class'=>'clr')
+		),
+		'forum_redirect_posteditor' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_forums']['forum_redirect_posteditor'],
+			'exclude'                 => false,
+			'inputType'               => 'pageTree',
+			'eval'                    => array('mandatory'=>true,'fieldType'=>'radio', 'tl_class'=>'clr')
+		),
+		'forum_redirect_moderator_panel' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_forums']['forum_redirect_moderator_panel'],
+			'exclude'                 => false,
+			'inputType'               => 'pageTree',
+			'eval'                    => array('mandatory'=>true,'fieldType'=>'radio', 'tl_class'=>'clr')
+		),
+		'forum_logging_mod_delete_post' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_forums']['forum_logging_mod_delete_post'],
+			'exclude'                 => false,
+			'inputType'               => 'select',
+			'options'				  => array('L','N'),
+			'reference'				  => &$GLOBALS['TL_LANG']['tl_forum_forums']['logging']['reference'],
+			'eval'                    => array('mandatory'=>true)
 		)
 	)
 );
+class tl_forum_forums extends Backend
+{
+public function addIcon($row, $label, DataContainer $dc=null, $imageAttribute='', $blnReturnImage=false)
+	{
+		$newLabel='';
+		if($row['forum_type']=='R')
+		{
+			$newLabel.=$this->generateImage('root.gif', '', $imageAttribute);
+			$newLabel.=$row['title'];
+		}
+		else
+		{
+			$newLabel.=$row['title'] . '<br /><i>' . $row['description'] . '</i>';
+		}
+		
+		return $newLabel;
+		
+	}
+}
 ?>

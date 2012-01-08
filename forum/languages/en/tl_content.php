@@ -37,6 +37,7 @@ $GLOBALS['TL_LANG']['tl_content']['forum_use_fixed_forum'] = array('Use fixed fo
 $GLOBALS['TL_LANG']['tl_content']['forum_fixed_forum'] = array('Fixed forum', 'Select the fixed forum this content element should use');
 $GLOBALS['TL_LANG']['tl_content']['forum_use_fixed_thread'] = array('Use fixed thread', 'Click if this content element should use a fix thread');
 $GLOBALS['TL_LANG']['tl_content']['forum_fixed_thread'] = array('Fixed thread', 'Select the fixed thread this content element should use');
+$GLOBALS['TL_LANG']['tl_content']['forum_forum_root'] = array('Root forum', 'Select the root element for the forum this element should use');
 /**
  * Reference
  */

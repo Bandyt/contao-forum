@@ -78,7 +78,11 @@
 				<?php endif; ?>
 				
 				<?php foreach($this->threads as $thread): ?>
-					<tr class="normal">
+					<?php if($thread['special']==1): ?>
+						<tr class="special">
+					<?php else: ?>
+						<tr class="normal">
+					<?php endif; ?>
 						<td class="icon"><?php foreach($thread['status'] as $status): ?><?php echo($status); ?><br /><?php endforeach; ?></td>
 						<td class="name"><a href="<?php echo($thread['redirect']); ?>"><?php echo($thread['title']); ?></a></td>
 						<td class="created_by"><?php echo($thread['created_by']); ?></td>

@@ -111,7 +111,7 @@ $GLOBALS['TL_DCA']['tl_forum_threads'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array(''),
-		'default'                     => 'title,thread_type;{forum_creator_information},created_by,created_date,created_time;{forum_additional_settings},deleted,locked'
+		'default'                     => 'title,thread_type;{forum_creator_information},created_by,created_date,created_time;{forum_additional_settings},deleted,locked,special'
 	),
 
 	// Subpalettes

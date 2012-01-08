@@ -35,13 +35,24 @@
 $GLOBALS['TL_LANG']['tl_forum_forums']['title'] = array('Titel', 'Titel des Forums');
 $GLOBALS['TL_LANG']['tl_forum_forums']['description'] = array('Beschreibung', 'Beschreibung des Forums');
 $GLOBALS['TL_LANG']['tl_forum_forums']['forum_type'] = array('Typ', 'Typ des Forum');
+$GLOBALS['TL_LANG']['tl_forum_forums']['forum_redirect_settings'] = 'Weiterleitung - Einstellungen';
+$GLOBALS['TL_LANG']['tl_forum_forums']['forum_redirect_threadreader'] = array('Themenleser', 'Seite, die den Themenleser beinhaltet');
+$GLOBALS['TL_LANG']['tl_forum_forums']['forum_redirect_threadeditor'] = array('Themeneditor', 'Seite, die den Themeneditor beinhaltet');
+$GLOBALS['TL_LANG']['tl_forum_forums']['forum_redirect_forumlist'] = array('Forenliste', 'Seite, die die Forenliste beinhaltet');
+$GLOBALS['TL_LANG']['tl_forum_forums']['forum_redirect_posteditor'] = array('Beitragseditor', 'Seite, die den Beitragseditor beinhaltet');
+$GLOBALS['TL_LANG']['tl_forum_forums']['forum_redirect_moderator_panel'] = array('Moderatorenbereich', 'Seite, die den Moderatorenbereich beinhaltet');
+$GLOBALS['TL_LANG']['tl_forum_forums']['forum_logging'] = 'Protokollierung';
+$GLOBALS['TL_LANG']['tl_forum_forums']['forum_logging_mod_delete_post'] = array('Moderator - Beitrag l&ouml;schen', 'Aktiviert oder deaktiviert das Protokollien von Beitragsl&ouml;schungen durch Moderatoren');
 
-
+$GLOBALS['TL_LANG']['tl_forum_forums']['dca_label'] = 'Verf&uuml;gbare Foren';
 /**
  * Reference
  */
 $GLOBALS['TL_LANG']['tl_forum_forums']['forum_type']['reference']['F']='Forum';
+$GLOBALS['TL_LANG']['tl_forum_forums']['forum_type']['reference']['R']='Startpunkt eines Forums';
 
+$GLOBALS['TL_LANG']['tl_forum_forums']['logging']['reference']['L'] = 'Aktiviert'; 
+$GLOBALS['TL_LANG']['tl_forum_forums']['logging']['reference']['N'] = 'Deaktiviert'; 
 
 /**
  * Buttons

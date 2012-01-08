@@ -37,10 +37,7 @@ $GLOBALS['TL_LANG']['tl_content']['forum_use_fixed_forum'] = array('Fixes Forum 
 $GLOBALS['TL_LANG']['tl_content']['forum_fixed_forum'] = array('Fixes Forum', 'W&auml;hlen Sie das Forum, dass dieses Inhaltselement nutzen soll, aus');
 $GLOBALS['TL_LANG']['tl_content']['forum_use_fixed_thread'] = array('Fixes Thema nutzen', 'Anklicken wenn ein fixes Thema genutzt werden soll');
 $GLOBALS['TL_LANG']['tl_content']['forum_fixed_thread'] = array('Fixes Thema', 'W&auml;hlen Sie das Thema, dass dieses Inhaltselement nutzen soll, aus');
-$GLOBALS['TL_LANG']['tl_content']['forum_redirect_threadreader'] = array('Weiterleitung - Themenleser', 'W&auml;hlen Sie die Seite mit dem Themenleser aus, den dieses Inhaltselement nutzen soll');
-$GLOBALS['TL_LANG']['tl_content']['forum_redirect_threadeditor'] = array('Weiterleitung - Themeneditor', 'W&auml;hlen Sie die Seite mit dem Themeneditor aus, den dieses Inhaltselement nutzen soll');
-$GLOBALS['TL_LANG']['tl_content']['forum_redirect_forumlist'] = array('Weiterleitung - Forenliste', 'W&auml;hlen Sie die Seite mit der Forenliste aus, den dieses Inhaltselement nutzen soll');
-$GLOBALS['TL_LANG']['tl_content']['forum_redirect_posteditor'] = array('Weiterleitung - Beitrageditor', 'W&auml;hlen Sie die Seite mit dem Beitrageditor aus, den dieses Inhaltselement nutzen soll');
+$GLOBALS['TL_LANG']['tl_content']['forum_forum_root'] = array('Startpunkt', 'W&auml;hlen Sie den Startpunkt des Forums, dass dieses Element nutzen soll');
 
 
 /**

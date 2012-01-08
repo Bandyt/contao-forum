@@ -38,19 +38,11 @@
  (
    'tl_forum_forums' => array
 	 (
-	    'tables' => array('tl_forum_forums')
+	    'tables' => array('tl_forum_forums','tl_forum_user_settings')
 	 ),
 	'tl_forum_threads' => array
 	 (
 	    'tables' => array('tl_forum_threads','tl_forum_posts')
-	 ),
-	'tl_forum_user_settings' => array
-	 (
-	    'tables' => array('tl_forum_user_settings')
-	 ),
-	'tl_forum_settings' => array
-	 (
-	    'tables' => array('tl_forum_settings')
 	 )
  );
 
@@ -143,8 +135,7 @@ $GLOBALS['TL_CTE']['tl_forum']['forum_moderator_panel'] = 'forum_moderator_panel
  * HOOKS
  * -------------------------------------------------------------------------
  */
-$GLOBALS['TL_HOOKS']['forum_quotePostText'][] = array('forum_BBCODE', 'quotePost');
-$GLOBALS['TL_HOOKS']['forum_parsePostText'][] = array('forum_BBCODE', 'parseBBCode');
+
 /**
  * -------------------------------------------------------------------------
  * PAGE TYPES

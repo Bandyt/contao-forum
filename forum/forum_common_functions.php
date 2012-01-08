@@ -38,21 +38,48 @@
  */
 class forum_common_functions extends frontend
 {
+	public function getRootFromForum($intForumId)
+	{
+		$objForum = $this->Database->prepare("SELECT * FROM tl_forum_forums WHERE id=?")->execute($intForumId);
+		if($objForum->forum_type=='R')
+		{
+			return $objForum->id;
+		}
+		elseif($objForum->pid==0)
+		{
+			return 0;
+		}
+		else
+		{
+			return $this->getRootFromForum($objForum->pid);
+		}
+	}
 	public function getMember()
 	{
 		$objMembers = $this->Database->prepare("SELECT * FROM tl_member")->execute();
-		$objMemberSettings = $this->Database->prepare("SELECT signature FROM tl_forum_user_settings WHERE user=?")->execute($objMembers->id);
 		$arrMember=array();
 		while($objMembers->next()){
 			$arrMember[$objMembers->id]=array(
 			'id'=>$objMembers->id,
 			'username'=>$objMembers->username,
 			'firstname'=>$objMembers->firstname,
-			'lastname'=>$objMembers->lastname,
-			'signature'=>$objMemberSettings->signature
+			'lastname'=>$objMembers->lastname
 			);
 		}
 		return $arrMember;
+	}
+	
+	public function getSignatures($intForumId)
+	{
+		$intRootId=$this->getRootFromForum($intForumId);
+		$objMemberSettings = $this->Database->prepare("SELECT user,signature FROM tl_forum_user_settings WHERE pid=?")->execute($intRootId);
+		$arrSignatures=array();
+		while($objMemberSettings->next()){
+			$arrSignatures[$objMemberSettings->user]=array(
+				'signature'=>$objMemberSettings->signature
+			);
+		}
+		return $arrSignatures;
 	}
 	
 	public function getUser()
@@ -78,29 +105,30 @@ class forum_common_functions extends frontend
 		return $user;
 	}
 	
-	public function getInternalLinks()
+	public function getInternalLinksFromForum($intForumId)
 	{
+		$intRoot=$this->getRootFromForum($intForumId);
 		$arrLinks=array();
-		
+		$objRoot=$this->Database->prepare("SELECT * FROM tl_forum_forums WHERE id=?")->execute($intRoot);
 		$arrLinks['thread_reader'] = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
 												->limit(1)
-												->execute($GLOBALS['TL_CONFIG']['forum_redirect_threadreader']);
+												->execute($objRoot->forum_redirect_threadreader);
 												
 		$arrLinks['thread_editor'] = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
 												->limit(1)
-												->execute($GLOBALS['TL_CONFIG']['forum_redirect_threadeditor']);
+												->execute($objRoot->forum_redirect_threadeditor);
 												
 		$arrLinks['forum_list'] = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
 												->limit(1)
-												->execute($GLOBALS['TL_CONFIG']['forum_redirect_forumlist']);
+												->execute($objRoot->forum_redirect_forumlist);
 												
 		$arrLinks['post_editor'] = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
 												->limit(1)
-												->execute($GLOBALS['TL_CONFIG']['forum_redirect_posteditor']);
+												->execute($objRoot->forum_redirect_posteditor);
 												
 		$arrLinks['moderator_panel'] = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
 												->limit(1)
-												->execute($GLOBALS['TL_CONFIG']['forum_redirect_moderator_panel']);
+												->execute($objRoot->forum_redirect_moderator_panel);
 		return $arrLinks;
 	}
 }
