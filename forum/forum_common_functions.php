@@ -131,6 +131,38 @@ class forum_common_functions extends frontend
 												->execute($objRoot->forum_redirect_moderator_panel);
 		return $arrLinks;
 	}
+	public function getUsernameFromId($intId)
+	{
+		$objMember = $this->Database->prepare("SELECT username FROM tl_member WHERE id=?")->execute($intId);
+		return $objMember->username;
+	}
+	public function convertCheckboxvalueToString($strValue)
+	{
+		if($strValue=='1')
+		{
+			return 'Yes';
+		}
+		else
+		{
+			return 'No';
+		}
+	}
+	
+	public function threadTypeToString($strThreadType)
+	{
+		switch($strThreadType)
+		{
+			case 'N':
+				return 'Normal';
+				break;
+			case 'B':
+				return 'Broadcast';
+				break;
+			case 'A':
+				return 'Announcement';
+				break;
+		}
+	}
 }
 
 ?>

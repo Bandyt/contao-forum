@@ -156,6 +156,19 @@ CREATE TABLE `tl_forum_moderator_log` (
   `new_value` blob NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+-- 
+-- Table `tl_forum_change_log`
+-- 
+
+CREATE TABLE `tl_forum_change_log` (
+  `thread` int(10) unsigned NOT NULL default '0',
+  `post` int(10) unsigned NOT NULL default '0',
+  `committer` int(10) unsigned NOT NULL default '0',
+  `change_time` int(10) unsigned NOT NULL default '0',
+  `change_ip` varchar(255) NOT NULL default '',
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
