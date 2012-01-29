@@ -67,7 +67,7 @@ class forum_post_editor extends ContentElement
 		$this->arrMember=$functions->getMember();
 		
 		//###########################################
-		//Get forum id
+		//Get thread id
 		//###########################################
 		if($this->forum_use_fixed_thread=='1'){
 			$threadid = $this->forum_fixed_thread;

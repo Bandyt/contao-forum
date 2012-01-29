@@ -101,34 +101,6 @@ class forum_moderator_panel extends ContentElement
 		$this->Template =  new FrontendTemplate("forum_moderator_panel_threadmanagement");
 		$this->Template->link_overview=$this->generateFrontendUrl($this->arrInternalLinks['moderator_panel']->row(),'/mode/overview');
 		$this->Template->link_usermanagement=$this->generateFrontendUrl($this->arrInternalLinks['moderator_panel']->row(),'/mode/usermanagement/user/' . $this->Input->get('user'));
-		//Check for the current thread (First from url parameter and then from post-parameter)
-		if($this->Input->get('thread') && $this->Input->get('thread')!='')
-		{
-			$current_thread=$this->Input->get('thread');
-		}
-		if($this->Input->post('thread') && $this->Input->post('thread')!='')
-		{
-			$current_thread=$this->Input->post('thread');
-		}
-		//If there is a current thread, list information about it
-		if($current_thread!='')
-		{
-			$objThread = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE id=?")->execute($current_thread);
-			$objPosts = $this->Database->prepare("SELECT count(id) as posts FROM tl_forum_posts WHERE pid=?")->execute($current_thread);
-			$arrThread = array(
-				'id' => $objThread->id,
-				'title' => $objThread->title,
-				'created_by' => $this->functions->getUsernameFromId($objThread->created_by),
-				'created_date' => $objThread->created_date,
-				'created_time' => date($GLOBALS['TL_CONFIG']['timeFormat'],$objThread->created_time),
-				'created_date' => date($GLOBALS['TL_CONFIG']['dateFormat'],$objThread->created_date),
-				'deleted' => $this->functions->convertCheckboxvalueToString($objThread->deleted),
-				'locked' => $this->functions->convertCheckboxvalueToString($objThread->locked),
-				'special' => $this->functions->convertCheckboxvalueToString($objThread->special),
-				'thread_type' => $this->functions->threadTypeToString($objThread->thread_type),
-				'posts' => $objPosts->posts
-			);
-		}		
 		//check for the current forum or take the defined root
 		if($this->Input->get('forum') && $this->Input->get('forum')!='')
 		{
@@ -141,19 +113,21 @@ class forum_moderator_panel extends ContentElement
 		if($current_forum==''){
 			$current_forum=$this->forum_forum_root;
 		}
+		
+		//Process actions from post-Parameter
+		
 		//list all threads in this forum
 		$objAllThreads = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE pid=?")->execute($current_forum);
-		$this->log("Listing threads for forum " . $current_forum . ". No of threads: " . $objAllThreads->numRows, 'forum_moderator_panel.threadmanagement()', TL_INFO);
 		while($objAllThreads->next())
 		{
 			$arrAllThreads[]=array(
 				'id'=>$objAllThreads->id,
-				'title'=>$objAllThreads->title,
-				'link_show'=>$this->generateFrontendUrl($this->arrInternalLinks['moderator_panel']->row(),'/mode/threadmanagement/thread/' . $objAllThreads->id)
+				'title'=>$objAllThreads->title
 			);
 		}
 		$this->Template->allthreads=$arrAllThreads;
-		$this->Template->thread=$arrThread;
+		$this->Template->current_forum=$current_forum;
+		$this->Template->form_action=$this->generateFrontendUrl($this->arrInternalLinks['moderator_panel']->row(),'/mode/threadmanagement/thread/' . $current_forum);
 		//Get a forums in this root and list them for the select field
 		$arrAllForums=$this->getChildForums($this->forum_forum_root,0,array());
 		$this->Template->allForums=$arrAllForums;
@@ -211,6 +185,7 @@ class forum_moderator_panel extends ContentElement
 		$this->arrInternalLinks=$this->functions->getInternalLinksFromForum($this->forum_forum_root);
 		$this->arrUser=$this->functions->getUser();
 		
+		//Process get data
 		switch($this->Input->get('mode'))
 		{
 			case 'mod-delete-post':
