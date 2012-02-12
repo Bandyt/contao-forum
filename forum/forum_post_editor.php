@@ -45,8 +45,8 @@ class forum_post_editor extends ContentElement
 	 */
 	protected $strTemplate = 'forum_post_editor';
 	private $arrMember=array();
-	private $user=array();
-	private $user_logged_in=false;
+	private $arrUser=array();
+	private $functions;
 	
 	public function generate()
 	{
@@ -63,9 +63,9 @@ class forum_post_editor extends ContentElement
 	 */
 	protected function compile()
 	{
-		$functions = new forum_common_functions();
-		$this->arrMember=$functions->getMember();
-		
+		$this->functions = new forum_common_functions();
+		$this->arrMember=$this->functions->getMember();
+		$this->arrUser=$this->functions->getUser();
 		//###########################################
 		//Get thread id
 		//###########################################
@@ -85,20 +85,7 @@ class forum_post_editor extends ContentElement
 		//###########################################
 		//Get user information
 		//###########################################
-		$this->import('FrontendUser', 'Member');
-		if(FE_USER_LOGGED_IN)
-		{
-			$user=array(
-				'id'=>$this->Member->id,
-				'username' => $this->Member->username
-			);
-			$this->Template->member=$user;
-			$this->Template->member_loggedin=true;
-		}
-		else
-		{
-			$this->Template->member_loggedin=false;
-		}
+		$this->Template->member=$this->functions->getUser();
 		//###########################################
 		//Process form
 		//###########################################
@@ -133,7 +120,7 @@ class forum_post_editor extends ContentElement
 					'text' => $this->Input->post('text'),
 					'created_date' => $currenttime,
 					'created_time' => $currenttime,
-					'created_by' => $user['id'],
+					'created_by' => $this->arrUser['id'],
 					'created_ip' => $this->Environment->ip,
 					'answered_post' => $answered_post,
 					'quoted_post' => $quoted_post,
@@ -165,7 +152,7 @@ class forum_post_editor extends ContentElement
 					'title' => $this->Input->post('title'),
 					'text' => $this->Input->post('text'),
 					'changed' => 1,
-					'last_change_by' => $user['id'],
+					'last_change_by' => $this->arrUser['id'],
 					'last_change_date' => $currenttime,
 					'last_change_time' => $currenttime,
 					'last_change_reason'=>$this->Input->post('reason')

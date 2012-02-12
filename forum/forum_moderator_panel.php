@@ -49,6 +49,7 @@ class forum_moderator_panel extends ContentElement
 	private $arrInternalLinks=array();
 	private $arrThread=array();
 	private $functions;
+	private $moderator;
 	
 	public function generate()
 	{
@@ -115,7 +116,47 @@ class forum_moderator_panel extends ContentElement
 		}
 		
 		//Process actions from post-Parameter
-		
+		if($this->Input->post('submit') && $this->Input->post('submit')!='')
+		{	
+			$logging = new forum_logging();
+			switch($this->Input->post('action'))
+			{
+				case 'mod_change_thread':
+					$arrThreads=$this->Input->post('threads');
+					if(is_array($arrThreads) && count($arrThreads)>0)
+					{
+						$moderator=new forum_moderator();
+						switch($this->Input->post('thread_action'))
+						{
+							case 'type_normal':
+								foreach($arrThreads as $thread){$moderator->threadSetThreadtype($thread,'N');}
+								break;
+							case 'type_announcement':
+								foreach($arrThreads as $thread){$moderator->threadSetThreadtype($thread,'A');}
+								break;
+							case 'type_broadcast':
+								foreach($arrThreads as $thread){$moderator->threadSetThreadtype($thread,'B');}
+								break;
+							case 'special':
+								foreach($arrThreads as $thread){$moderator->threadSetSpecial($thread,'1');}
+								break;
+							case 'unspecial':
+								foreach($arrThreads as $thread){$moderator->threadSetSpecial($thread,'');}
+								break;
+							case 'lock':
+								foreach($arrThreads as $thread){$moderator->threadSetLocked($thread,'1');}
+								break;
+							case 'unlock':
+								foreach($arrThreads as $thread){$moderator->threadSetLocked($thread,'');}
+								break;
+							case 'delete':
+								foreach($arrThreads as $thread){$moderator->threadSetDeleted($thread,'1');}
+								break;
+						}//switch($this->Input->post('thread_action'))
+					}//if(is_array($arrThread) && count($arrThread)>0)
+					break; //case 'mod_change_thread':
+			}//switch($this->Input->post('action'))
+		}//if($this->Input->post('submit') && $this->Input->post('submit')!='')
 		//list all threads in this forum
 		$objAllThreads = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE pid=?")->execute($current_forum);
 		while($objAllThreads->next())
@@ -181,6 +222,7 @@ class forum_moderator_panel extends ContentElement
 	 */
 	protected function compile()
 	{
+		$this->moderator=new forum_moderator();
 		$this->functions = new forum_common_functions();
 		$this->arrInternalLinks=$this->functions->getInternalLinksFromForum($this->forum_forum_root);
 		$this->arrUser=$this->functions->getUser();
@@ -192,17 +234,11 @@ class forum_moderator_panel extends ContentElement
 				$this->log("Delete post", 'forum_moderator_panel.processInput()', TL_INFO);
 				if($this->Input->get('post')!='')
 				{
-					$arrSetPost = array
-					(
-						'deleted' => '1'
-					);
-					$this->Database->prepare("UPDATE tl_forum_posts %s WHERE id=?")->set($arrSetPost)->execute($this->Input->get('post'));
-					$logging = new forum_logging();
-					$logging->moderator_log($this->forum_forum_root,'forum_logging_mod_delete_post',0,0,$this->Input->get('post'),0,$this->arrUser['id'],$this->Environment->ip,'MOD_DELETE_POST','TL_FORUM_POSTS.DELETED','','1','POST');
+					$this->moderator->postSetDeleted($this->Input->get('post'),'1');
 					$this->redirect($this->generateFrontendUrl($this->arrInternalLinks['thread_reader']->row(),'/thread/' . $this->Input->get('thread')));
 				}
+				
 				break;
-			
 			case '':
 			case 'overview':
 				$this->overview();

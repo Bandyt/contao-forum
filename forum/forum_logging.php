@@ -38,17 +38,26 @@
  */
 class forum_logging extends frontend
 {
-	public function moderator_log($intForumId,$strAction,$intForum,$intThread,$intPost,$intUser,$intCommitter,$strChangeIP,$strChangeType,$strField,$objOldValue,$objNewValue,$strObject)
+	public function moderator_log($intForumId,$strLogAction,$intForum,$intThread,$intPost,$intUser,$intCommitter,$strChangeIP,$strChangeType,$strField,$strOldValue,$strNewValue,$strObject)
 	{
 		$functions = new forum_common_functions();
 		$intRoot=$functions->getRootFromForum($intForumId);
 		$bolLog=false;
-		switch($strAction)
+		switch($strLogAction)
 		{
-			case 'forum_logging_mod_delete_post':
-				$objSettings = $this->Database->prepare("SELECT forum_logging_mod_delete_post FROM tl_forum_forums WHERE id=?")->execute($intRootId);
-				if ($objSettings->forum_logging_mod_delete_post=='' || $objSettings->forum_logging_mod_delete_post=='L'){ $bolLog=true; }
+			case 'forum_logging_mod_post_set_delete':
+				//$objSettings = $this->Database->prepare("SELECT forum_logging_mod_delete_post FROM tl_forum_forums WHERE id=?")->execute($intRootId);
+				//if ($objSettings->forum_logging_mod_delete_post=='' || $objSettings->forum_logging_mod_delete_post=='L'){ $bolLog=true; }
+				$bolLog=true;
 				break;
+			
+			case 'forum_logging_mod_threadtype_normal':
+				//$objSettings = $this->Database->prepare("SELECT forum_logging_mod_delete_post FROM tl_forum_forums WHERE id=?")->execute($intRootId);
+				//TODO: Add settings for log
+				$bolLog=true;
+				break;
+			default:
+				$bolLog=true;
 		}
 		if($bolLog==true)
 		{
@@ -69,11 +78,6 @@ class forum_logging extends frontend
 			);
 			$this->Database->prepare("INSERT INTO tl_forum_moderator_log %s")->set($arrSetLog)->execute();
 		}
-	}
-	
-	public function test()
-	{
-		$this->log("Test", 'forum_logging.test()', TL_INFO);
 	}
 }
 
