@@ -30,7 +30,6 @@ CREATE TABLE `tl_forum_forums` (
   `forum_redirect_forumlist` int(10) unsigned NOT NULL default '0',
   `forum_redirect_posteditor` int(10) unsigned NOT NULL default '0',
   `forum_redirect_moderator_panel` int(10) unsigned NOT NULL default '0',
-  `forum_logging_mod_delete_post` int(10) unsigned NOT NULL default '0',
   `description` blob NULL,
   PRIMARY KEY  (`id`),
   KEY `pid` (`pid`)

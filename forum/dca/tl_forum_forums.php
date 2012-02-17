@@ -108,13 +108,13 @@ $GLOBALS['TL_DCA']['tl_forum_forums'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array('forum_type'),
-		'default'                     => 'forum_type'
+		'default'                     => 'pid,forum_type'
 	),
 
 	// Subpalettes
 	'subpalettes' => array
 	(
-		'forum_type_R'			      => 'title;{forum_redirect_settings},forum_redirect_threadreader,forum_redirect_threadeditor,forum_redirect_forumlist,forum_redirect_posteditor,forum_redirect_moderator_panel;{forum_logging},forum_logging_mod_delete_post',
+		'forum_type_R'			      => 'title;{forum_redirect_settings},forum_redirect_threadreader,forum_redirect_threadeditor,forum_redirect_forumlist,forum_redirect_posteditor,forum_redirect_moderator_panel;',
 		'forum_type_F'			      => 'title,description'
 	),
 
@@ -178,21 +178,12 @@ $GLOBALS['TL_DCA']['tl_forum_forums'] = array
 			'exclude'                 => false,
 			'inputType'               => 'pageTree',
 			'eval'                    => array('mandatory'=>true,'fieldType'=>'radio', 'tl_class'=>'clr')
-		),
-		'forum_logging_mod_delete_post' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_forums']['forum_logging_mod_delete_post'],
-			'exclude'                 => false,
-			'inputType'               => 'select',
-			'options'				  => array('L','N'),
-			'reference'				  => &$GLOBALS['TL_LANG']['tl_forum_forums']['logging']['reference'],
-			'eval'                    => array('mandatory'=>true)
 		)
 	)
 );
 class tl_forum_forums extends Backend
 {
-public function addIcon($row, $label, DataContainer $dc=null, $imageAttribute='', $blnReturnImage=false)
+	public function addIcon($row, $label, DataContainer $dc=null, $imageAttribute='', $blnReturnImage=false)
 	{
 		$newLabel='';
 		if($row['forum_type']=='R')

@@ -42,23 +42,8 @@ class forum_logging extends frontend
 	{
 		$functions = new forum_common_functions();
 		$intRoot=$functions->getRootFromForum($intForumId);
-		$bolLog=false;
-		switch($strLogAction)
-		{
-			case 'forum_logging_mod_post_set_delete':
-				//$objSettings = $this->Database->prepare("SELECT forum_logging_mod_delete_post FROM tl_forum_forums WHERE id=?")->execute($intRootId);
-				//if ($objSettings->forum_logging_mod_delete_post=='' || $objSettings->forum_logging_mod_delete_post=='L'){ $bolLog=true; }
-				$bolLog=true;
-				break;
-			
-			case 'forum_logging_mod_threadtype_normal':
-				//$objSettings = $this->Database->prepare("SELECT forum_logging_mod_delete_post FROM tl_forum_forums WHERE id=?")->execute($intRootId);
-				//TODO: Add settings for log
-				$bolLog=true;
-				break;
-			default:
-				$bolLog=true;
-		}
+		$bolLog=true;
+		//TODO: Add options to let admin decide what to log
 		if($bolLog==true)
 		{
 			$arrSetLog = array

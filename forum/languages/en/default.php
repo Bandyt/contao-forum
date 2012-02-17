@@ -62,6 +62,30 @@ $GLOBALS['TL_LANG']['forum']['no_threads']   = 'No threads';
 $GLOBALS['TL_LANG']['forum']['signature']   = 'Signature';
 $GLOBALS['TL_LANG']['forum']['delete_post']   = 'Delete post';
 $GLOBALS['TL_LANG']['forum']['text']   = 'Text';
+$GLOBALS['TL_LANG']['forum']['username'] = 'Username';
+
+$GLOBALS['TL_LANG']['forum']['moderator']   = 'Moderator';
+$GLOBALS['TL_LANG']['forum']['overview'] = 'Overview';
+$GLOBALS['TL_LANG']['forum']['thread_management'] = 'Thread management';
+$GLOBALS['TL_LANG']['forum']['user_management'] = 'User management';
+$GLOBALS['TL_LANG']['forum']['select_forum'] = 'Select forum';
+$GLOBALS['TL_LANG']['forum']['select_user'] = 'Select user';
+$GLOBALS['TL_LANG']['forum']['list_of_available_threads'] = 'List of available threads';
+$GLOBALS['TL_LANG']['forum']['with_selected_threads'] = 'With selected threads';
+$GLOBALS['TL_LANG']['forum']['thread_type'] = 'Thread type';
+$GLOBALS['TL_LANG']['forum']['change_threadtype_normal'] = 'Change thread type to "normal"';
+$GLOBALS['TL_LANG']['forum']['change_threadtype_annoucement'] = 'Change thread type to "annoucement"';
+$GLOBALS['TL_LANG']['forum']['change_threadtype_broadcast'] = 'Change thread type to "broadcast"';
+$GLOBALS['TL_LANG']['forum']['special_flag'] = '"Special" flag';
+$GLOBALS['TL_LANG']['forum']['set_special'] = 'Set special flag';
+$GLOBALS['TL_LANG']['forum']['unset_special'] = 'Unset special flag';
+$GLOBALS['TL_LANG']['forum']['lock_flag'] = '"Lock" flag';
+$GLOBALS['TL_LANG']['forum']['lock_thread'] = 'Lock thread(s)';
+$GLOBALS['TL_LANG']['forum']['unlock_thread'] = 'Unlock thread(s)';
+$GLOBALS['TL_LANG']['forum']['general_options'] = 'General options';
+$GLOBALS['TL_LANG']['forum']['delete_thread'] = 'Delete thread(s)';
+$GLOBALS['TL_LANG']['forum']['show_user'] = 'Show user';
+
 
 $GLOBALS['TL_LANG']['forum']['thread_type_n']='Normal';
 $GLOBALS['TL_LANG']['forum']['thread_type_a']='Announcement';
