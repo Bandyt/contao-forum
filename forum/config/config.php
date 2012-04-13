@@ -38,7 +38,7 @@
  (
    'tl_forum_forums' => array
 	 (
-	    'tables' => array('tl_forum_forums','tl_forum_user_settings')
+	    'tables' => array('tl_forum_forums','tl_forum_user_settings','tl_forum_permissions')
 	 ),
 	'tl_forum_threads' => array
 	 (

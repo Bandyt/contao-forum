@@ -114,6 +114,87 @@ CREATE TABLE `tl_forum_user_settings` (
 -- --------------------------------------------------------
 
 -- 
+-- Table `tl_forum_permissions`
+-- 
+
+CREATE TABLE `tl_forum_permissions` (
+	`id` int(10) unsigned NOT NULL auto_increment,
+	`pid` int(10) unsigned NOT NULL default '0',
+	`sorting` int(10) unsigned NOT NULL default '0',
+	`tstamp` int(10) unsigned NOT NULL default '0',
+	`member_group` int(10) unsigned NOT NULL default '0',
+	`u` char(1) NOT NULL default '',
+	`u_f` char(1) NOT NULL default '',
+	`u_f_a` char(1) NOT NULL default '',
+	`u_f_a_l` char(1) NOT NULL default '',
+	`u_f_a_r` char(1) NOT NULL default '',
+	`u_t` char(1) NOT NULL default '',
+	`u_t_a` char(1) NOT NULL default '',
+	`u_t_a_m` char(1) NOT NULL default '',
+	`u_t_a_m_n` char(1) NOT NULL default '',
+	`u_t_a_m_b` char(1) NOT NULL default '',
+	`u_t_a_m_s` char(1) NOT NULL default '',
+	`u_t_a_m_l` char(1) NOT NULL default '',
+	`u_t_a_m_a` char(1) NOT NULL default '',
+	`u_t_a_o` char(1) NOT NULL default '',
+	`u_t_a_o_n` char(1) NOT NULL default '',
+	`u_t_a_o_b` char(1) NOT NULL default '',
+	`u_t_a_o_s` char(1) NOT NULL default '',
+	`u_t_a_o_l` char(1) NOT NULL default '',
+	`u_t_a_o_a` char(1) NOT NULL default '',
+	`u_t_c` char(1) NOT NULL default '',
+	`u_t_c_t` char(1) NOT NULL default '',
+	`u_t_c_s` char(1) NOT NULL default '',
+	`u_t_c_a` char(1) NOT NULL default '',
+	`u_t_c_b` char(1) NOT NULL default '',
+	`u_t_c_l` char(1) NOT NULL default '',
+	`u_t_e` char(1) NOT NULL default '',
+	`u_t_e_m` char(1) NOT NULL default '',
+	`u_t_e_m_h` char(1) NOT NULL default '',
+	`u_t_e_m_t` char(1) NOT NULL default '',
+	`u_t_e_m_t_n` char(1) NOT NULL default '',
+	`u_t_e_m_t_b` char(1) NOT NULL default '',
+	`u_t_e_m_t_a` char(1) NOT NULL default '',
+	`u_t_e_m_s` char(1) NOT NULL default '',
+	`u_t_e_m_s_s` char(1) NOT NULL default '',
+	`u_t_e_m_s_u` char(1) NOT NULL default '',
+	`u_t_e_m_l` char(1) NOT NULL default '',
+	`u_t_e_m_l_l` char(1) NOT NULL default '',
+	`u_t_e_m_l_u` char(1) NOT NULL default '',
+	`u_t_e_m_d` char(1) NOT NULL default '',
+	`u_t_e_m_d_d` char(1) NOT NULL default '',
+	`u_t_e_m_d_u` char(1) NOT NULL default '',
+	`u_p` char(1) NOT NULL default '',
+	`u_p_c` char(1) NOT NULL default '',
+	`u_p_c_r` char(1) NOT NULL default '',
+	`u_p_c_r_m` char(1) NOT NULL default '',
+	`u_p_c_r_o` char(1) NOT NULL default '',
+	`u_p_c_q` char(1) NOT NULL default '',
+	`u_p_c_q_m` char(1) NOT NULL default '',
+	`u_p_c_q_o` char(1) NOT NULL default '',
+	`u_p_c_a` char(1) NOT NULL default '',
+	`u_p_c_a_m` char(1) NOT NULL default '',
+	`u_p_c_a_o` char(1) NOT NULL default '',
+	`u_p_e` char(1) NOT NULL default '',
+	`u_p_e_m` char(1) NOT NULL default '',
+	`u_p_e_m_h` char(1) NOT NULL default '',
+	`u_p_e_m_t` char(1) NOT NULL default '',
+	`u_p_e_m_d` char(1) NOT NULL default '',
+	`u_p_e_m_d_d` char(1) NOT NULL default '',
+	`u_p_e_m_d_u` char(1) NOT NULL default '',
+	`u_p_e_o` char(1) NOT NULL default '',
+	`u_p_e_o_h` char(1) NOT NULL default '',
+	`u_p_e_o_t` char(1) NOT NULL default '',
+	`u_p_e_o_d` char(1) NOT NULL default '',
+	`u_p_e_o_d_d` char(1) NOT NULL default '',
+	`u_p_e_o_d_u` char(1) NOT NULL default '',
+  PRIMARY KEY  (`id`),
+  KEY `pid` (`pid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+-- 
 -- Table `tl_forum_forum_tracker`
 -- 
 

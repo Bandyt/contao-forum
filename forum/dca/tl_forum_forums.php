@@ -100,6 +100,13 @@ $GLOBALS['TL_DCA']['tl_forum_forums'] = array
 				'href'                => 'table=tl_forum_user_settings',
 				'icon'                => 'edit.gif',
 				'attributes'          => 'class="contextmenu"'
+			),
+			'permissions' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_forum_forums']['permissions'],
+				'href'                => 'table=tl_forum_permissions',
+				'icon'                => 'edit.gif',
+				'attributes'          => 'class="contextmenu"'
 			)
 		)
 	),
