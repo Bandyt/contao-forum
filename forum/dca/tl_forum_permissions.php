@@ -103,38 +103,148 @@ $GLOBALS['TL_DCA']['tl_forum_permissions'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'__selector__'                => array('u','u_f','u_t','u_p','u_f_a','u_t','u_t_a','u_t_c','u_t_e'),
-		'default'                     => 'member_group;{user_permissions},u;'
+		'__selector__'                => array('u','u_fa','u_ta','u_te','u_ta_m','u_ta_o','u_te','u_te_m','u_te_m_t','u_te_m_s','u_te_m_l','u_te_m_d','u_pc','u_pe','u_pc_r','u_pc_q','u_pc_a','u_pe_m','u_pe_m_d','m','m_te','m_pe','m_te_t','m_te_l','m_te_s','m_te_d','m_te_m','m_pe_d'),
+		'default'                     => 'member_group;{lbl_u},u;{lbl_m},m;'
 	),
 
 	// Subpalettes
 	'subpalettes' => array
 	(
-		'u'				  	=> '',
-		'u_A'			  	=> '',
-		'u_D'			  	=> '',
-		'u_N'			  	=> '',
-		'u_C'			  	=> ';{lbl_u_f},u_f;{lbl_u_t},u_t;{lbl_u_p},u_p;',
-		'u_f'			  	=> '',
-		'u_f_A'			  	=> '',
-		'u_f_D'			  	=> '',
-		'u_f_N'			  	=> '',
-		'u_f_C'			  	=> ';{lbl_u_f_a},u_f_a;',
-		'u_f_a'			  	=> '',
-		'u_f_a_A'			=> '',
-		'u_f_a_D'			=> '',
-		'u_f_a_N'			=> '',
-		'u_f_a_C'			=> 'u_f_a_l,u_f_a_r;',
-		'u_t'			  	=> '',
-		'u_t_A'			  	=> '',
-		'u_t_D'			  	=> '',
-		'u_t_N'			  	=> '',
-		'u_t_C'			  	=> ';{lbl_u_t_a},u_t_a;{lbl_u_t_c},u_t_c;{lbl_u_t_e},u_t_e;',
-		'u_t_a'			  	=> '',
-		'u_t_a_A'			=> '',
-		'u_t_a_D'			=> '',
-		'u_t_a_N'			=> '',
-		'u_t_a_C'			=> ';{lbl_u_t_a_m},u_t_a_m;{lbl_u_t_a_o},u_t_a_o;',
+		'u'			  		=> '',
+		'u_A'				=> '',
+		'u_D'				=> '',
+		'u_N'				=> '',
+		'u_C'				=> ';{lbl_u_fa},u_fa;{lbl_u_tc},u_tc;{lbl_u_te},u_te;{lbl_u_pc},u_pc;{lbl_u_pe},u_pe;',
+		'u_fa'			  	=> '',
+		'u_fa_A'			=> '',
+		'u_fa_D'			=> '',
+		'u_fa_N'			=> '',
+		'u_fa_C'			=> 'u_fa_l,u_fa_r;',
+		'u_ta'			  	=> '',
+		'u_ta_A'			=> '',
+		'u_ta_D'			=> '',
+		'u_ta_N'			=> '',
+		'u_ta_C'			=> 'u_ta_m,u_ta_o;',
+		'u_ta_m'		  	=> '',
+		'u_ta_m_A'			=> '',
+		'u_ta_m_D'			=> '',
+		'u_ta_m_N'			=> '',
+		'u_ta_m_C'			=> 'u_ta_m_n,u_ta_m_b,u_ta_m_s,u_ta_m_l,u_ta_m_a;',
+		'u_ta_o'		  	=> '',
+		'u_ta_o_A'			=> '',
+		'u_ta_o_D'			=> '',
+		'u_ta_o_N'			=> '',
+		'u_ta_o_C'			=> 'u_ta_o_n,u_ta_o_b,u_ta_o_s,u_ta_o_l,u_ta_o_a;',
+		'u_te'			  	=> '',
+		'u_te_A'	  		=> '',
+		'u_te_D'	  		=> '',
+		'u_te_N'	  		=> '',
+		'u_te_C'	  		=> 'u_te_m;',
+		'u_te_m'	  		=> '',
+		'u_te_m_A'		  	=> '',
+		'u_te_m_D'		  	=> '',
+		'u_te_m_N'		  	=> '',
+		'u_te_m_C'		  	=> 'u_te_m_h,u_te_m_t,u_te_m_s,u_te_m_l,u_te_m_d;',
+		'u_te_m_t'		  	=> '',
+		'u_te_m_t_A'	  	=> '',
+		'u_te_m_t_D'	  	=> '',
+		'u_te_m_t_N'	  	=> '',
+		'u_te_m_t_C'	  	=> 'u_te_m_t_n,u_te_m_t_b,u_te_m_t_a',
+		'u_te_m_s'		  	=> '',
+		'u_te_m_s_A'	  	=> '',
+		'u_te_m_s_D'	  	=> '',
+		'u_te_m_s_N'	  	=> '',
+		'u_te_m_s_C'	  	=> 'u_te_m_s_s,u_te_m_s_u',
+		'u_te_m_l'		  	=> '',
+		'u_te_m_l_A'	  	=> '',
+		'u_te_m_l_D'	  	=> '',
+		'u_te_m_l_N'	  	=> '',
+		'u_te_m_l_C'	  	=> 'u_te_m_l_l,u_te_m_l_u',
+		'u_te_m_d'		  	=> '',
+		'u_te_m_d_A'	  	=> '',
+		'u_te_m_d_D'	  	=> '',
+		'u_te_m_d_N'	  	=> '',
+		'u_te_m_d_C'  		=> 'u_te_m_d_d,u_te_m_d_u',
+		'u_pc'				=> '',
+		'u_pc_A'			=> '',
+		'u_pc_D'			=> '',
+		'u_pc_N'			=> '',
+		'u_pc_C'			=> 'u_pc_r,u_pc_q,u_pc_a;',
+		'u_pc_r'			=> '',
+		'u_pc_r_A'			=> '',
+		'u_pc_r_D'			=> '',
+		'u_pc_r_N'			=> '',
+		'u_pc_r_C'			=> 'u_pc_r_m,u_pc_p;',
+		'u_pc_q'			=> '',
+		'u_pc_q_A'			=> '',
+		'u_pc_q_D'			=> '',
+		'u_pc_q_N'			=> '',
+		'u_pc_q_C'			=> 'u_pc_q_m,u_pc_q_o;',
+		'u_pc_a'			=> '',
+		'u_pc_a_A'			=> '',
+		'u_pc_a_D'			=> '',
+		'u_pc_a_N'			=> '',
+		'u_pc_a_C'			=> 'u_pc_a_m,u_pc_a_o;',
+		'u_pe'				=> '',
+		'u_pe_A'			=> '',
+		'u_pe_D'			=> '',
+		'u_pe_N'			=> '',
+		'u_pe_C'			=> 'u_pe_m;',
+		'u_pe_m'			=> '',
+		'u_pe_m_A'			=> '',
+		'u_pe_m_D'			=> '',
+		'u_pe_m_N'			=> '',
+		'u_pe_m_C'			=> 'u_pe_m_h,u_pe_m_t,u_pe_m_d;',
+		'u_pe_m_d'			=> '',
+		'u_pe_m_d_A'		=> '',
+		'u_pe_m_d_D'		=> '',
+		'u_pe_m_d_N'		=> '',
+		'u_pe_m_d_C'		=> 'u_pe_m_d_d,u_pe_m_d_u;',
+		'm'			  		=> '',
+		'm_A'				=> '',
+		'm_D'				=> '',
+		'm_N'				=> '',
+		'm_C'				=> ';{lbl_m_te},m_te;{lbl_m_pe},m_pe;',
+		'm_te'		  		=> '',
+		'm_te_A'			=> '',
+		'm_te_D'			=> '',
+		'm_te_N'			=> '',
+		'm_te_C'			=> 'm_te_h,m_te_t;{lbl_m_te_t},m_te_t;{lbl_m_te_l},m_te_l;{lbl_m_te_s},m_te_s;{lbl_m_te_d},m_te_d;{lbl_m_te_m},m_te_m;',
+		'm_te_t'	  		=> '',
+		'm_te_t_A'			=> '',
+		'm_te_t_D'			=> '',
+		'm_te_t_N'			=> '',
+		'm_te_t_C'			=> 'm_te_t_n,m_te_t_a,m_te_t_b',
+		'm_te_l'	  		=> '',
+		'm_te_l_A'			=> '',
+		'm_te_l_D'			=> '',
+		'm_te_l_N'			=> '',
+		'm_te_l_C'			=> 'm_te_l_l,m_te_l_u',
+		'm_te_s'	  		=> '',
+		'm_te_s_A'			=> '',
+		'm_te_s_D'			=> '',
+		'm_te_s_N'			=> '',
+		'm_te_s_C'			=> 'm_te_s_s,m_te_s_u',
+		'm_te_d'	  		=> '',
+		'm_te_d_A'			=> '',
+		'm_te_d_D'			=> '',
+		'm_te_d_N'			=> '',
+		'm_te_d_C'			=> 'm_te_d_d,m_te_d_u',
+		'm_te_m'	  		=> '',
+		'm_te_m_A'			=> '',
+		'm_te_m_D'			=> '',
+		'm_te_m_N'			=> '',
+		'm_te_m_C'			=> 'm_te_m_f,m_te_m_t',
+		'm_pe'		  		=> '',
+		'm_pe_A'			=> '',
+		'm_pe_D'			=> '',
+		'm_pe_N'			=> '',
+		'm_pe_C'			=> 'm_pe_h,m_pe_t;{lbl_m_pe_d},m_pe_d;',
+		'm_pe_d'	  		=> '',
+		'm_pe_d_A'			=> '',
+		'm_pe_d_D'			=> '',
+		'm_pe_d_N'			=> '',
+		'm_pe_d_C'			=> 'm_pe_d_d,m_pe_d_u'
 	),
 
 	// Fields
@@ -157,580 +267,652 @@ $GLOBALS['TL_DCA']['tl_forum_permissions'] = array
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_f' => array
+		'u_fa' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_f'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_fa'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N','C'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_f_a' => array
+		'u_fa_l' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_f_a'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_fa_l'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_fa_r' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_fa_r'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_ta' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_ta'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N','C'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_f_a_l' => array
+		'u_ta_m' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_f_a_l'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_ta_m'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N','C'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'u_ta_m_n' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_ta_m_n'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_ta_m_b' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_ta_m_b'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_ta_m_s' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_ta_m_s'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_ta_m_l' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_ta_m_l'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_ta_m_a' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_ta_m_a'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_ta_o' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_ta_o'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N','C'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'u_ta_o_n' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_ta_o_n'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_ta_o_b' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_ta_o_b'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_ta_o_s' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_ta_o_s'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_ta_o_l' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_ta_o_l'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_ta_o_a' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_ta_o_a'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_tc' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_tc'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_te' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N','C'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'u_te_m' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N','C'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'u_te_m_h' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_h'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_f_a_r' => array
+		'u_te_m_t' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_f_a_r'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_t'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N','C'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'u_te_m_t_n' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_t_n'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_t' => array
+		'u_te_m_t_b' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_t_b'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'u_te_m_t_a' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_t_a'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'u_te_m_s' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_s'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N','C'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_t_a' => array
+		'u_te_m_s_s' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_s_s'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'u_te_m_s_u' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_s_u'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'u_te_m_l' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_l'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N','C'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_t_a_m' => array
+		'u_te_m_l_l' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_m'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_l_l'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'u_te_m_l_u' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_l_u'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'u_te_m_d' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_d'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N','C'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_t_a_m_n' => array
+		'u_te_m_d_d' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_m_n'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_d_d'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'u_te_m_d_u' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_d_u'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'u_pc' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pc'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N','C'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_t_a_m_b' => array
+		'u_pc_r' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_m_b'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pc_r'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N','C'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_t_a_m_s' => array
+		'u_pc_r_m' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_m_s'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pc_r_m'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_pc_r_o' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pc_r_o'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_pc_q' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pc_q'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N','C'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_t_a_m_l' => array
+		'u_pc_q_m' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_m_l'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pc_q_m'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_pc_q_o' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pc_q_o'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_pc_a' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pc_a'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N','C'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_t_a_m_a' => array
+		'u_pc_a_m' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_m_a'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pc_a_m'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_pc_a_o' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pc_a_o'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_pe' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pe'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N','C'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_t_a_o' => array
+		'u_pe_m' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_o'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pe_m'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N','C'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_t_a_o_n' => array
+		'u_pe_m_h' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_o_n'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pe_m_h'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_pe_m_t' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pe_m_t'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_pe_m_d' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pe_m_d'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N','C'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_t_a_o_b' => array
+		'u_pe_m_d_d' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_o_b'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pe_m_d_d'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'u_pe_m_d_u' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pe_m_d_u'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>false)
+			),
+		'm' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N','C'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_t_a_o_s' => array
+		'm_te' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_o_s'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N','C'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_t_a_o_l' => array
+		'm_te_h' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_o_l'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_h'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'm_te_t' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_t'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N','C'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_t_a_o_a' => array
+		'm_te_t_n' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_o_a'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_t_n'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'm_te_t_b' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_t_b'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'm_te_t_a' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_t_a'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'm_te_s' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_s'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N','C'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_t_c' => array
+		'm_te_s_s' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_c'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_s_s'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'm_te_s_u' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_s_u'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'm_te_l' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_l'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N','C'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_t_c_t' => array
+		'm_te_l_l' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_c_t'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_l_l'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'm_te_l_u' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_l_u'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'm_te_d' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_d'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N','C'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_t_c_s' => array
+		'm_te_d_d' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_c_s'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_d_d'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'm_te_d_u' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_d_u'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'm_pe' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_pe'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N','C'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_t_c_a' => array
+		'm_pe_h' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_c_a'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_pe_h'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'm_pe_t' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_pe_t'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+			),
+		'm_pe_d' => array
+			(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_pe_d'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options'                 => array('A','D','N','C'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_t_c_b' => array
+		'm_pe_d_d' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_c_b'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_pe_d_d'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			),
-		'u_t_c_l' => array
+		'm_pe_d_u' => array
 			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_c_l'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['m_pe_d_u'],
 			'exclude'                 => true,
 			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_t_e' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_t_e_m' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_t_e_m_h' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_h'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_t_e_m_t' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_t'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_t_e_m_t_n' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_t_n'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_t_e_m_t_b' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_t_b'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_t_e_m_t_a' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_t_a'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_t_e_m_s' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_s'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_t_e_m_s_s' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_s_s'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_t_e_m_s_u' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_s_u'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_t_e_m_l' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_l'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_t_e_m_l_l' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_l_l'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_t_e_m_l_u' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_l_u'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_t_e_m_d' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_d'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_t_e_m_d_d' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_d_d'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_t_e_m_d_u' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_d_u'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_c' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_c'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_c_r' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_c_r'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_c_r_m' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_c_r_m'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_c_r_o' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_c_r_o'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_c_q' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_c_q'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_c_q_m' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_c_q_m'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_c_q_o' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_c_q_o'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_c_a' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_c_a'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_c_a_m' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_c_a_m'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_c_a_o' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_c_a_o'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_e' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_e'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_e_m' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_e_m'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_e_m_h' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_e_m_h'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_e_m_t' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_e_m_t'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_e_m_d' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_e_m_d'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_e_m_d_d' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_e_m_d_d'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_e_m_d_u' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_e_m_d_u'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_e_o' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_e_o'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_e_o_h' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_e_o_h'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_e_o_t' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_e_o_t'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_e_o_d' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_e_o_d'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_e_o_d_d' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_e_o_d_d'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
-			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
-			),
-		'u_p_e_o_d_u' => array
-			(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_e_o_d_u'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options'                 => array('A','D','N','C'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference'],
+			'options'                 => array('A','D','N'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference'],
 			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
 			)
 	)

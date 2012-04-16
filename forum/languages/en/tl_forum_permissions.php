@@ -34,99 +34,115 @@
  */
 $GLOBALS['TL_LANG']['tl_forum_permissions']['member_group'] = array('Member group', 'Group for which this permissions apply');
 
-$GLOBALS['TL_LANG']['tl_forum_permissions']['user_permissions'] = 'Permission for user';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u'] = 'User rights';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u'] = array('User rights', 'Grantes the user all user rights');
 
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u'] = array('User', 'Permission for the object group User');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_fa'] = 'User-Forum-Access';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_fa'] = array('User-Forum-Access', 'Allows the user to get the forum listed and access it');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_fa_l'] = array('User-Forum-Access-List', 'Allows the user to get this forum listed');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_fa_r'] = array('User-Forum-Access-Read', 'Allows the user to read this forum');
 
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_f'] = 'User-Forum';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_f'] = array('User-Forum', 'Permission for the object group User-Forum');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_ta'] = 'User-Thread-Access';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_ta'] = array('User-Thread-Access', 'Allows the user to access threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_ta_m'] = 'User-Thread-Access-Own threads';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_ta_m'] = array('User-Thread-Access-Own threads', 'Allows the user to access own threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_ta_m_n'] = array('User-Thread-Access-Own threads-Normal', 'Allows the user to read own normal threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_ta_m_b'] = array('User-Thread-Access-Own threads-Broadcast', 'Allows the user to read own broadcasts');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_ta_m_s'] = array('User-Thread-Access-Own threads-Special', 'Allows the user to read own special threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_ta_m_l'] = array('User-Thread-Access-Own threads-Locked', 'Allows the user to read own locked threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_ta_m_a'] = array('User-Thread-Access-Own threads-Announcement', 'Allows the user to read own announcements');
 
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_f_a'] = 'User-Forum-Access';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_f_a'] = array('User-Forum-Access', 'Allows the user to get the forum listed and access it');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_f_a_l'] = array('User-Forum-Access-List', 'Allows the user to get this forum listed');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_f_a_r'] = array('User-Forum-Access-Read', 'Allows the user to read this forum');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_tc'] = 'User-Thread-Create';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_tc'] = array('User-Thread-Create', 'Allows the user to create threads');
 
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_t'] = 'User-Thread';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t'] = array('User-Thread', 'Allows the user to access, create and edit threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_te'] = 'User-Thread-Edit';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te'] = array('User-Thread-Edit', 'Allows the user to change threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_te_m'] = 'User-Thread-Edit-Own threads';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m'] = array('User-Thread-Edit-Own threads', 'Allows the user to change own threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_h'] = array('User-Thread-Edit-Own threads-Title', 'Allows the user to change the title of own threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_d'] = array('User-Thread-Edit-Own threads-Text', 'Allows the user to change the text of own threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_te_m_t'] = 'User-Thread-Edit-Own threads-Type';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_t'] = array('User-Thread-Edit-Own threads-Type', 'Allows the user to change the thread type of own threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_t_n'] = array('User-Thread-Edit-Own threads-Type-Normal', 'Allows the user to change the thread type of own threads to normal');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_t_b'] = array('User-Thread-Edit-Own threads-Type-Broadcast', 'Allows the user to change the thread type of own threads to broadcast');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_t_a'] = array('User-Thread-Edit-Own threads-Type-Announcement', 'Allows the user to change the thread type of own threads to announcement');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_te_m_s'] = 'User-Thread-Edit-Own threads-Special';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_s'] = array('User-Thread-Edit-Own threads-Special', 'Allows the user to change the special indicator of own threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_s_s'] = array('User-Thread-Edit-Own threads-Special-Special', 'Allows the user to change the special indicator of own threads to special');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_s_u'] = array('User-Thread-Edit-Own threads-Special-Normal', 'Allows the user to change the special indicator of own threads to normal');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_te_m_l'] = 'User-Thread-Edit-Own threads-Locked';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_l'] = array('User-Thread-Edit-Own threads-Locked', 'Allows the user to change the locked indicator of own threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_l_l'] = array('User-Thread-Edit-Own threads-Locked-Locked', 'Allows the user to change the locked indicator of own threads to locked');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_l_u'] = array('User-Thread-Edit-Own threads-Locked-Unlocked', 'Allows the user to change the locked of own threads to unlocked');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_te_m_d'] = 'User-Thread-Edit-Own threads-Deleted';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_d'] = array('User-Thread-Edit-Own threads-Deleted', 'Allows the user to change the deleted flag of own threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_d_d'] = array('User-Thread-Edit-Own threads-Deleted-Deleted', 'Allows the user to change the deleted flag of own threads to deleted');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_te_m_d_u'] = array('User-Thread-Edit-Own threads-Deleted-Normal', 'Allows the user to change the deleted flag of own threads to undeleted');
 
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_t_a'] = 'User-Thread-Access';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a'] = array('User-Thread-Access', 'Allows the user to access threads');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_t_a_m'] = 'User-Thread-Access-Own threads';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_m'] = array('User-Thread-Access-Own threads', 'Allows the user to access own threads');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_m_n'] = array('User-Thread-Access-Own threads-Normal', 'Allows the user to read own normal threads');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_m_b'] = array('User-Thread-Access-Own threads-Broadcast', 'Allows the user to read own broadcasts');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_m_s'] = array('User-Thread-Access-Own threads-Special', 'Allows the user to read own special threads');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_m_l'] = array('User-Thread-Access-Own threads-Locked', 'Allows the user to read own locked threads');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_m_a'] = array('User-Thread-Access-Own threads-Announcement', 'Allows the user to read own announcements');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_pc'] = 'User-Post-Create';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pc'] = array('User-Post-Create', 'Allows the user to create posts');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_pc_r'] = 'User-Post-Create-Reply';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pc_r'] = array('User-Post-Create-Reply', 'Allows the user to reply to posts');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pc_r_m'] = array('User-Post-Create-Reply-Own threads', 'Allows the user to reply to own threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pc_r_o'] = array('User-Post-Create-Reply-Others threads', 'Allows the user to reply to others threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_pc_q'] = 'User-Post-Create-Quote';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pc_q'] = array('User-Post-Create-Quote', 'Allows the user to quote posts');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pc_q_m'] = array('User-Post-Create-Quote-Own posts', 'Allows the user to quote to own posts');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pc_q_o'] = array('User-Post-Create-Quote-Others posts', 'Allows the user to quote to others posts');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_pc_a'] = 'User-Post-Create-Answer';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pc_a'] = array('User-Post-Create-Answer', 'Allows the user to answer to posts');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pc_a_m'] = array('User-Post-Create-Answer-Own posts', 'Allows the user to answer to own posts');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pc_a_o'] = array('User-Post-Create-Answer-Others posts', 'Allows the user to answer to others posts');
 
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_t_a_o'] = 'User-Thread-Access-Others threads';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_o'] = array('User-Thread-Access-Others threads', 'Allows the user to access others threads');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_o_n'] = array('User-Thread-Access-Others threads-Normal', 'Allows the user to read others normal threads');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_o_b'] = array('User-Thread-Access-Others threads-Broadcast', 'Allows the user to read others broadcasts');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_o_s'] = array('User-Thread-Access-Others threads-Special', 'Allows the user to read others special threads');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_o_l'] = array('User-Thread-Access-Others threads-Locked', 'Allows the user to read others locked threads');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_a_o_a'] = array('User-Thread-Access-Others threads-Announcement', 'Allows the user to read others announcements');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_pe'] = 'User-Post-Edit';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pe'] = array('User-Post-Edit', 'Allows the user to edit posts');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_pe_m'] = 'User-Post-Edit-My posts';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pe_m'] = array('User-Post-Edit-My posts', 'Allows the user to edit own posts');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pe_m_h'] = array('User-Post-Edit-My posts-Title', 'Allows the user to edit the title of own posts');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pe_m_t'] = array('User-Post-Edit-My posts-Text', 'Allows the user to edit the text of own posts');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_pe_m_d'] = 'User-Post-Edit-My posts-Deleted';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pe_m_d'] = array('User-Post-Edit-My posts-Delted', 'Allows the user to edit the deleted flag of own posts');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pe_m_d_d'] = array('User-Post-Edit-My posts-Deleted-Deleted', 'Allows the user to delete own posts');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['u_pe_m_d_u'] = array('User-Post-Edit-My posts-Deleted-Undeleted', 'Allows the user to undelete own posts');
 
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_t_c'] = 'User-Thread-Create';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_c'] = array('User-Thread-Create', 'Allows the user to create threads');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_c_t'] = array('User-Thread-Create-Normal', 'Allows the user to create a new normal thread');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_c_s'] = array('User-Thread-Create-Special', 'Allows the user to create a new special thread');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_c_a'] = array('User-Thread-Create-Announcement', 'Allows the user to create a new announcement thread');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_c_b'] = array('User-Thread-Create-Broadcast', 'Allows the user to create a new broadcast thread');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_c_l'] = array('User-Thread-Create-Locked', 'Allows the user to create a new locked thread');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_m'] = 'Moderator rights';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m'] = array('Moderator rights', 'Grantes the user all moderator rights');
 
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_t_e'] = 'User-Thread-Edit';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e'] = array('User-Thread-Edit', 'Allows the user to change threads');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_t_e_m'] = 'User-Thread-Edit-Own threads';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m'] = array('User-Thread-Edit-Own threads', 'Allows the user to change own threads');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_h'] = array('User-Thread-Edit-Own threads-Title', 'Allows the user to change the title of own threads');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_d'] = array('User-Thread-Edit-Own threads-Text', 'Allows the user to change the text of own threads');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_t_e_m_t'] = 'User-Thread-Edit-Own threads-Type';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_t'] = array('User-Thread-Edit-Own threads-Type', 'Allows the user to change the thread type of own threads');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_t_n'] = array('User-Thread-Edit-Own threads-Type-Normal', 'Allows the user to change the thread type of own threads to normal');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_t_b'] = array('User-Thread-Edit-Own threads-Type-Broadcast', 'Allows the user to change the thread type of own threads to broadcast');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_t_a'] = array('User-Thread-Edit-Own threads-Type-Announcement', 'Allows the user to change the thread type of own threads to announcement');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_t_e_m_s'] = 'User-Thread-Edit-Own threads-Special';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_s'] = array('User-Thread-Edit-Own threads-Special', 'Allows the user to change the special indicator of own threads');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_s_s'] = array('User-Thread-Edit-Own threads-Special-Special', 'Allows the user to change the special indicator of own threads to special');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_s_u'] = array('User-Thread-Edit-Own threads-Special-Normal', 'Allows the user to change the special indicator of own threads to normal');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_t_e_m_l'] = 'User-Thread-Edit-Own threads-Locked';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_t'] = array('User-Thread-Edit-Own threads-Locked', 'Allows the user to change the locked indicator of own threads');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_t_n'] = array('User-Thread-Edit-Own threads-Locked-Locked', 'Allows the user to change the locked indicator of own threads to locked');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_t_b'] = array('User-Thread-Edit-Own threads-Locked-Unlocked', 'Allows the user to change the locked of own threads to unlocked');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_t_e_m_d'] = 'User-Thread-Edit-Own threads-Deleted';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_t'] = array('User-Thread-Edit-Own threads-Deleted', 'Allows the user to change the deleted flag of own threads');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_t_n'] = array('User-Thread-Edit-Own threads-Deleted-Deleted', 'Allows the user to change the deleted flag of own threads to deleted');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_t_e_m_t_b'] = array('User-Thread-Edit-Own threads-Deleted-Normal', 'Allows the user to change the deleted flag of own threads to deleted');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_m_te'] = 'Moderator-Thread-Edit';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te'] = array('Moderator-Thread-Edit', 'Allows the user to change all threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_h'] = array('Moderator-Thread-Edit-Title', 'Allows the user to change the title of all threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_t'] = array('Moderator-Thread-Edit-Text', 'Allows the user to change the text of all threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_m_te_t'] = 'Moderator-Thread-Edit-Type';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_t'] = array('Moderator-Thread-Edit-Type', 'Allows the user to change the thread type of all threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_t_n'] = array('Moderator-Thread-Edit-Type-Normal', 'Allows the user to change the thread type of all threads to normal');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_t_b'] = array('Moderator-Thread-Edit-Type-Broadcast', 'Allows the user to change the thread type of all threads to broadcast');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_t_a'] = array('Moderator-Thread-Edit-Type-Announcement', 'Allows the user to change the thread type of all threads to announcement');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_m_te_s'] = 'Moderator-Thread-Edit-Special';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_s'] = array('Moderator-Thread-Edit-Special', 'Allows the user to change the special indicator of all threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_s_s'] = array('Moderator-Thread-Edit-Special-Special', 'Allows the user to change the special indicator of all threads to special');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_s_u'] = array('Moderator-Thread-Edit-Special-Normal', 'Allows the user to change the special indicator of all threads to normal');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_m_te_l'] = 'Moderator-Thread-Edit-Locked';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_l'] = array('Moderator-Thread-Edit-Locked', 'Allows the user to change the locked indicator of all threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_l_l'] = array('Moderator-Thread-Edit-Locked-Locked', 'Allows the user to change the locked indicator of all threads to locked');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_l_u'] = array('Moderator-Thread-Edit-Locked-Unlocked', 'Allows the user to change the locked of all threads to unlocked');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_m_te_d'] = 'Moderator-Thread-Edit-Deleted';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_d'] = array('Moderator-Thread-Edit-Deleted', 'Allows the user to change the deleted flag of all threads');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_d_d'] = array('Moderator-Thread-Edit-Deleted-Deleted', 'Allows the user to change the deleted flag of all threads to deleted');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_te_d_u'] = array('Moderator-Thread-Edit-Deleted-Normal', 'Allows the user to change the deleted flag of all threads to deleted');
 
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_p'] = 'User-Post';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p'] = array('User-Post', 'Allows the user to access, create and edit posts');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_p_c'] = 'User-Post-Create';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_c'] = array('User-Post-Create', 'Allows the user to create posts');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_p_c_r'] = 'User-Post-Create-Reply';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_c_r'] = array('User-Post-Create-Reply', 'Allows the user to reply to posts');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_c_r_m'] = array('User-Post-Create-Reply-Own posts', 'Allows the user to reply to own posts');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_c_r_o'] = array('User-Post-Create-Reply-Others posts', 'Allows the user to reply to others posts');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_p_c_q'] = 'User-Post-Create-Quote';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_c_q'] = array('User-Post-Create-Quote', 'Allows the user to quote posts');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_c_q_m'] = array('User-Post-Create-Quote-Own posts', 'Allows the user to quote to own posts');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_c_q_o'] = array('User-Post-Create-Quote-Others posts', 'Allows the user to quote to others posts');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_p_c_a'] = 'User-Post-Create-Answer';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_c_a'] = array('User-Post-Create-Answer', 'Allows the user to answer to posts');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_c_a_m'] = array('User-Post-Create-Answer-Own posts', 'Allows the user to answer to own posts');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_c_a_o'] = array('User-Post-Create-Answer-Others posts', 'Allows the user to answer to others posts');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_m_pe'] = 'Moderator-Post-Edit';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_pe'] = array('Moderator-Post-Edit', 'Allows the user to edit all posts');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_pe_h'] = array('Moderator-Post-Edit-Title', 'Allows the user to edit the title of all posts');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_pe_t'] = array('Moderator-Post-Edit-Text', 'Allows the user to edit the text of all posts');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_m_pe_d'] = 'Moderator-Post-Edit-Deleted';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_pe_d'] = array('Moderator-Post-Edit-Deleted', 'Allows the user to edit the deleted flag of all posts');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_pe_d_d'] = array('Moderator-Post-Edit-Deleted-Deleted', 'Allows the user to delete all posts');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['m_pe_d_u'] = array('Moderator-Post-Edit-Deleted-Undeleted', 'Allows the user to undelete all posts');
 
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_p_e'] = 'User-Post-Edit';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_e'] = array('User-Post-Edit', 'Allows the user to edit posts');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_p_e_m'] = 'User-Post-Edit-My posts';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_e_m'] = array('User-Post-Edit-My posts', 'Allows the user to edit own posts');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_e_m_h'] = array('User-Post-Edit-My posts-Title', 'Allows the user to edit the title of own posts');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_e_m_t'] = array('User-Post-Edit-My posts-Text', 'Allows the user to edit the text of own posts');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u_p_e_m_d'] = 'User-Post-Edit-My posts-Deleted';
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_e_m_d'] = array('User-Post-Edit-My posts-Delted', 'Allows the user to edit the deleted flag of own posts');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_e_m_d_d'] = array('User-Post-Edit-My posts-Deleted-Deleted', 'Allows the user to delete own posts');
-$GLOBALS['TL_LANG']['tl_forum_permissions']['u_p_e_m_d_u'] = array('User-Post-Edit-My posts-Deleted-Undeleted', 'Allows the user to undelete own posts');
 
+/**
+ * Reference
+ */
 $GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference']['A'] = 'Allow';
 $GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference']['D'] = 'Deny';
 $GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference']['N'] = 'Never';
@@ -135,12 +151,6 @@ $GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference']['A'
 $GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference']['D'] = 'Deny all';
 $GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference']['N'] = 'Never all';
 $GLOBALS['TL_LANG']['tl_forum_permissions']['group_permission']['reference']['C'] = 'Custom';
-
-
-/**
- * Reference
- */
-
 
 /**
  * Buttons
