@@ -32,6 +32,7 @@
 /**
  * Fields
  */
+$GLOBALS['TL_LANG']['tl_forum_permissions']['user_group'] = array('Benutzergruppe', 'Legt den Typ Benutzer fest f&uuml;r den diese Berechtigung gilt');
 $GLOBALS['TL_LANG']['tl_forum_permissions']['member_group'] = array('Mitgliedergruppe', 'Gruppe f&uml;r die diese Berechtigung gilt');
 
 $GLOBALS['TL_LANG']['tl_forum_permissions']['Benutzer_permissions'] = 'Benutzer-Rechte';
@@ -163,6 +164,10 @@ $GLOBALS['TL_LANG']['tl_forum_permissions']['m_pe_d_u'] = array('Moderator-Post-
 /**
  * Reference
  */
+$GLOBALS['TL_LANG']['tl_forum_permissions']['user_group']['reference']['G'] = 'G&auml;ste';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['user_group']['reference']['B'] = 'Bots';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['user_group']['reference']['C'] = 'Mitgliedergruppe';
+
 $GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference']['A'] = 'Erlaubt';
 $GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference']['D'] = 'Verboten';
 $GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference']['N'] = 'Nie';

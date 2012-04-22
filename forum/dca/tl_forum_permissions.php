@@ -103,13 +103,17 @@ $GLOBALS['TL_DCA']['tl_forum_permissions'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'__selector__'                => array('u','u_fa','u_ta','u_te','u_ta_m','u_ta_o','u_te','u_te_m','u_te_m_t','u_te_m_s','u_te_m_l','u_te_m_d','u_pc','u_pe','u_pc_r','u_pc_q','u_pc_a','u_pe_m','u_pe_m_d','m','m_te','m_pe','m_te_t','m_te_l','m_te_s','m_te_d','m_te_m','m_pe_d'),
-		'default'                     => 'member_group;{lbl_u},u;{lbl_m},m;'
+		'__selector__'                => array('user_group','u','u_fa','u_ta','u_te','u_ta_m','u_ta_o','u_te','u_te_m','u_te_m_t','u_te_m_s','u_te_m_l','u_te_m_d','u_pc','u_pe','u_pc_r','u_pc_q','u_pc_a','u_pe_m','u_pe_m_d','m','m_te','m_pe','m_te_t','m_te_l','m_te_s','m_te_d','m_te_m','m_pe_d'),
+		'default'                     => 'user_group;{lbl_u},u;{lbl_m},m;'
 	),
 
 	// Subpalettes
 	'subpalettes' => array
 	(
+		'user_group'  		=> '',
+		'user_group_G'		=> '',
+		'user_group_B'		=> '',
+		'user_group_C'		=> 'member_group',
 		'u'			  		=> '',
 		'u_A'				=> '',
 		'u_D'				=> '',
@@ -250,6 +254,15 @@ $GLOBALS['TL_DCA']['tl_forum_permissions'] = array
 	// Fields
 	'fields' => array
 	(
+		'user_group' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['user_group'],
+			'exclude'                 => false,
+			'inputType'               => 'select',
+			'options'                 => array('G','B','C'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_forum_permissions']['user_group']['reference'],
+			'eval'                    => array('mandatory'=>false,'submitOnChange'=>true)
+		),
 		'member_group' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_forum_permissions']['member_group'],
@@ -922,8 +935,19 @@ class tl_forum_permissions extends Backend
 {	
 	public function listPermissions($arrRow)
 	{
-		$objMembergroup = $this->Database->prepare("SELECT name FROM tl_member_group WHERE id=?")->execute($arrRow['member_group']);
-		return '<div>' . $objMembergroup->name . '</div>';
+		switch($arrRow['user_group'])
+		{
+			case 'G':
+				return 'Guests';
+				break;
+			case 'B':
+				return 'Bots';
+				break;
+			case 'C':
+				$objMembergroup = $this->Database->prepare("SELECT name FROM tl_member_group WHERE id=?")->execute($arrRow['member_group']);
+				return 'Group: ' . $objMembergroup->name;
+				break;				
+		}
 	}
 }
 ?>

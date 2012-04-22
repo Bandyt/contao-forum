@@ -50,6 +50,7 @@ class forum_thread_reader extends ContentElement
 	private $arrLinks=array();
 	private $arrThread=array();
 	private $arrSignatures=array();
+	private $auth;
 	
 	private function getThreadInformation()
 	{
@@ -57,7 +58,18 @@ class forum_thread_reader extends ContentElement
 		$objThread = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE id=?")->execute($this->intThreadId);
 		$this->arrThread['title']=$objThread->title;
 		$this->arrThread['locked']=$objThread->locked;
+		$this->arrThread['special']=$objThread->special;
+		$this->arrThread['thread_type']=$objThread->thread_type;
+		$this->arrThread['created_by']=$objThread->created_by;
+		$this->arrThread['forum']=$objThread->pid;
 		$this->arrThread['root']=$functions->getRootFromForum($objThread->pid);
+		if($this->forum_use_fixed_thread=='1'){
+			$this->intThreadId = $this->forum_fixed_thread;
+		}
+		else
+		{
+			$this->intThreadId = $this->Input->get('thread');
+		}
 	}
 	
 	private function getPosts()
@@ -147,17 +159,6 @@ class forum_thread_reader extends ContentElement
 		}
 	}//private function getForumBreadcrumb
 	
-	private function getThreadId()
-	{
-		if($this->forum_use_fixed_thread=='1'){
-			$this->intThreadId = $this->forum_fixed_thread;
-		}
-		else
-		{
-			$this->intThreadId = $this->Input->get('thread');
-		}
-	}
-	
 	private function updateTracker()
 	{
 		if(($this->intThreadId!=0) && ($this->arrUser['logged_in']==true))
@@ -202,24 +203,34 @@ class forum_thread_reader extends ContentElement
 	 */
 	protected function compile()
 	{
-		$this->getThreadId();
-		$this->getThreadInformation();
-		
+		$this->auth = new forum_auth();
 		$functions = new forum_common_functions();
-		$this->arrMember=$functions->getMember();
+		$this->getThreadInformation();
 		$this->arrUser=$functions->getUser();
-		$this->arrLinks= $functions->getInternalLinksFromForum($this->arrThread['root']);
-		$this->arrSignatures = $functions->getSignatures($this->arrThread['root']);
 		
+		$bolAccessAllowed=false;
+		if($this->arrThread['created_by']!=$this->arrUser['id']){$creator='m';}else{$creator='o';}
+		$accessAllowed=$this->auth->checkPermissions($this->arrThread['forum'],'u_ta_' . $creator . '_' . strtolower($this->arrThread['thread_type']));
+		if($this->arrThread['special']==1){$accessSpecial=$this->auth->checkPermissions($this->arrThread['forum'],'u_ta_' . $creator . '_s');}else{$accessSpecial='A'};
+		if($this->arrThread['locked']==1){$accessLocked=$this->auth->checkPermissions($this->arrThread['forum'],'u_ta_' . $creator . '_l');}else{$accessLocked='A'};
 		
-		$this->Template->postcreator=$this->generateFrontendUrl($this->arrLinks['post_editor']->row(),'/thread/' . $this->intThreadId . '/mode/new');
-		
-		$this->Template->thread = $this->arrThread;
-		$this->updateTracker();
-		$this->Template->posts=$this->getPosts();
+		if(($accessAllowed!='A') || ($accessSpecial!='A') || ($accessLocked!='A'))
+		{
+			$objTemplate=new frontendTemplate('forum_thread_reader_noaccess');
+			$this->Template->objTemplate;
+			
+		}
+		else
+		{
+			$this->arrMember=$functions->getMember();
+			$this->arrLinks= $functions->getInternalLinksFromForum($this->arrThread['root']);
+			$this->arrSignatures = $functions->getSignatures($this->arrThread['root']);
+			$this->Template->postcreator=$this->generateFrontendUrl($this->arrLinks['post_editor']->row(),'/thread/' . $this->intThreadId . '/mode/new');
+			$this->Template->thread = $this->arrThread;
+			$this->updateTracker();
+			$this->Template->posts=$this->getPosts();
+		}//if(($accessAllowed!='A') || ($accessSpecial!='A') || ($accessLocked!='A')){
 		$this->Template->breadcrumbs=$this->getBreadcrumb($this->intThreadId,array());
-		
-		
 	}
 }
 

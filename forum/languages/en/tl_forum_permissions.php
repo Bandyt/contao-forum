@@ -32,7 +32,8 @@
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_forum_permissions']['member_group'] = array('Member group', 'Group for which this permissions apply');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['user_group'] = array('User group', 'Defines for which type of user this permissions apply');
+$GLOBALS['TL_LANG']['tl_forum_permissions']['member_group'] = array('Member group', 'Member group for which this permissions apply');
 
 $GLOBALS['TL_LANG']['tl_forum_permissions']['lbl_u'] = 'User rights';
 $GLOBALS['TL_LANG']['tl_forum_permissions']['u'] = array('User rights', 'Grantes the user all user rights');
@@ -143,6 +144,10 @@ $GLOBALS['TL_LANG']['tl_forum_permissions']['m_pe_d_u'] = array('Moderator-Post-
 /**
  * Reference
  */
+$GLOBALS['TL_LANG']['tl_forum_permissions']['user_group']['reference']['G'] = 'Guests';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['user_group']['reference']['B'] = 'Bots';
+$GLOBALS['TL_LANG']['tl_forum_permissions']['user_group']['reference']['C'] = 'Member group';
+
 $GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference']['A'] = 'Allow';
 $GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference']['D'] = 'Deny';
 $GLOBALS['TL_LANG']['tl_forum_permissions']['permission']['reference']['N'] = 'Never';

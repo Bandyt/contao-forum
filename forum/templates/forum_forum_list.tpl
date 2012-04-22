@@ -99,5 +99,7 @@
 	<?php else: ?>
 		<div class="nothread"><?php echo($GLOBALS['TL_LANG']['forum']['no_threads']); ?></div>
 	<?php endif; ?>
-	<a href="<?php echo($this->threadcreator); ?>"><?php echo($GLOBALS['TL_LANG']['forum']['add_thread']); ?></a>
+	<?php if($this->threadcreator!=''): ?>
+		<a href="<?php echo($this->threadcreator); ?>"><?php echo($GLOBALS['TL_LANG']['forum']['add_thread']); ?></a>
+	<?php endif; ?>
 </div>

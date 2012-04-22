@@ -86,6 +86,11 @@ $GLOBALS['TL_LANG']['forum']['unlock_thread'] = 'Thema entsperren';
 $GLOBALS['TL_LANG']['forum']['general_options'] = 'Allgemeine Optionen';
 $GLOBALS['TL_LANG']['forum']['delete_thread'] = 'Thema l&ouml;schen';
 $GLOBALS['TL_LANG']['forum']['show_user'] = 'Benutzer anzeigen';
+/*
+ * Error message
+ */
+$GLOBALS['TL_LANG']['forum']['err_forum_noaccess'] = 'Sie haben keine Berechtigung f&uuml;r dieses Forum';
+$GLOBALS['TL_LANG']['forum']['err_thread_noaccess'] = 'Sie haben keine Berechtigung f&uuml;r dieses Thema';
 
 $GLOBALS['TL_LANG']['forum']['thread_type_n']='Normal';
 $GLOBALS['TL_LANG']['forum']['thread_type_a']='Ank&uuml;digung';

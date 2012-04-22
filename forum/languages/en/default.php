@@ -85,7 +85,11 @@ $GLOBALS['TL_LANG']['forum']['unlock_thread'] = 'Unlock thread(s)';
 $GLOBALS['TL_LANG']['forum']['general_options'] = 'General options';
 $GLOBALS['TL_LANG']['forum']['delete_thread'] = 'Delete thread(s)';
 $GLOBALS['TL_LANG']['forum']['show_user'] = 'Show user';
-
+/*
+ * Error message
+ */
+$GLOBALS['TL_LANG']['forum']['err_forum_noaccess'] = 'You do not have the permission to view this forum';
+$GLOBALS['TL_LANG']['forum']['err_thread_noaccess'] = 'You do not have the permission to view this thread';
 
 $GLOBALS['TL_LANG']['forum']['thread_type_n']='Normal';
 $GLOBALS['TL_LANG']['forum']['thread_type_a']='Announcement';

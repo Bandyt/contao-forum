@@ -122,6 +122,7 @@ CREATE TABLE `tl_forum_permissions` (
 	`pid` int(10) unsigned NOT NULL default '0',
 	`sorting` int(10) unsigned NOT NULL default '0',
 	`tstamp` int(10) unsigned NOT NULL default '0',
+	`user_group` char(1) NOT NULL default '',
 	`member_group` int(10) unsigned NOT NULL default '0',
 	`u` char(1) NOT NULL default '',
 	`u_fa` char(1) NOT NULL default '',

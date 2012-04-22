@@ -48,6 +48,8 @@ class forum_forum_list extends ContentElement
 	private $arrUser=array();
 	private $arrLinks=array();
 	private $intForumId;
+	private $functions;
+	private $auth;
 	
 	public function generate()
 	{
@@ -240,18 +242,22 @@ class forum_forum_list extends ContentElement
 			{
 				$Threads=$objThreads->num_threads;
 			}
-			$arrForums[]=array(
-				'id'=>$objForums->id,
-				'title'=>$objForums->title,
-				'redirect'=>$this->addToUrl('forum=' . $objForums->id),
-				'num_threads'=>$Threads,
-				'last_post_creator'=>$this->arrMember[$objLastPost->created_by]['username'],
-				'last_post_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objLastPost->created_date),
-				'last_post_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objLastPost->created_time),
-				'last_post_title'=>$objLastPost->thread_title,
-				'last_post_link'=>$this->generateFrontendUrl($this->arrLinks['thread_reader']->row(),'/thread/' . $objLastPost->pid) . '#' . $objLastPost->id,
-				'status'=>$this->getForumStatus($objForums->id)
-			);
+			if($this->auth->checkPermissions($objForums->id,'u_fa_l')=='A')//Check if user may list this forum
+			{
+				$arrForums[]=array(
+					'id'=>$objForums->id,
+					'title'=>$objForums->title,
+					'redirect'=>$this->addToUrl('forum=' . $objForums->id),
+					'num_threads'=>$Threads,
+					'last_post_creator'=>$this->arrMember[$objLastPost->created_by]['username'],
+					'last_post_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objLastPost->created_date),
+					'last_post_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objLastPost->created_time),
+					'last_post_title'=>$objLastPost->thread_title,
+					'last_post_link'=>$this->generateFrontendUrl($this->arrLinks['thread_reader']->row(),'/thread/' . $objLastPost->pid) . '#' . $objLastPost->id,
+					'status'=>$this->getForumStatus($objForums->id)
+				);
+			}
+			
 		}
 		return $arrForums;
 	}//private function getForums()
@@ -259,7 +265,15 @@ class forum_forum_list extends ContentElement
 	private function getThreads($deleted,$thread_type)
 	{
 		$arrThreads=array();
-		if($thread_type=='B')//Broadcasted thread must not be search with pid
+		//Get permissions
+		$accessMyThreadsThisType=$this->auth->checkPermissions($this->ForumId,'u_ta_m_' . strtolower($thread_type));
+		$accessOthersThreadsThisType=$this->auth->checkPermissions($this->ForumId,'u_ta_o_' . strtolower($thread_type));
+		$accessMyThreadsSpecial=$this->auth->checkPermissions($this->ForumId,'u_ta_m_s');
+		$accessOthersThreadsSpecial=$this->auth->checkPermissions($this->ForumId,'u_ta_o_s');
+		$accessMyThreadsLocked=$this->auth->checkPermissions($this->ForumId,'u_ta_m_l');
+		$accessOthersThreadsLockewd=$this->auth->checkPermissions($this->ForumId,'u_ta_o_l');
+		
+		if($thread_type=='B')//Broadcasted threads must not be search with pid
 		{
 			$objThreads = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE deleted=? AND thread_type=? ORDER BY sorting ASC")->execute($deleted,$thread_type);
 		}
@@ -268,8 +282,13 @@ class forum_forum_list extends ContentElement
 			$objThreads = $this->Database->prepare("SELECT * FROM tl_forum_threads WHERE pid=? AND deleted=? AND thread_type=? ORDER BY sorting ASC")->execute($this->intForumId,$deleted,$thread_type);
 		}
 		
-		
-		while($objThreads->next()){
+		while($objThreads->next()){ 
+			if(($objThreads->created_by==$this->arrUser['id']) && ($accessMyThreadsThisType!='A')){break;}
+			if(($objThreads->created_by!=$this->arrUser['id']) && ($accessOthersThreadsThisType!='A')){break;}
+			if(($objThreads->created_by==$this->arrUser['id']) && ($objThreads->locked==1) && ($accessMyThreadsLocked!='A')){break;}
+			if(($objThreads->created_by!=$this->arrUser['id']) && ($objThreads->locked==1) && ($accessOthersThreadsLocked!='A')){break;}
+			if(($objThreads->created_by==$this->arrUser['id']) && ($objThreads->special==1) && ($accessMyThreadsSpecial!='A')){break;}
+			if(($objThreads->created_by!=$this->arrUser['id']) && ($objThreads->special==1) && ($accessOthersThreadsSpecial!='A')){break;}
 			$objPosts = $this->Database->prepare("SELECT count(id) as cnt FROM tl_forum_posts WHERE pid=? AND deleted=?")->execute($objThreads->id,'');
 			$objLastThreadPost = $this->Database->prepare("SELECT * FROM tl_forum_posts WHERE pid=? AND deleted=? ORDER BY created_time DESC LIMIT 0,1")->execute($objThreads->id,'');
 			$arrThreads[]=array(
@@ -301,21 +320,37 @@ class forum_forum_list extends ContentElement
 	{
 		//Initialize
 		$this->getForumId();
-		$functions = new forum_common_functions();
-		$this->arrMember=$functions->getMember();
-		$this->arrUser=$functions->getUser();
-		$this->arrLinks= $functions->getInternalLinksFromForum($this->intForumId);
+		$this->functions = new forum_common_functions();
+		$this->auth = new forum_auth();
+		$this->arrLinks= $this->functions->getInternalLinksFromForum($this->intForumId);
 		$this->updateTracker();
 		
-		//Get data and send them to template
-		$this->Template->forums=$this->getForums();
-		$this->Template->threadcreator=$this->generateFrontendUrl($this->arrLinks['thread_editor']->row(),'/forum/' . $this->intForumId . '/mode/new');
-		$this->Template->threads=$this->getThreads('','N'); //Get the normal threads
-		$this->Template->announcements=$this->getThreads('','A'); //Get announcements
-		$this->Template->broadcasts=$this->getThreads('','B'); //Get broadcasts
-		$this->Template->num_threads=count($this->Template->threads)+count($this->Template->announcements)+count($this->Template->broadcasts);
-		$this->Template->forumid=$this->intForumId;
+		
+		if($this->auth->checkPermissions($this->intForumId,'u_fa_a')=='A') //Check if user may access the this forum
+		{
+			//No need to gather these information if user has no access
+			$this->arrMember=$this->functions->getMember();
+			$this->arrUser=$this->functions->getUser();
+			//Get data and send them to template
+			$this->Template->forums=$this->getForums();
+			if($this->auth->checkPermissions($this->intForumId,'u_tc')=='A')
+			{
+				$this->Template->threadcreator=$this->generateFrontendUrl($this->arrLinks['thread_editor']->row(),'/forum/' . $this->intForumId . '/mode/new');
+			}
+			$this->Template->threads=$this->getThreads('','N'); //Get the normal threads
+			$this->Template->announcements=$this->getThreads('','A'); //Get announcements
+			$this->Template->broadcasts=$this->getThreads('','B'); //Get broadcasts
+			$this->Template->num_threads=count($this->Template->threads)+count($this->Template->announcements)+count($this->Template->broadcasts);
+			$this->Template->forumid=$this->intForumId;
+		}
+		else
+		{
+			$objTemplate = new FrontendTemplate("forum_forum_list_noacess");
+			$this->Template=$objTemplate;
+		}
+		//Code for access and no access
 		$this->Template->forumbreadcrumbs=$this->getForumBreadcrumb($this->intForumId,array());
+		
 	}//protected function compile()
 	
 	
