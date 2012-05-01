@@ -67,6 +67,12 @@ class forum_common_functions extends frontend
 		return $objThread->pid;
 	}
 	
+	public function getForumFromPost($intPostId)
+	{
+		$objPost = $this->Database->prepare("SELECT pid FROM tl_forum_posts WHERE id=?")->execute($intPostId);
+		return $this->getForumFromThread($objPost->pid);
+	}
+	
 	public function getMember()
 	{
 		$objMembers = $this->Database->prepare("SELECT * FROM tl_member")->execute();

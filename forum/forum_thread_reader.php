@@ -76,6 +76,13 @@ class forum_thread_reader extends ContentElement
 	{
 		$objPosts = $this->Database->prepare("SELECT * FROM tl_forum_posts WHERE pid=? AND deleted=? ORDER BY order_no ASC")->execute($this->intThreadId,'');
 		$intI=0;
+		$answerMyPosts=$this->auth->checkPermissions($this->arrThread['forum'],'u_pc_a_m');
+		$answerOthersPosts=$this->auth->checkPermissions($this->arrThread['forum'],'u_pc_a_o');
+		$quoteMyPosts=$this->auth->checkPermissions($this->arrThread['forum'],'u_pc_q_m');
+		$quoteOthersPosts=$this->auth->checkPermissions($this->arrThread['forum'],'u_pc_q_o');
+		$editMyPostsHeading=$this->auth->checkPermissions($this->arrThread['forum'],'u_pe_m_h');
+		$editMyPostsText=$this->auth->checkPermissions($this->arrThread['forum'],'u_pe_m_t');
+		$editMyPostsDelete=$this->auth->checkPermissions($this->arrThread['forum'],'u_pe_m_d_d');
 		while($objPosts->next()){
 				$intI++;
 				$strPostText=$objPosts->text;
@@ -87,6 +94,18 @@ class forum_thread_reader extends ContentElement
 						$this->import($callback[0]); 
 						$strPostText = $this->$callback[0]->$callback[1]($strPostText,$objPosts->id,$this->intThreadId); 
 					} 
+				}
+				if($objPosts->created_by==$arrUser['id'])
+				{
+					if($answerMyPosts=='A'){$answer_link=$this->generateFrontendUrl($this->arrLinks['post_editor']->row(),'/thread/' . $this->intThreadId . '/mode/answer/post/' . $objPosts->id),}else{$answer_link='';}
+					if($quoteMyPosts=='A'){$quote_link=$this->generateFrontendUrl($this->arrLinks['post_editor']->row(),'/thread/' . $this->intThreadId . '/mode/quote/post/' . $objPosts->id),}else{$quote_link='';}
+					if($MyPosts=='A'){$edit_link=$this->generateFrontendUrl($this->arrLinks['post_editor']->row(),'/thread/' . $this->intThreadId . '/mode/edit/post/' . $objPosts->id),}else{$edit_link='';}
+				}
+				else
+				{
+					if($answerOthersPosts=='A'){$answer_link=$this->generateFrontendUrl($this->arrLinks['post_editor']->row(),'/thread/' . $this->intThreadId . '/mode/answer/post/' . $objPosts->id),}else{$answer_link='';}
+					if($quoteOthersPosts=='A'){$quote_link=$this->generateFrontendUrl($this->arrLinks['post_editor']->row(),'/thread/' . $this->intThreadId . '/mode/quote/post/' . $objPosts->id),}else{$quote_link='';}
+					$edit_link='';
 				}
 				$arrPosts[]=array(
 					'id'=>$objPosts->id,
@@ -104,9 +123,9 @@ class forum_thread_reader extends ContentElement
 					'last_change_date'=>date($GLOBALS['TL_CONFIG']['dateFormat'],$objPosts->last_change_date),
 					'last_change_time'=>date($GLOBALS['TL_CONFIG']['timeFormat'],$objPosts->last_change_time),
 					'last_change_reason'=>$objPosts->last_change_reason,
-					'answer_link'=>$this->generateFrontendUrl($this->arrLinks['post_editor']->row(),'/thread/' . $this->intThreadId . '/mode/answer/post/' . $objPosts->id),
-					'quote_link'=>$this->generateFrontendUrl($this->arrLinks['post_editor']->row(),'/thread/' . $this->intThreadId . '/mode/quote/post/' . $objPosts->id),
-					'edit_link'=>$this->generateFrontendUrl($this->arrLinks['post_editor']->row(),'/thread/' . $this->intThreadId . '/mode/edit/post/' . $objPosts->id),
+					'answer_link'=>$answer_link;
+					'quote_link'=>$quote_link;
+					'edit_link'=>$edit_link;
 					'mod_tools_delete_link'=>$this->generateFrontendUrl($this->arrLinks['moderator_panel']->row(),'/thread/' . $this->intThreadId . '/mode/mod-delete-post/post/' . $objPosts->id),
 				);
 		}
