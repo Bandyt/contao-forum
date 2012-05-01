@@ -46,7 +46,11 @@ class forum_post_editor extends ContentElement
 	protected $strTemplate = 'forum_post_editor';
 	private $arrMember=array();
 	private $arrUser=array();
+	private $arrLinks=array();
 	private $functions;
+	private $intForumId;
+	private $intThreadId;
+	
 	
 	public function generate()
 	{
@@ -58,38 +62,26 @@ class forum_post_editor extends ContentElement
 		return parent::generate();
 	}
 	
-	/**
-	 * Generate module
-	 */
-	protected function compile()
+	private function getThreadId()
 	{
-		$this->functions = new forum_common_functions();
-		$this->arrMember=$this->functions->getMember();
-		$this->arrUser=$this->functions->getUser();
-		//###########################################
-		//Get thread id
-		//###########################################
 		if($this->forum_use_fixed_thread=='1'){
-			$threadid = $this->forum_fixed_thread;
+			$this->intThreadId = $this->forum_fixed_thread;
 		}
 		else
 		{
-			$threadid = $this->Input->get('thread');
+			$this->intThreadId = $this->Input->get('thread');
 		}
-		if($threadid==''){
-			$threadid=0;
+		if($this->intThreadId==''){
+			$this->intThreadId=0;
 		}
-		$objThread = $this->Database->prepare("SELECT pid FROM tl_forum_threads WHERE id=?")->execute($threadid);
-		$intForumId=$objThread->pid;
-		$this->Template->threadid=$threadid;
-		//###########################################
-		//Get user information
-		//###########################################
-		$this->Template->member=$this->functions->getUser();
-		//###########################################
-		//Process form
-		//###########################################
-		$errors=array();
+		$objThread = $this->Database->prepare("SELECT pid FROM tl_forum_threads WHERE id=?")->execute($this->intThreadId);
+		$this->intForumId=$objThread->pid;
+		$this->Template->threadid=$this->intThreadId;
+	}
+	
+	private function processForm()
+	{
+		$arrErrors=array();
 		if($this->Input->post('submit'))
 		{
 			$currenttime=time();
@@ -115,7 +107,7 @@ class forum_post_editor extends ContentElement
 				$posts = $this->Database->prepare("SELECT max(order_no) as order_no FROM tl_forum_posts WHERE pid=?")->execute($threadid);
 				$arrSetthread = array
 				(
-					'pid' => $threadid,
+					'pid' => $this->intThreadId,
 					'title' => $this->Input->post('title'),
 					'text' => $this->Input->post('text'),
 					'created_date' => $currenttime,
@@ -135,14 +127,11 @@ class forum_post_editor extends ContentElement
 					'last_post_date' => $currenttime,
 					'last_post_time' => $currenttime
 				);
-				$this->Database->prepare("UPDATE tl_forum_threads %s WHERE id=?")->set($arrSet)->execute($threadid);
+				$this->Database->prepare("UPDATE tl_forum_threads %s WHERE id=?")->set($arrSet)->execute($this->intThreadId);
 				$this->Database->prepare("UPDATE tl_forum_forums %s WHERE id=?")->set($arrSet)->execute($intForumId);
 			
 				//Post added. Now redirect to thread reader
-				$objTargetPage = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
-												->limit(1)
-												->execute($GLOBALS['TL_CONFIG']['forum_redirect_threadreader']);
-				$this->redirect($this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $threadid));
+				$this->redirect($this->generateFrontendUrl($this->arrLinks['thread_reader']->row(),'/thread/' . $this->intThreadId);
 			}//if(($this->Input->post('mode')=='new')||($this->Input->post('mode')=='quote'))
 			elseif($this->Input->post('mode')=='edit')
 			{
@@ -164,13 +153,10 @@ class forum_post_editor extends ContentElement
 					'last_change_date' => $currenttime,
 					'last_change_time' => $currenttime
 				);
-				$this->Database->prepare("UPDATE tl_forum_threads %s WHERE id=?")->set($arrSet)->execute($threadid);
+				$this->Database->prepare("UPDATE tl_forum_threads %s WHERE id=?")->set($arrSet)->execute($this->intThreadId);
 				$this->Database->prepare("UPDATE tl_forum_forums %s WHERE id=?")->set($arrSet)->execute($intForumId);
-					
-				$objTargetPage = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
-												->limit(1)
-												->execute($GLOBALS['TL_CONFIG']['forum_redirect_threadreader']);
-				$this->redirect($this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $threadid));
+				
+				$this->redirect($this->generateFrontendUrl($this->arrLinks['thread_reader']->row(),'/thread/' . $this->intThreadId);
 			}//elseif($this->Input->post('mode')=='edit')
 			//Post created/edited. Now update forum and thread
 			$arrSetForum = array
@@ -182,61 +168,79 @@ class forum_post_editor extends ContentElement
 			
 		}//if($this->Input->post('submit'))
 		
-		$this->Template->errors=$errors;
-		//###########################################
-		//Prepare form
-		//###########################################
-		if($this->Input->get('mode')=='new')
+		$this->Template->arrErrors=$arrErrors;
+	}//private function processForm()
+	
+	private function prepareForm()
+	{
+		switch($this->Input->get('mode'))
 		{
-			$mode='new';
-		}
-		elseif($this->Input->get('mode')=='edit')
-		{
-			$mode='edit';
-			$postid=intval($this->Input->get('post'));
-			if($postid!='')
-			{
-				if(is_int($postid)==true)
-				{
-					$objPost = $this->Database->prepare("SELECT title,text FROM tl_forum_posts WHERE id=?")->executeUncached($postid);
-					$this->Template->post=$objPost->text;
-					$this->Template->title=$objPost->title;
-					$this->Template->post_id=$postid;
-				}
-			}
-		}
-		elseif($this->Input->get('mode')=='answer')
-		{
-			$mode='answer';
-			$answeredid=intval($this->Input->get('post'));
-			$this->Template->answered_id=$answeredid;
-		}
-		elseif($this->Input->get('mode')=='quote')
-		{
-			$mode='quote';
-			//TODO: Add code for quoting posts
-			$quoteid=intval($this->Input->get('post'));
-			if($quoteid!='')
-			{
-				if(is_int($quoteid)==true)
-				{
-					$quoted_post = $this->Database->prepare("SELECT created_by,text FROM tl_forum_posts WHERE id=?")->executeUncached($quoteid);
-					$strQuoteText=$quoted_post->text;
-					if (isset($GLOBALS['TL_HOOKS']['forum_quotePostText']) && is_array($GLOBALS['TL_HOOKS']['forum_quotePostText'])) 
-					{ 
-						foreach ($GLOBALS['TL_HOOKS']['forum_quotePostText'] as $callback) 
-						{ 
-							$this->import($callback[0]); 
-							$strQuoteText = $this->$callback[0]->$callback[1]($strQuoteText,$quoteid,$this->arrMember[$quoted_post->created_by]); 
-						} 
-					}
-					$this->Template->quoted_id=$quoteid;
-					$this->Template->quoted_text=$strQuoteText;
-				}
+			case 'new':
+				$mode='new';
+				break;
 				
-			}
+			case 'edit':
+				$mode='edit';
+				$postid=intval($this->Input->get('post'));
+				if($postid!='')
+				{
+					if(is_int($postid)==true)
+					{
+						$objPost = $this->Database->prepare("SELECT title,text FROM tl_forum_posts WHERE id=?")->executeUncached($postid);
+						$this->Template->post=$objPost->text;
+						$this->Template->title=$objPost->title;
+						$this->Template->post_id=$postid;
+					}
+				}
+				break;
+				
+			case 'answer':
+				$mode='answer';
+				$answeredid=intval($this->Input->get('post'));
+				$this->Template->answered_id=$answeredid;
+				break;
+				
+			case 'quote':
+				$mode='quote';
+				//TODO: Add code for quoting posts
+				$quoteid=intval($this->Input->get('post'));
+				if($quoteid!='')
+				{
+					if(is_int($quoteid)==true)
+					{
+						$quoted_post = $this->Database->prepare("SELECT created_by,text FROM tl_forum_posts WHERE id=?")->executeUncached($quoteid);
+						$strQuoteText=$quoted_post->text;
+						if (isset($GLOBALS['TL_HOOKS']['forum_quotePostText']) && is_array($GLOBALS['TL_HOOKS']['forum_quotePostText'])) 
+						{ 
+							foreach ($GLOBALS['TL_HOOKS']['forum_quotePostText'] as $callback) 
+							{ 
+								$this->import($callback[0]); 
+								$strQuoteText = $this->$callback[0]->$callback[1]($strQuoteText,$quoteid,$this->arrMember[$quoted_post->created_by]); 
+							} 
+						}
+						$this->Template->quoted_id=$quoteid;
+						$this->Template->quoted_text=$strQuoteText;
+					}					
+				}
+				break;
 		}
 		$this->Template->mode=$mode;	
+	} //private function prepareForm()
+	
+	/**
+	 * Generate module
+	 */
+	protected function compile()
+	{
+		$this->functions = new forum_common_functions();
+		$this->arrMember=$this->functions->getMember();
+		$this->arrUser=$this->functions->getUser();
+		$this->getThreadId();//incl. forum id
+		$this->arrLinks= $this->functions->getInternalLinksFromForum($this->intForumId);
+		$this->Template->member=$this->functions->getUser();
+		
+		$this->processForm();
+		$this->prepareForm();
 	}
 }
 

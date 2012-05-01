@@ -45,6 +45,11 @@ class forum_thread_editor extends ContentElement
 	 */
 	protected $strTemplate = 'forum_thread_editor';
 
+	private $functions;
+	private $arrUser = array();
+	private $intForumId;
+	private $arrLinks=array();
+	
 	public function generate()
 	{
 		if (TL_MODE == 'BE')
@@ -55,48 +60,23 @@ class forum_thread_editor extends ContentElement
 		return parent::generate();
 	}
 
-	/**
-	 * Generate module
-	 */
-	protected function compile()
+	private function getForumId()
 	{
-		//###########################################
-		//Get forum id
-		//###########################################
 		if($this->forum_use_fixed_forum=='1'){
-			$forumid = $this->forum_fixed_forum;
+			$this->intForumId = $this->forum_fixed_forum;
 		}
 		else
 		{
-			$forumid = $this->Input->get('forum');
+			$this->intForumId = $this->Input->get('forum');
 		}
-		if($forumid==''){
-			$forumid=0;
+		if($this->intForumId==''){
+			$this->intForumId=0;
 		}
-		$this->Template->forumid=$forumid;
-		//###########################################
-		//Get user information
-		//###########################################
-		$this->import('FrontendUser', 'Member');
-		if(FE_USER_LOGGED_IN)
-		{
-			$user=array(
-				'id'=>$this->Member->id,
-				'firstname'=>$this->Member->firstname,
-				'lastname'=>$this->Member->lastname,
-				'username'=>$this->Member->username,
-				'groups'=>$this->Member->groups
-			);
-			$this->Template->member=$user;
-			$this->Template->member_loggedin=true;
-		}
-		else
-		{
-			$this->Template->member_loggedin=false;
-		}
-		//###########################################
-		//Prepare form
-		//###########################################
+		$this->Template->this->forumid=$this->intForumId;
+	}
+	
+	private function prepareForm()
+	{
 		if($this->Input->get('mode')=='edit')
 		{
 			$mode='edit';
@@ -107,9 +87,10 @@ class forum_thread_editor extends ContentElement
 			$mode='new';
 		}
 		$this->Template->mode=$mode;
-		//###########################################
-		//Process form
-		//###########################################
+	}
+	
+	private function processForm()
+	{
 		$errors=array();
 		if($this->Input->post('submit'))
 		{
@@ -123,7 +104,7 @@ class forum_thread_editor extends ContentElement
 					'title' => $this->Input->post('title'),
 					'created_date' => $currenttime,
 					'created_time' => $currenttime,
-					'created_by' => $user['id'],
+					'created_by' => $this->arrUser['id'],
 					'thread_type' => $this->Input->post('thread_type')
 				);
 				$insertId = $this->Database->prepare("INSERT INTO tl_forum_threads %s")->set($arrSetthread)->execute()->insertId;
@@ -135,29 +116,37 @@ class forum_thread_editor extends ContentElement
 					'text'=>$this->Input->post('text'),
 					'created_date' => $currenttime,
 					'created_time' => $currenttime,
-					'created_by' => $user['id']
+					'created_by' => $this->arrUser['id']
 				);
 				$postInsertId = $this->Database->prepare("INSERT INTO tl_forum_posts %s")->set($arrSetpost)->execute()->insertId;
 
 				//Thread added. Now update parent forum and redirect to new thread
 				
-				if($forumid!=0 && $forumid!='')
+				if($this->intForumId!=0 && $this->intForumId!='')
 				{
 					$arrSetForum = array
 					(
 						'last_change_date' => $currenttime,
 						'last_change_time' => $currenttime,
 					);
-					$this->Database->prepare("UPDATE tl_forum_forums %s WHERE id=?")->set($arrSetForum)->execute($forumid);
+					$this->Database->prepare("UPDATE tl_forum_forums %s WHERE id=?")->set($arrSetForum)->execute($this->intForumId);
 				}
-				$objTargetPage = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
-												->limit(1)
-												->execute($GLOBALS['TL_CONFIG']['forum_redirect_threadreader']);
-				$this->redirect($this->generateFrontendUrl($objTargetPage->row(),'/thread/' . $insertId));
+				$this->redirect($this->generateFrontendUrl($this->arrLinks['thread_reader']->row(),'/thread/' . $insertId);
 			}//if($this->Input->post('mode')=='new')
 		}
 		$this->Template->errors=$errors;
-		
+	}
+	/**
+	 * Generate module
+	 */
+	protected function compile()
+	{
+		$this->functions = new forum_common_functions();
+		$this->getForumId();
+		$this->arrUser=$this->functions->getUser();
+		$this->arrLinks= $this->functions->getInternalLinksFromForum($this->intForumId);
+		$this->prepareForm();
+		$this->processForm();
 	}
 }
 
